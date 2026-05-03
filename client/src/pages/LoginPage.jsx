@@ -1,30 +1,41 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LoginPage() {
+export default function LoginPage({greenLogoUrl}) {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+
+  function handleSubmit() {
+    const newErrors = {};
+    if (!username) newErrors.username = true;
+    if (!password) newErrors.password = true;
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+  }
 
   return (
     <div className="auth-page">
-      <h1 className="auth-logo">taeketmaster®</h1>
+      <img className="sign-up-logo" src={greenLogoUrl}/>
 
       <div className="auth-box">
         <h2 className="auth-title">Sign Up</h2>
 
         <div className="auth-field">
           <label className="auth-label">Username <span className="required">*</span></label>
-          <input type="text" className="auth-input" placeholder="cast_username" />
+          <input type="text" className="auth-input" placeholder="" value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={errors.username ? { border: '1.5px solid #FF0000' } : {}}/>
         </div>
 
         <div className="auth-field">
           <label className="auth-label">Password <span className="required">*</span></label>
           <div style={{ position: 'relative', width: '100%' }}>
-            <input 
-              type={showPassword ? "text" : "password"} 
-              className="auth-input" 
-              placeholder="••••••••" 
-            />
-            {/* ไอคอนลูกตา SVG */}
+            <input type={showPassword ? "text" : "password"} className="auth-input" placeholder="" 
+              value={password} onChange={(e) => setPassword(e.target.value)}
+              style={errors.password ? { border: '1.5px solid #FF0000' } : {}}/>
             <span 
               onClick={() => setShowPassword(!showPassword)}
               style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
@@ -42,12 +53,12 @@ export default function LoginPage() {
               )}
             </span>
           </div>
-          <div style={{ width: '100%', marginTop: '0.4rem' }}>
+          <div style={{ width: '100%', marginTop: '0' }}>
             <Link to="/forgot-password" style={{ fontSize: '0.65rem', color: '#4A5D23', textDecoration: 'none' }}>Forgot your password?</Link>
           </div>
         </div>
 
-        <button className="auth-btn">SIGN IN</button>
+        <button className="auth-btn" onClick={handleSubmit}>SIGN IN</button>
 
         <div className="auth-links">
           <Link to="/register">Create new account</Link>
