@@ -5,6 +5,8 @@ export const getEventDetailService = async (id) => {
         select e.title, e.img_path,  
         to_char(min(s.show_at), 'Dy fmdd Mon yyyy') || ' - ' || to_char(max(s.show_at), 'Dy fmdd Mon yyyy') as showdate,
         v.name as venue_name, to_char(e.sales_started_at, 'Dy fmdd Mon yyyy, hh24:mi') as public_sale,
+        (select string_agg(z.zone_name || ' ' || to_char(ez.price, 'FM9,999'), ' / ' order by ez.price desc)
+         from event_zones ez join zones z on ez.zone_id = z.zone_id where ez.event_id = e.event_id) as ticket_prices,
         case
             when now() < e.sales_started_at then 0
             when (

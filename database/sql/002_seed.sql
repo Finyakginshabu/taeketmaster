@@ -6,10 +6,6 @@ insert into users (first_name, last_name, email, username, password) values
 insert into venues (name, seat_capacity, latitude, longitude) values 
 ('micro theater', 2, 13.7, 100.5);
 
-insert into zones (venue_id, zone_name) values (1, 'main zone');
-
-insert into seats (zone_id, number) values (1, 's1'), (1, 's2');
-
 insert into events (event_id, title, img_path, sales_started_at, sales_ended_at, event_status) values
 (1, 'future festival 1', '/img/f1.jpg', '2026-10-01', '2026-11-01', 'active'),
 (2, 'future festival 2', '/img/f2.jpg', '2026-11-01', '2026-12-01', 'active'),
@@ -17,6 +13,16 @@ insert into events (event_id, title, img_path, sales_started_at, sales_ended_at,
 (4, 'current concert 2', '/img/c2.jpg', '2026-01-01', '2026-06-01', 'active'),
 (5, 'sold out show 1', '/img/s1.jpg', '2026-01-01', '2026-06-01', 'active'),
 (6, 'sold out show 2', '/img/s2.jpg', '2026-01-01', '2026-06-01', 'active');
+
+insert into zones (venue_id, zone_name) values (1, 'Zone A'), (1, 'Zone B');
+
+insert into seats (zone_id, number) values 
+(1, 'A1'), (1, 'A2'), 
+(2, 'B1'), (2, 'B2');
+
+insert into event_zones (event_id, zone_id, price) values 
+(1, 1, 2000.00),
+(1, 2, 1200.00);
 
 insert into showtimes (showtime_id, event_id, venue_id, show_at) values
 (1, 1, 1, '2026-12-01 19:00'), (2, 2, 1, '2026-12-02 19:00'),
@@ -33,5 +39,3 @@ insert into tickets (booking_id, showtime_id, seat_id, price) values
 
 insert into tickets (booking_id, showtime_id, seat_id, price) values 
 (1, 6, 1, 250.00), (1, 6, 2, 250.00);
-
-
