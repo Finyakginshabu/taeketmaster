@@ -35,11 +35,11 @@ export const getEventFeedService = async (filters) => {
         : '';
     const result = await pool.query(`
         select distinct
-            e.event_id, e.title, e.jpg_path, min(s.show_at) as first_show,
+            e.event_id, e.title, e.img_path, min(s.show_at) as first_show,
             case 
                 when min(s.show_at)::date = max(s.show_at)::date 
-                then to_char(min(s.show_at), 'dd mon yyyy')
-                else to_char(min(s.show_at), 'dd mon yyyy') || ' - ' || to_char(max(s.show_at), 'dd mon yyyy')
+                then to_char(min(s.show_at), 'fmdd Mon yyyy')
+                else to_char(min(s.show_at), 'fmdd Mon yyyy') || ' - ' || to_char(max(s.show_at), 'fmdd Mon yyyy')
             end as showdate,
             case
                 when now() < e.sales_started_at then 0
@@ -62,7 +62,7 @@ export const getEventFeedService = async (filters) => {
         left join event_artists ea on e.event_id = ea.event_id
         left join artists art on ea.artist_id = art.artist_id
         ${whereClause}
-        group by e.event_id, e.title, e.jpg_path, e.sales_started_at
+        group by e.event_id, e.title, e.img_path, e.sales_started_at
         order by first_show asc;
     `, queryParams);
     return result.rows;
