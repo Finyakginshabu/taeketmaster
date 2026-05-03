@@ -13,7 +13,7 @@ services:
       - ./database/sql:/docker-entrypoint-initdb.d
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root"]
+      test: ["CMD-SHELL", "pg_isready -U root -d taeketmaster_db"]
       interval: 10s
       timeout: 5s
       retries: 5

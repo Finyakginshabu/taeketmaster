@@ -95,10 +95,11 @@ create index if not exists idx_seats_zone_id on seats(zone_id);
 create table if not exists events (
   event_id serial primary key,
   title varchar(255) not null,
+  img_path VARCHAR(255),
   description text,
   event_status event_status not null default 'draft',
   sales_started_at timestamp not null,
-  sales_ended_at timestamp not null,
+  sales_ended_at timestamp not null
 );
 
 create index if not exists idx_events_status on events(event_status);
@@ -146,13 +147,11 @@ create index if not exists idx_showtimes_show_at on showtimes(show_at);
 create table if not exists bookings (
   booking_id serial primary key,
   user_id int not null references users(user_id),
-  booked_at timestamp default current_timestamp,
-  total_price decimal(10,2),
-  status varchar(50) default 'confirmed'
+  booked_at timestamp,
+  total_price decimal(10,2)
 );
 
 create index if not exists idx_bookings_user on bookings(user_id);
-create index if not exists idx_bookings_status on bookings(status);
 
 create table if not exists tickets (
   ticket_id serial primary key,

@@ -5,6 +5,7 @@ import pool from "./config/db.js"
 
 // import userRoutes from "./routes/users.routes.js"
 import authRoutes from "./routes/auth.routes.js"
+import homeRoutes from "./routes/home.routes.js"
 import errorHandling from "./middlewares/errorHandler.js";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(cors());
 // Routes
 // app.use("/api", userRoutes);
 app.use("/api", authRoutes);
+app.use("/api", homeRoutes);
 
 // Error handling middleware
 app.use(errorHandling);

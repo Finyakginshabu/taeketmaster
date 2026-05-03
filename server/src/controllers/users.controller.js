@@ -1,7 +1,7 @@
 import * as model from "../models/users.model.js";
 
 const handleResponse = (res, status, message, data = null) => {
-    res.status(status).join({
+    res.status(status).json({
         status,
         message,
         data,
