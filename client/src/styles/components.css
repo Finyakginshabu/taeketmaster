@@ -1,0 +1,138 @@
+/* =========================================
+   สไตล์ใหม่: Soft & Minimal (เป๊ะตาม Figma)
+   ========================================= */
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
+  padding: 2rem;
+}
+
+.auth-logo {
+  color: #4A5D23; /* สีเขียวเข้มโลโก้ */
+  font-weight: 900;
+  font-style: italic;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.auth-box {
+  background-color: #D6E0C2; /* สีเขียวอ่อนพื้นหลังกล่อง */
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  /* เงาฟุ้งๆ นุ่มๆ แบบใน Figma */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.auth-box.wide {
+  max-width: 700px; /* ขยายกล่องสำหรับหน้า Register */
+}
+
+.auth-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.auth-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #4A5D23;
+  margin-bottom: 0.3rem;
+}
+
+.auth-label .required {
+  color: #E05236; /* สีแดงของดอกจัน */
+  margin-left: 2px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #C4D0A9; /* เส้นขอบบางๆ สีกลืนกับพื้น */
+  border-radius: 8px;
+  background-color: #F0F4E6; /* สีครีมช่องกรอก */
+  font-size: 0.75rem;
+  color: #4A5D23;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.auth-input::placeholder {
+  color: #A0B08C; /* สี placeholder จางๆ */
+}
+
+.auth-input:focus {
+  border-color: #7A8C53;
+}
+
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.5rem;
+}
+
+.auth-btn {
+  background-color: #7A8C53; /* สีเขียวตุ่นๆ ของปุ่ม */
+  color: white;
+  border: none;
+  border-radius: 50px; /* ทรงแคปซูลโค้งมน */
+  padding: 0.6rem 2rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  width: auto;
+  min-width: 140px;
+  margin: 1.5rem auto 0 auto;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.auth-btn:hover {
+  opacity: 0.9;
+}
+
+.auth-radio-group {
+  display: flex;
+  gap: 0.8rem;
+  height: 34px;
+  align-items: center;
+}
+
+.auth-radio-group label {
+  font-size: 0.7rem;
+  color: #4A5D23;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-size: 0.65rem;
+}
+
+.auth-links a {
+  color: #4A5D23;
+  text-decoration: none;
+}
+.auth-links a:hover {
+  text-decoration: underline;
+}
