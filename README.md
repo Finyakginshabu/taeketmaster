@@ -1,6 +1,6 @@
 ## Stupid Note for Backend of Taeketmaster
 // เพื่อน Frontend ไปดู **Taeketmaster Setup** ได้เลย
-คำสั้ง Bash ดี ๆ เช่น
+คำสั่ง Bash ดี ๆ เช่น
  - `cd ../..` คือ move up
  - `mkdir controllers, models, ...` คือ สร้าง folders
 
@@ -46,3 +46,5 @@ clear และ setup ใหม่เมื่่ออัปเดต database/
 -> ใช้ email/username โดย email case-insensitive และ username case-sensitive
 -> JWT ไว้จำว่า sign in แล้ว (มีแต่ Access Token)
 
+## Frontend ทำไรไปแล้วบ้าง
+**Login and Register page** เหลือ api

@@ -16,7 +16,7 @@ const posterUrl = "./src/assets/Poster.png";
 const cartUrl = "./src/assets/ShoppingCart.svg";
 const userUrl = "./src/assets/User.svg";
 const mapUrl = "./src/assets/MapPin.svg";
-const searchUrl = "./src/assets/Seach.svg";
+const searchUrl = "./src/assets/Search.svg";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

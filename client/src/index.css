@@ -1,4 +1,4 @@
-:root {
+:root{
   --gree-on-white: #3b4b1b;
   --green-on-green: #1a2700;
   --light-green: #d6e7b6;
@@ -30,11 +30,11 @@
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* * {
+/* *{
   box-sizing: border-box;
 } */
 
-body {
+body{
   margin: 0;
   font-family: var(--font-sans);
   background-color: var(--bg-body);
@@ -43,7 +43,7 @@ body {
   line-height: 1.5;
 }
 
-.auth-page {
+.auth-page{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +57,7 @@ body {
   margin-bottom:  20px;;
 }
 
-.auth-box {
+.auth-box{
   background-color: var(--light-green);
   padding: 2.5rem 4rem;
   border-radius: 20px;
@@ -67,11 +67,11 @@ body {
   box-sizing: border-box;
 }
 
-.auth-box.wide {
+.auth-box.wide{
   max-width: 700px;
 }
 
-.auth-title {
+.auth-title{
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-main);
@@ -80,7 +80,7 @@ body {
   text-align: center;
 }
 
-.auth-field {
+.auth-field{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -88,19 +88,19 @@ body {
   width: 100%;
 }
 
-.auth-label {
+.auth-label{
   font-size: 0.65rem;
   font-weight: 600;
   color: var(--gree-on-white);
   margin-bottom: 0.3rem;
 }
 
-.auth-label .required {
+.auth-label .required{
   color: var(--red);
   margin-left: 2px;
 }
 
-.auth-input {
+.auth-input{
   width: 100%;
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--border-lightgreen);
@@ -224,6 +224,60 @@ body {
   gap: 8px;
 }
 
+.search-bar{
+  padding: 0px 190px;
+}
+
+.province-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--bg-body);
+  border: 1px solid #c8c6a0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: 100;
+  width: 200px;
+  overflow: hidden;
+}
+
+.province-search {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--bg-body);
+  padding: 10px 12px;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.province-list{
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.province-list button{
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.province-list button:hover{
+  background: var(--bg-body);
+}
+
+.province-btn{
+  border: none;
+  background: none;
+  font-size: 18px;
+  color: var(--gree-on-white);
+}
+
 .section{
   position: relative;
   display: flex;
@@ -233,14 +287,55 @@ body {
 .section-btn{
   display: flex;
   align-items: center;
-  gap: 7;
+  gap: 10px;
+  background: var(--bg-body);
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: var(--gree-on-white);
+  font-size: 18px;
+  transition: background 0.15s;
+  line-height: 2px;
+}
+
+.divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border-muted);
+}
+
+.clear-btn{
   background: none;
   border: none;
   cursor: pointer;
-  padding: 14px 18px;
-  color: #3d4418;
-  font-size: 14px;
-  transition: background 0.15s;
+  font-size: 16px;
+  color: #7a7d50;
+  padding: 0 0 0 4px;
+  margin-bottom: 2px;
+}
+
+.search-bar-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-body);
+  border-radius: 10px;
+  padding: 6px 14px;
+  gap: 8px;
+}
+
+.search-bar-wrap img{
+  margin-bottom: 2px;
+}
+
+.search-input{
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 16px;
+}
+
+.nav-bar-icon{
+  margin-left: 30px;
 }
 
 .sign-in{
@@ -329,16 +424,20 @@ body {
   font-size: 14px;
 }
 
-.card {
+.card{
   display: flex;
   flex-direction: column;
 }
 
-.card button {
+.card a{
   margin-top: auto;
 }
 
 .buy-now-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-size: 22px;
   width: 200px;
   height: 56px;
@@ -348,7 +447,16 @@ body {
   background-color: var(--gree-on-white);
 }
 
+.buy-now-btn:hover{
+  border: 3px solid color-mix(in srgb, var(--border-lightgreen), var(--bg-body)15%);
+  background-color: color-mix(in srgb, var(--gree-on-white), var(--bg-body)15%);
+}
+
 .coming-soon-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-size: 22px;
   width: 200px;
   height: 56px;
@@ -359,9 +467,13 @@ body {
 }
 
 .sold-out-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-size: 22px;
   width: 200px;
-  height: 52px;
+  height: 58px;
   border: none;
   border-radius: 30px;
   color: var(--bg-body);
