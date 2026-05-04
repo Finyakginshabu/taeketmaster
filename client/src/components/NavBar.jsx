@@ -10,7 +10,7 @@ export default function NavBar({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapUrl,
             <div className="nav-bar-content">
                 <div className="back-to-home">
                     <img className="nav-bar-icon" src={homeUrl}/>
-                    <h3>Home</h3>
+                    <Link to="/" className="home">Home</Link>
                 </div>
 
                 <div className="search-bar">

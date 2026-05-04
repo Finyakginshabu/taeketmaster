@@ -211,9 +211,10 @@ body{
   flex: 1;
 }
 
-.nav-bar-content h3{
+.home{
   font-size: 1.5em;
   color: var(--bg-body);
+  text-decoration: none;
 }
 
 .cart-login{
