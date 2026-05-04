@@ -1,0 +1,15 @@
+:root {
+  --primary-green: #596B37;     /* เขียวปุ่ม */
+  --primary-dark: #3B4B1B;      /* เขียวเข้มจัด (เส้นขอบ/ตัวหนังสือ) */
+  --bg-cream: #F2F2E9;          /* สีพื้นหลังครีมตามรูป */
+  --form-bg: #D9E3C1;           /* สีเขียวอ่อนของตัวฟอร์ม */
+  --input-bg: #E8EED9;          /* สีพื้นหลังช่อง Input */
+  --white: #FFFFFF;
+  --error-red: #FF0000;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--primary-dark);
+  font-family: 'Inter', 'Noto Sans', sans-serif;
+}

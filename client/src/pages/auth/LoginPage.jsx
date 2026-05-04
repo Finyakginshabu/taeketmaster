@@ -9,7 +9,7 @@ export default function LoginPage() {
       <h1 className="auth-logo">taeketmaster®</h1>
 
       <div className="auth-box">
-        <h2 className="auth-title">Sign Up</h2>
+        <h2 className="auth-title">Sign In</h2>
 
         <div className="auth-field">
           <label className="auth-label">Username <span className="required">*</span></label>

@@ -8,7 +8,7 @@ export default function RegisterPage() {
       <h1 className="auth-logo">taeketmaster®</h1>
 
       <div className="auth-box wide">
-        <h2 className="auth-title">Sign Up</h2>
+     <h2 className="auth-title">Create Account</h2>
 
         <div className="auth-grid">
           <div className="auth-field">
