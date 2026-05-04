@@ -7,6 +7,7 @@ export const mockEvents = [
         startDate: "2026-05-01T09:00:00",
         endDate: "2026-05-09T23:59:59",
         isAvailable: true,
+        province: "กรุงเทพมหานคร",
         imageUrl: "./src/assets/Poster.png"
     },
     {
@@ -16,6 +17,7 @@ export const mockEvents = [
         startDate: "2026-07-01T09:00:00",
         endDate: "2026-07-19T23:59:59",
         isAvailable: true,
+        province: "เชียงใหม่",
         imageUrl: "./src/assets/Linux.png"
     },
     {
@@ -25,6 +27,7 @@ export const mockEvents = [
         startDate: "2026-08-01T09:00:00",
         endDate: "2026-08-14T23:59:59",
         isAvailable: true,
+        province: "ชลบุรี",
         imageUrl: "./src/assets/Dino.jpg"
     },
     {
@@ -34,6 +37,7 @@ export const mockEvents = [
         startDate: "2026-05-01T09:00:00",
         endDate: "2026-05-30T23:59:59",
         isAvailable: false,
+        province: "กรุงเทพมหานคร",
         imageUrl: "./src/assets/Poster.png"
     },
     {
@@ -42,7 +46,8 @@ export const mockEvents = [
         showDate: "2026-09-01",
         startDate: "2026-08-15T09:00:00",
         endDate: "2026-08-31T23:59:59",
-        isAvailable: true, // Coming Soon
+        isAvailable: true,
+        province: "ภูเก็ต",
         imageUrl: "./src/assets/Linux.png"
     },
 ];

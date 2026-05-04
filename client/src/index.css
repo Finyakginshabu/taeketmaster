@@ -197,6 +197,7 @@ body{
   width: 250px;
   height: auto;
   margin: 20px;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 .nav-bar-content{
@@ -204,14 +205,22 @@ body{
   background-color: transparent;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   gap: 8px;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .nav-bar-content h3{
   font-size: 1.5em;
   color: var(--bg-body);
+}
+
+.cart-login{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
 }
 
 .back-to-home{
@@ -225,7 +234,7 @@ body{
 }
 
 .search-bar{
-  padding: 0px 190px;
+  padding: 0px;
 }
 
 .province-dropdown {
@@ -411,6 +420,8 @@ body{
   height: 260px;
   border-radius: 16px;
   margin-bottom: 0;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
 }
 
 .card h2{

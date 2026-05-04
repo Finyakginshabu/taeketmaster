@@ -1,7 +1,7 @@
 import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
 
-export default function NavBar({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl, onSearch}){
+export default function NavBar({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl, onSearch, onDate, onProvince}){
     
     return(
         <div className="nav-bar">
@@ -14,17 +14,21 @@ export default function NavBar({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapUrl,
                 </div>
 
                 <div className="search-bar">
-                    <SearchBar mapUrl={mapUrl} calendarUrl={calendarUrl} searchUrl={searchUrl} onSearch={onSearch}/>
+                    <SearchBar mapUrl={mapUrl} calendarUrl={calendarUrl} 
+                            searchUrl={searchUrl} onSearch={onSearch}
+                            onDate={onDate} onProvince={onProvince}/>
                 </div>
-        
-                <Link to="/cart">
+                <div className="cart-login">
+                    <Link to="/cart">
                     <img className="nav-bar-icon" src={cartUrl}/>
-                </Link>
+                    </Link>
         
-                <div className="user-log-in">
-                    <img className="nav-bar-icon" src={userUrl}/>
-                    <Link to="/signin" className="sign-in">Sign in</Link>
+                    <div className="user-log-in">
+                        <img className="nav-bar-icon" src={userUrl}/>
+                        <Link to="/signin" className="sign-in">Sign in</Link>
+                    </div>
                 </div>
+                
             </div>
         </div>
     );
