@@ -179,7 +179,20 @@ Response (200):
   }
 }
 ```
+---
+No more example response เพราะฟินไม่ไหวแล้วล่ะ
 
+**EventDetail2**
+หน้าตอนกด Buy Now จาก Event Detail
+GET: `http://localhost:6700/api/event2?id=1`
+พาร์ท Zone Layout
+
+Seat Available
+GET: `http://localhost:6700/api/event/available?id=1`
+
+หลังเลือก Zone -> หน้า Seat Layout
+
+**Create/Update Address**
 ---
 
 ### 3. หน้า Profile

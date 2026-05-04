@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.routes.js"
 import userRoutes from "./routes/users.routes.js"
 import homeRoutes from "./routes/home.routes.js"
 import eventDetailsRoutes from "./routes/eventDetail.routes.js"
+import bookingsRoutes from "./routes/bookings.routes.js"
 import errorHandling from "./middlewares/errorHandler.js";
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", homeRoutes);
 app.use("/api", eventDetailsRoutes);
+app.use("/api", bookingsRoutes);
 app.use("/api", express.static('public'));
 
 // Error handling middleware
