@@ -10,12 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@hookform/resolvers": "^5.2.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.75.0",
     "react-router-dom": "^7.14.2",
     "zod": "^4.4.2"
+=======
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.2"
+>>>>>>> d311f7231df374fc8c18590ff7ae31488aa1d656
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
