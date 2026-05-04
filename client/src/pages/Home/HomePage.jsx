@@ -9,14 +9,16 @@ export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, use
     const [events, setEvents] = useState([]);
     const [hideSoldOut, setHideSoldOut] = useState(false);
     const [hideComingSoon, setHideComingSoon] = useState(false);
+    const [date, setDate] = useState(null);
     const [search, setSearch] = useState("");
+    const [province, setProvince] = useState("");
 
     const filteredEvents = events.filter((event) => {
         const today = new Date();
         if (today > new Date(event.endDate) && event.isAvailable) return false;
         if (hideSoldOut && !event.isAvailable) return false;
         if (hideComingSoon && today < new Date(event.startDate)) return false;
-        if (search && !event.title.toLowerCase().includes(search.toLowerCase())) return false;
+
         return true;
     });
 
@@ -28,8 +30,9 @@ export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, use
     }, []);
 
     return( <>
-            <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} userUrl={userUrl}
-                    mapUrl={mapUrl} calendarUrl={calendarUrl} searchUrl={searchUrl} onSearch={setSearch}/>
+            <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} 
+                    userUrl={userUrl} mapUrl={mapUrl} calendarUrl={calendarUrl} 
+                    searchUrl={searchUrl} />
 
             <div className="wrapper">
                 <div className="filter">

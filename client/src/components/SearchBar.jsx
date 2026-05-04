@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect, useCon} from 'react';
 import {provinces, days, months} from "../utils.js";
 import CalendarPicker from "./CalendarPicker.jsx";
 
-export default function SearchBar({mapUrl, calendarUrl, searchUrl, onSearch}){
+export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
     const [province, setProvince] = useState("");
     const [date, setDate] = useState(null);
     const [search, setSearch] = useState("");
@@ -35,6 +35,18 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl, onSearch}){
         return `${dd}/${mm}/${d.getFullYear()}`;
     };
 
+    const handleProvince = (p) => {
+        setProvince(p);
+        setShowProvince(false);
+        setQuery("");
+        onProvince(p);
+    };
+
+    const handleDate = (d) => {
+        setDate(d);
+        onDate(d);
+    };
+
     return (
         <div className="search-bar-wrap">
             <div className="section" ref={provinceRef} style={{position: 'relative'}}>
@@ -46,17 +58,14 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl, onSearch}){
 
                 {showProvince && (
                     <div className="province-dropdown">
-                        <input autoFocus placeholder=""
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        className="province-search"
-                        />
+                        <input autoFocus placeholder="" value={query}
+                        onChange={(e) => setQuery(e.target.value)}className="province-search" />
                         <div className="province-list">
-                        <button onClick={() => { setProvince(""); setShowProvince(false); setQuery(""); }}>
+                        <button onClick={() => handleProvince("")}>
                             All Provinces
                         </button>
                         {filteredProvinces.map((p) => (
-                            <button key={p} onClick={() => { setProvince(p); setShowProvince(false); setQuery(""); }}>
+                            <button key={p} onClick={() => handleProvince(p)}>
                             {p}
                             </button>
                         ))}
@@ -77,7 +86,7 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl, onSearch}){
                     </span>
                     {date ? (
                     <button className="clear-btn"
-                        onClick={(e) => { e.stopPropagation(); setDate(null); }}>
+                        onClick={(e) => { e.stopPropagation(); setDate(null); onDate(null); }}>
                         ×
                     </button>
                     ) : ""}
@@ -86,7 +95,7 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl, onSearch}){
                 {showCalendar && (
                     <CalendarPicker
                     value={date}
-                    onChange={setDate}
+                    onChange={handleDate}
                     onClose={() => setShowCalendar(false)}
                     />
                 )}
