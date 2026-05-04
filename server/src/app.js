@@ -5,6 +5,7 @@ import pool from "./config/db.js"
 
 // import userRoutes from "./routes/users.routes.js"
 import authRoutes from "./routes/auth.routes.js"
+import userRoutes from "./routes/users.routes.js"
 import homeRoutes from "./routes/home.routes.js"
 import eventDetailsRoutes from "./routes/eventDetail.routes.js"
 import errorHandling from "./middlewares/errorHandler.js";
@@ -21,8 +22,10 @@ app.use(cors());
 // Routes
 // app.use("/api", userRoutes);
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 app.use("/api", homeRoutes);
 app.use("/api", eventDetailsRoutes);
+app.use("/api", express.static('public'));
 
 // Error handling middleware
 app.use(errorHandling);

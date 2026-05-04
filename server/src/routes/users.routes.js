@@ -1,12 +1,14 @@
 import express from "express"
 import * as controller from "../controllers/users.controller.js";
+import { verifyToken } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/user", controller.createUser);
-router.get("/user", controller.getAllUsers);
-router.get("/user/:id", controller.getUserById);
-router.put("/user/:id", controller.updateUser);
-router.delete("/user/:id", controller.deleteUser);
+// require auth
+router.get("/profile", verifyToken, controller.getProfile);
+router.put("/profile", verifyToken, controller.updateProfile);
+router.get("/address", verifyToken, controller.getAddress);
+router.post("/address", verifyToken, controller.upsertAddress);
+router.put("/address", verifyToken, controller.upsertAddress);
 
 export default router;
