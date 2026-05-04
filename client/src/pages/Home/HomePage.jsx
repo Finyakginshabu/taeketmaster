@@ -18,17 +18,7 @@ export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, use
         if (today > new Date(event.endDate) && event.isAvailable) return false;
         if (hideSoldOut && !event.isAvailable) return false;
         if (hideComingSoon && today < new Date(event.startDate)) return false;
-        if (search && !event.title.toLowerCase().includes(search.toLowerCase())) return false;
-        if (date) {
-        const showDate = new Date(event.showDate);
-        if (
-            showDate.getFullYear() !== date.getFullYear() ||
-            showDate.getMonth()   !== date.getMonth()    ||
-            showDate.getDate()    !== date.getDate()
-        ) return false;
-        }
-        if (province && event.province !== province) return false;
-        
+
         return true;
     });
 
@@ -42,8 +32,7 @@ export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, use
     return( <>
             <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} 
                     userUrl={userUrl} mapUrl={mapUrl} calendarUrl={calendarUrl} 
-                    searchUrl={searchUrl} onSearch={setSearch} onDate={setDate}
-                    onProvince={setProvince} />
+                    searchUrl={searchUrl} />
 
             <div className="wrapper">
                 <div className="filter">
