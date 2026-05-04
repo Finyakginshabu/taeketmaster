@@ -3,12 +3,12 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/common/Navbar';
 
-import LoginPage from './pages/auth/LoginPage';
-import RegisterPage from './pages/auth/RegisterPage';
-import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
-// 👇 เพิ่ม 2 บรรทัดนี้ตรงนี้ครับ 👇
-import OtpPage from './pages/auth/OtpPage';
-import ResetPasswordPage from './pages/auth/ResetPasswordPage';
+// อัปเดต Path เป็นโฟลเดอร์ Login ทั้งหมด
+import LoginPage from './pages/Login/LoginPage';
+import RegisterPage from './pages/Login/RegisterPage';
+import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
+import OtpPage from './pages/Login/OtpPage';
+import ResetPasswordPage from './pages/Login/ResetPasswordPage';
 
 import HomePage from './pages/user/HomePage';
 import ConcertDetailPage from './pages/user/ConcertDetailPage';
@@ -33,7 +33,6 @@ function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        {/* 👇 เพิ่ม 2 บรรทัดนี้ตรงนี้ครับ 👇 */}
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
 
