@@ -232,9 +232,9 @@ Response (200):
   "message": "Profile updated successfully",
   "data": {
     "id": 1,
-    "first_name": "สมชายใหม่",
-    "last_name": "ใจดีใหม่",
-    "email": "somchai@example.com",
+    "first_name": "khipnata",
+    "last_name": "hot_username",
+    "email": "example@mail.taeket.ac.th",
     "phone": "0867676767",
     "username": "cool_username",
     "gender": "gay",
