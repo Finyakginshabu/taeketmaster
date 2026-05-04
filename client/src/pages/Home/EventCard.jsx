@@ -14,14 +14,10 @@ export default function EventCard({title, date, startDate, endDate, isAvailable,
 
     const status = getStatus();
 
-    function handleClick(){
-
-    }
-
     return(<div className="card">
                 <img src={image}/>
                 <h2>{title}</h2>
                 <p>{date}</p>
-                <Link to="/event" className={status.label} onClick={handleClick}>{status.status}</Link>
+                <Link to="/event" className={status.label}>{status.status}</Link>
             </div>);
 }

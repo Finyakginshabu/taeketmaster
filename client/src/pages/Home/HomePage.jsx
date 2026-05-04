@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import EventCard from './EventCard';
-import SearchBar from './SearchBar.jsx';
+import NavBar from '../../components/NavBar';
 import { mockEvents } from "../../api/mockData.js";
 
 export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl}){
@@ -28,29 +28,8 @@ export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, use
     }, []);
 
     return( <>
-            <div className="nav-bar">
-                <img className="logo-user" src={whiteLogoUrl}/>
-
-                <div className="nav-bar-content">
-                    <div className="back-to-home">
-                        <img className="nav-bar-icon" src={homeUrl}/>
-                        <h3>Home</h3>
-                    </div>
-                    
-                    <div className="search-bar">
-                        <SearchBar mapUrl={mapUrl} calendarUrl={calendarUrl} searchUrl={searchUrl} onSearch={setSearch}/>
-                    </div>
-
-                    <Link to="/cart">
-                        <img className="nav-bar-icon" src={cartUrl}/>
-                    </Link>
-
-                    <div className="user-log-in">
-                        <img className="nav-bar-icon" src={userUrl}/>
-                        <Link to="/signin" className="sign-in">Sign in</Link>
-                    </div>
-                </div>
-            </div>
+            <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} userUrl={userUrl}
+                    mapUrl={mapUrl} calendarUrl={calendarUrl} searchUrl={searchUrl} onSearch={setSearch}/>
 
             <div className="wrapper">
                 <div className="filter">

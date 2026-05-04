@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect, useCon} from 'react';
-import {provinces, days, months} from "../../utils.js";
-import CalendarPicker from "../../components/CalendarPicker.jsx";
+import {provinces, days, months} from "../utils.js";
+import CalendarPicker from "./CalendarPicker.jsx";
 
 export default function SearchBar({mapUrl, calendarUrl, searchUrl, onSearch}){
     const [province, setProvince] = useState("");
