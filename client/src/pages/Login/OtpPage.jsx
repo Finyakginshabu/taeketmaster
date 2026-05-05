@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function OtpPage({greenLogoUrl}) {
+export default function OtpPage({greenLogoUrl}){
   const navigate = useNavigate();
   // สร้าง State สำหรับเก็บค่า OTP ทั้ง 6 ช่อง
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -11,19 +11,19 @@ export default function OtpPage({greenLogoUrl}) {
 
   // ฟังก์ชันจัดการตอนพิมพ์ตัวเลข
   const handleChange = (element, index) => {
-    if (isNaN(element.value)) return false;
+    if(isNaN(element.value)) return false;
 
     const newOtp = [...otp];
     newOtp[index] = element.value;
     setOtp(newOtp);
 
-    if (element.value !== "" && index < 5) {
+    if(element.value !== "" && index < 5){
       inputRefs.current[index + 1].focus();
     }
   };
 
   const handleKeyDown = (e, index) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
+    if(e.key === "Backspace" && !otp[index] && index > 0){
       inputRefs.current[index - 1].focus();
     }
   };
@@ -32,7 +32,7 @@ export default function OtpPage({greenLogoUrl}) {
     e.preventDefault();
     const otpValue = otp.join(""); 
     
-    if (otpValue.length !== 6) {
+    if(otpValue.length !== 6){
       setError("Please complete the 6-digit OTP");
       return;
     }

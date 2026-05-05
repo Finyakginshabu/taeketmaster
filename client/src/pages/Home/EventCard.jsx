@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export function getStatus(startDate, endDate, isAvailable) {
-        if (!isAvailable) return { status: "Sold Out", label: "sold-out-btn" };
+export function getStatus(startDate, endDate, isAvailable){
+        if(!isAvailable) return { status: "Sold Out", label: "sold-out-btn" };
 
         const today = new Date();
-        if (today < new Date(startDate)) return { status: "Coming Soon", label: "coming-soon-btn" };
+        if(today < new Date(startDate)) return { status: "Coming Soon", label: "coming-soon-btn" };
         return { status: "Buy Now", label: "buy-now-btn" };
     }
 

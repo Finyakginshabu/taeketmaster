@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import CalendarPicker from '../../components/CalendarPicker';
 
-export default function RegisterPage({greenLogoUrl, calendarUrl}) {
+export default function RegisterPage({greenLogoUrl, calendarUrl}){
   const [username, setUsername]   = useState('');
   const [password, setPassword]   = useState('');
   const [firstName, setFirstName] = useState('');
@@ -17,32 +17,32 @@ export default function RegisterPage({greenLogoUrl, calendarUrl}) {
 
   useEffect(() => {
     const handler = (e) => {
-      if (calendarRef.current && !calendarRef.current.contains(e.target))
+      if(calendarRef.current && !calendarRef.current.contains(e.target))
         setShowCalendar(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  function handleSubmit() {
+  function handleSubmit(){
     const newErrors = {};
-    if (!username) newErrors.username = true;
-    if (!password) newErrors.password = true;
-    if (!firstName) newErrors.firstName = true;
-    if (!lastName)  newErrors.lastName  = true;
-    if (!email)     newErrors.email     = true;
+    if(!username) newErrors.username = true;
+    if(!password) newErrors.password = true;
+    if(!firstName) newErrors.firstName = true;
+    if(!lastName)  newErrors.lastName  = true;
+    if(!email)     newErrors.email     = true;
 
     setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+    if(Object.keys(newErrors).length > 0) return;
   }
 
-  function formatDateTH(d) {
+  function formatDateTH(d){
     const dd = String(d.getDate()).padStart(2, "0");
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     return `${dd}/${mm}/${d.getFullYear()}`;
   }
 
-  function handleGenderChange(e) {
+  function handleGenderChange(e){
     setGender(e.target.value);
   }
 

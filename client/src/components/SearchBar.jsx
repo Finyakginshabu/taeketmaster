@@ -17,9 +17,9 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
 
     useEffect(() => {
         const handler = (e) => {
-        if (provinceRef.current && !provinceRef.current.contains(e.target))
+        if(provinceRef.current && !provinceRef.current.contains(e.target))
             setShowProvince(false);
-        if (calendarRef.current && !calendarRef.current.contains(e.target))
+        if(calendarRef.current && !calendarRef.current.contains(e.target))
             setShowCalendar(false);
         };
         document.addEventListener("mousedown", handler);
@@ -29,7 +29,7 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
     const filteredProvinces = provinces.filter((p) => p.includes(query));
 
     const formatDate = (d) => {
-        if (!d) return null;
+        if(!d) return null;
         const dd = String(d.getDate()).padStart(2, "0");
         const mm = String(d.getMonth() + 1).padStart(2, "0");
         return `${dd}/${mm}/${d.getFullYear()}`;

@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LoginPage({greenLogoUrl}) {
+export default function LoginPage({greenLogoUrl}){
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  function handleSubmit() {
+  function handleSubmit(){
     const newErrors = {};
-    if (!username) newErrors.username = true;
-    if (!password) newErrors.password = true;
+    if(!username) newErrors.username = true;
+    if(!password) newErrors.password = true;
 
     setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+    if(Object.keys(newErrors).length > 0) return;
   }
 
   return (

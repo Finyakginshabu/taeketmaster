@@ -13,7 +13,7 @@ export default function ConcertPlan({whiteLogoUrl, homeUrl, cartUrl, userUrl, ma
 
     useEffect(() => {
         const handleClickOutside = (e) => {
-        if (ref.current && !ref.current.contains(e.target)) {
+        if(ref.current && !ref.current.contains(e.target)){
             setIsOpen(false);
         }
         };
@@ -23,18 +23,18 @@ export default function ConcertPlan({whiteLogoUrl, homeUrl, cartUrl, userUrl, ma
 
     useEffect(() => {
             const found = mockEvents.find(e => e.id === Number(id));
-            if (found) {
+            if(found){
                 setEvent(found);
                 setSelected(found.showDate[0]);
             }
     }, [id]);
 
-    function handleSelect(option) {
+    function handleSelect(option){
         setSelected(option);
         setIsOpen(false);
     };
     
-    if (!event) return null;
+    if(!event) return null;
 
     return( <>
             <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} 

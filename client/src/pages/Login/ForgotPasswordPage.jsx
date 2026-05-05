@@ -9,7 +9,7 @@ const forgotPasswordSchema = z.object({
                     .email({ message: "Please enter your correct email" }),
 });
 
-export default function ForgotPasswordPage({greenLogoUrl}) {
+export default function ForgotPasswordPage({greenLogoUrl}){
   const navigate = useNavigate();
 
   // 2. เรียกใช้ React Hook Form คู่กับ Zod

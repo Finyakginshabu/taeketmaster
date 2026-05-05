@@ -13,7 +13,7 @@ export const getProfile = async (req, res, next) => {
     try{
         const user = await model.getUserById(userId);
         
-        if (!user) {
+        if(!user){
             return handleResponse(res, 404, "User not found");
         }
 
