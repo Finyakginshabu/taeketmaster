@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import LoginPage from './pages/Login/LoginPage'; 
 import RegisterPage from './pages/Login/RegisterPage';
+import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
+import OtpPage from './pages/Login/OtpPage';
+import ResetPasswordPage from './pages/Login/ResetPasswordPage';
 import HomePage from './pages/Home/HomePage';
 import EventPage from './pages/Event/EventPage';
 import ConcertPlan from './pages/Booking/ConcertPlan';
@@ -32,6 +35,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                                   calendarUrl={calendarUrl} searchUrl={searchUrl}/>} />
         <Route path="/signin" element={<LoginPage greenLogoUrl={greenLogoUrl} />} />
         <Route path="/signup" element={<RegisterPage greenLogoUrl={greenLogoUrl} calendarUrl={calendarUrl}/>} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage greenLogoUrl={greenLogoUrl}/>} />
+        <Route path="/otp" element={<OtpPage greenLogoUrl={greenLogoUrl}/>} />
+        <Route path="/reset-password" element={<ResetPasswordPage greenLogoUrl={greenLogoUrl}/>} />
         <Route path="/event/:id" element={<EventPage whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} 
                                   cartUrl={cartUrl} userUrl={userUrl} mapUrl={mapUrl}
                                   calendarUrl={calendarUrl} searchUrl={searchUrl}

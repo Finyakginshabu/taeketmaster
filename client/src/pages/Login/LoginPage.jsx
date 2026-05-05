@@ -54,7 +54,7 @@ export default function LoginPage({greenLogoUrl}) {
             </span>
           </div>
           <div style={{ width: '100%', marginTop: '0' }}>
-            <Link to="/forgot-password" style={{ fontSize: '0.65rem', color: '#4A5D23', textDecoration: 'none' }}>Forgot your password?</Link>
+            <Link to="/forgot-password" style={{ fontSize: '12px', color: '#4A5D23', textDecoration: 'none' }}>Forgot your password?</Link>
           </div>
         </div>
 
