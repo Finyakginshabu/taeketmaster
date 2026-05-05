@@ -8,42 +8,54 @@ const handleResponse = (res, status, message, data = null) => {
     });
 };
 
-// Get booking detail with event info
-export const getBookingDetail = async (req, res, next) => {
-    const { id } = req.params;
-    try {
-        const booking = await model.getBookingDetail(id);
-        if (!booking) {
-            return handleResponse(res, 404, "Booking not found");
-        }
-        handleResponse(res, 200, "Booking details fetched successfully", booking);
-    } catch (err) {
-        next(err);
+export const reserveTicket = async (req, res) => {
+  try{
+    const userId = req.user.user_id; // From JWT token middleware
+    const { showtimeId, seatId } = req.body;
+
+    if(!showtimeId || !seatId){
+      return handleResponse(res, 400, "showtimeId and seatId are required");
     }
+
+    const seatData = await model.getSeatPriceService(seatId, showtimeId);
+    
+    if(!seatData){
+      return handleResponse(res, 404, "Seat or showtime not found");
+    }
+
+    const ticketPrice = parseFloat(seatData.price);
+
+    const isBooked = await model.isSeadBookedService(seatId, showtimeId);
+    
+    if(isBooked){
+      return handleResponse(res, 409, "Seat is already booked");
+    }
+
+    let booking = await model.getActiveBookingService(userId);
+
+    if(!booking){
+      booking = await model.createBookingService(userId);
+    }
+
+    const ticket = await model.createTicketService(
+      booking.booking_id,
+      showtimeId,
+      seatId,
+      ticketPrice
+    );
+
+    const newTotal = await model.getBookingTotalPriceService(booking.booking_id);
+    await model.updateBookingTotalPriceService(booking.booking_id, newTotal);
+
+    return handleResponse(res, 201, "Ticket reserved successfully", { 
+      booking_id: booking.booking_id, 
+      ticket: ticket, 
+      booking_total: newTotal 
+    });
+
+  }catch(error){
+    console.error("Error reserving ticket:", error);
+    return handleResponse(res, 500, "Error reserving ticket: " + error.message);
+  }
 };
 
-// Get all bookings for logged-in user
-export const getMyBookings = async (req, res, next) => {
-    const userId = req.user.id; // From auth middleware
-    try {
-        const bookings = await model.getBookingsByUserId(userId);
-        handleResponse(res, 200, "User bookings fetched successfully", bookings);
-    } catch (err) {
-        next(err);
-    }
-};
-
-// Create booking (basic)
-export const createBooking = async (req, res, next) => {
-    const userId = req.user.id; // From auth middleware
-    const { totalPrice } = req.body;
-    try {
-        if (!totalPrice) {
-            return handleResponse(res, 400, "Total price is required");
-        }
-        const booking = await model.createBooking(userId, totalPrice);
-        handleResponse(res, 201, "Booking created successfully", booking);
-    } catch (err) {
-        next(err);
-    }
-};
