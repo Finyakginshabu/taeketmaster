@@ -18,7 +18,6 @@ export default function EventCard({id, title, date, startDate, endDate, isAvaila
                 <img src={image}/>
                 <h2>{title}</h2>
                 <p>{date}</p>
-                {/* <Link to="/event" className={status.label}>{status.status}</Link> */}
                 <button onClick={() => navigate(`/event/${id}`)} className={status.label}>
                     {status.status}
                 </button>

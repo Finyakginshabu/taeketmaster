@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import CalendarPicker from '../../components/CalendarPicker';
+import { Calendar, GreenLogo } from '../../components/Icons';
 
-export default function RegisterPage({greenLogoUrl, calendarUrl}) {
+export default function RegisterPage() {
   const [username, setUsername]   = useState('');
   const [password, setPassword]   = useState('');
   const [firstName, setFirstName] = useState('');
@@ -48,7 +49,7 @@ export default function RegisterPage({greenLogoUrl, calendarUrl}) {
 
   return (
     <div className="auth-page">
-      <img className="sign-up-logo" src={greenLogoUrl}/>
+      <GreenLogo className="sign-up-logo" />
 
       <div className="auth-box wide">
         <h2 className="auth-title">Sign Up</h2>
@@ -120,12 +121,8 @@ export default function RegisterPage({greenLogoUrl, calendarUrl}) {
               <span style={{ flex: 1, color: dob ? 'inherit' : '#A0B08C' }}>
                 {dob ? formatDateTH(dob) : "DD/MM/YYYY"}
               </span>
-              <img
-                src={calendarUrl}
-                width="16" height="16"
-                onClick={() => setShowCalendar((v) => !v)}
-                style={{ cursor: 'pointer' }}
-              />
+              <Calendar width="16" height="16"
+                onClick={() => setShowCalendar((v) => !v)} style={{ cursor: 'pointer' }} />
             </div>
 
             {showCalendar && (

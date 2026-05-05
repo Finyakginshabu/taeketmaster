@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import EventCard from './EventCard';
-import NavBar from '../../components/NavBar';
+import EventCard from './EventCard.jsx';
+import NavBar from '../../components/NavBar.jsx';
 import { mockEvents } from "../../api/mockData.js";
 
-export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl}){
+export default function HomePage(){
 
     const [events, setEvents] = useState([]);
     const [hideSoldOut, setHideSoldOut] = useState(false);
@@ -30,9 +30,7 @@ export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, use
     }, []);
 
     return( <>
-            <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} 
-                    userUrl={userUrl} mapUrl={mapUrl} calendarUrl={calendarUrl} 
-                    searchUrl={searchUrl} />
+            <NavBar />
 
             <div className="wrapper">
                 <div className="filter">

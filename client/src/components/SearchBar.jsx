@@ -1,8 +1,9 @@
 import React, {useState, useRef, useEffect, useCon} from 'react';
 import {provinces, days, months} from "../utils.js";
 import CalendarPicker from "./CalendarPicker.jsx";
+import { MapPin, Calendar, Search } from '../components/Icons.jsx';
 
-export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
+export default function SearchBar(){
     const [province, setProvince] = useState("");
     const [date, setDate] = useState(null);
     const [search, setSearch] = useState("");
@@ -52,7 +53,7 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
             <div className="section" ref={provinceRef} style={{position: 'relative'}}>
                 <button className="section-btn" 
                     onClick={() => { setShowProvince((v) => !v); setShowCalendar(false); }}>
-                    <img style={{width:22}} src={mapUrl}/>
+                    <MapPin style={{width:22}} />
                     {province || "Province"}
                 </button>
 
@@ -80,7 +81,7 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
                 <button className="section-btn" onClick={() => {
                     setShowCalendar((v) => !v);
                     setShowProvince(false);}}>
-                    <img style={{width:24}} src={calendarUrl} />
+                    <Calendar style={{width:24}} />
                     <span>
                     {formatDate(date) || "Dates"}
                     </span>
@@ -103,7 +104,7 @@ export default function SearchBar({mapUrl, calendarUrl, searchUrl}){
 
             <div className="divider" />
             
-            <img style={{width:24}} src={searchUrl} />
+            <Search style={{width:24}} />
             <input placeholder="Search Artist, Event..."
                 onChange={(e) => onSearch(e.target.value)}
                 className="search-input" />

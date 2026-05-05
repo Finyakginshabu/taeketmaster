@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { GreenLogo } from '../../components/Icons';
 
 export default function OtpPage({greenLogoUrl}) {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function OtpPage({greenLogoUrl}) {
   return (
     <div className="auth-page">
       {/* แก้โลโก้ให้ตรงกับหน้าอื่น */}
-      <img className="sign-up-logo" src={greenLogoUrl} />
+      <GreenLogo className="sign-up-logo" />
 
       <div className="auth-box">
         <h2 className="auth-title">Verify Code</h2>

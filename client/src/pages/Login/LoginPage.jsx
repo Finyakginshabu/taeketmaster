@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { GreenLogo } from '../../components/Icons';
 
-export default function LoginPage({greenLogoUrl}) {
+export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +19,7 @@ export default function LoginPage({greenLogoUrl}) {
 
   return (
     <div className="auth-page">
-      <img className="sign-up-logo" src={greenLogoUrl}/>
+      <GreenLogo className="sign-up-logo" />
 
       <div className="auth-box">
         <h2 className="auth-title">Sign In</h2>
