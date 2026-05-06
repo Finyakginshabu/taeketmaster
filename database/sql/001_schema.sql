@@ -79,8 +79,8 @@ create table if not exists zones(
   zone_id serial primary key,
   venue_id int not null references venues(venue_id) on delete cascade,
   zone_name varchar(50) not null,
-  img_path VARCHAR(255),
-  color CHAR(7) CHECK (color ~ '^#[A-Fa-f0-9]{6}$'),
+  img_path varchar(255),
+  color char(7) check (color ~ '^#[A-Fa-f0-9]{6}$'),
   x_pos int,
   y_pos int
 );
@@ -103,7 +103,7 @@ create index if not exists idx_seats_zone_id on seats(zone_id);
 create table if not exists events(
   event_id serial primary key,
   title varchar(255) not null,
-  img_path VARCHAR(255),
+  img_path varchar(255),
   description text,
   event_status event_status not null default 'draft',
   sales_started_at timestamp not null,

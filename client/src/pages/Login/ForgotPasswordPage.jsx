@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
+import { GreenLogo } from '../../components/Icons';
 
 // 1. สร้าง Zod Schema กำหนดกฎของข้อมูล
 const forgotPasswordSchema = z.object({
@@ -9,7 +10,7 @@ const forgotPasswordSchema = z.object({
                     .email({ message: "Please enter your correct email" }),
 });
 
-export default function ForgotPasswordPage({greenLogoUrl}){
+export default function ForgotPasswordPage() {
   const navigate = useNavigate();
 
   // 2. เรียกใช้ React Hook Form คู่กับ Zod
@@ -32,7 +33,7 @@ export default function ForgotPasswordPage({greenLogoUrl}){
 
   return (
     <div className="auth-page">
-      <img className="sign-up-logo"src={greenLogoUrl} />
+      <GreenLogo className="sign-up-logo" />
 
       <div className="auth-box">
         <h2 className="auth-title">Forgot password</h2>

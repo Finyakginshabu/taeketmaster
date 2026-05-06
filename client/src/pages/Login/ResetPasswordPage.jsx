@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { GreenLogo } from '../../components/Icons';
 
 // 1. สร้าง Zod Schema: บังคับรหัส 8 ตัว และเช็คว่า 2 ช่องพิมพ์ตรงกันไหม
 const resetPasswordSchema = z.object({
@@ -13,7 +14,7 @@ const resetPasswordSchema = z.object({
   path: ["confirmPassword"], 
 });
 
-export default function ResetPasswordPage({greenLogoUrl}){
+export default function ResetPasswordPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -36,7 +37,7 @@ export default function ResetPasswordPage({greenLogoUrl}){
 
   return (
     <div className="auth-page">
-      <img className="sign-up-logo"src={greenLogoUrl} />
+      <GreenLogo className="sign-up-logo" />
 
       <div className="auth-box">
         <h2 className="auth-title">New Password</h2>

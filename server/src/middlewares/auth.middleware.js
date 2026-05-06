@@ -20,3 +20,22 @@ export const verifyToken = (req, res, next) => {
         return handleResponse(res, 403, "Invalid or expired token.");
     }
 };
+
+export const verifyAdmin = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token){
+        return handleResponse(res, 401, "Access denied. No token provided."); 
+    }
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        
+        if(decoded.role !== 'admin'){
+            return handleResponse(res, 403, "Access denied. Only Admin lol.");
+        }
+        next();
+    }catch(err){
+        return handleResponse(res, 403, "Invalid or expired token.");
+    }
+};

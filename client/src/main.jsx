@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+/* UserPage */
 import LoginPage from './pages/Login/LoginPage'; 
 import RegisterPage from './pages/Login/RegisterPage';
 import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
@@ -10,41 +13,83 @@ import ResetPasswordPage from './pages/Login/ResetPasswordPage';
 import HomePage from './pages/Home/HomePage';
 import EventPage from './pages/Event/EventPage';
 import ConcertPlan from './pages/Booking/ConcertPlan';
+
+/* AdminPage */
+import DashBoardPage from './pages/DashBoard/DashBoardPage.jsx';
+import TablePage from './pages/Tables/AdminTablesPage.jsx';
 import './index.css';
 
 // image URL
-import greenLogoUrl from "./assets/LogoGreen.svg";
-import calendarUrl from "./assets/Calendar.svg";
-import whiteLogoUrl from "./assets/LogoWhite.svg";
-import homeUrl from "./assets/Home.svg";
-import posterUrl from "./assets/Poster.png";
-import cartUrl from "./assets/ShoppingCart.svg";
-import userUrl from "./assets/User.svg";
-import mapUrl from "./assets/MapPin.svg";
-import searchUrl from "./assets/Search.svg";
-import priceUrl from "./assets/Price.svg";
-import saleUrl from "./assets/Sale.svg";
-import downUrl from "./assets/ChevronDown.svg";
+import { GreenLogo, HomeGreen, Table, Report, User, LogOut } from './components/Icons.jsx';
+
+function Sidebar() {
+
+  const getNavClass = ({ isActive }) => isActive ? "nav-item active" : "nav-item";
+
+  return (
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        <GreenLogo />
+      </div>
+      <nav className="sidebar-nav">
+        <NavLink to="/dashboard" className={getNavClass}>
+          <span className="nav-icon-box">
+            <HomeGreen size={20} />
+          </span>
+          <span className="nav-label">DashBoard</span>
+        </NavLink>
+
+        <NavLink to="/tables" className={getNavClass}>
+          <span className="nav-icon-box">
+            <Table size={20} />
+          </span>
+          <span className="nav-label">Tables</span>
+        </NavLink>
+
+        <div className="nav-group">
+        <NavLink to="/reports" className={getNavClass}>
+          <span className="nav-icon-box">
+            <Report size={20} />
+          </span>
+          <span className="nav-label">Reports</span>
+        </NavLink>
+        <hr className="nav-separator" />
+      </div>
+
+        <NavLink to="/account" className={getNavClass}>
+          <span className="nav-icon-box">
+            <User size={20} />
+          </span>
+          <span className="nav-label">Account</span>
+        </NavLink>
+
+        <NavLink to="/signin" className={({ isActive }) => isActive ? "nav-item active logout" : "nav-item logout"}>
+          <span className="nav-icon-box logout-icon-box">
+            <LogOut size={20} />
+          </span>
+          <span className="nav-label logout-icon-box">Log out</span>
+        </NavLink>
+      </nav>
+    </aside>
+  );
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} 
-                                  cartUrl={cartUrl} userUrl={userUrl} mapUrl={mapUrl}
-                                  calendarUrl={calendarUrl} searchUrl={searchUrl}/>} />
-        <Route path="/signin" element={<LoginPage greenLogoUrl={greenLogoUrl} />} />
-        <Route path="/signup" element={<RegisterPage greenLogoUrl={greenLogoUrl} calendarUrl={calendarUrl}/>} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage greenLogoUrl={greenLogoUrl}/>} />
-        <Route path="/otp" element={<OtpPage greenLogoUrl={greenLogoUrl}/>} />
-        <Route path="/reset-password" element={<ResetPasswordPage greenLogoUrl={greenLogoUrl}/>} />
-        <Route path="/event/:id" element={<EventPage whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} 
-                                  cartUrl={cartUrl} userUrl={userUrl} mapUrl={mapUrl}
-                                  calendarUrl={calendarUrl} searchUrl={searchUrl}
-                                  priceUrl={priceUrl} saleUrl={saleUrl}/>} />
-        <Route path="/event-booking/:id" element={<ConcertPlan whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl}
-                                  cartUrl={cartUrl} userUrl={userUrl} mapUrl={mapUrl}
-                                  calendarUrl={calendarUrl} searchUrl={searchUrl} downUrl={downUrl}/>} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/signin" element={<LoginPage />} />
+        <Route path="/signup" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/otp" element={<OtpPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/event/:id" element={<EventPage />} />
+        <Route path="/event-booking/:id" element={<ConcertPlan />} />
+        
+        <Route path="/dashboard" element={<Sidebar><DashBoardPage /></Sidebar>} />
+        <Route path="/tables" element={<Sidebar><TablePage /></Sidebar>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

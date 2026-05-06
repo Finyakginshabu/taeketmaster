@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
-import { getStatus } from '../Home/EventCard';
+import NavBar from '../../components/NavBar.jsx';
+import { getStatus } from '../Home/EventCard.jsx';
 import { mockEvents } from "../../api/mockData.js";
+import { Calendar, MapPin, Price, Sale } from '../../components/Icons.jsx';
 
-function eventStatus(startDate, endDate, isAvailable){
-        if(!isAvailable) return { status: "SOLD OUT", label: "sold-out-sale" };
+function eventStatus(startDate, endDate, isAvailable) {
+        if (!isAvailable) return { status: "SOLD OUT", label: "sold-out-sale" };
 
         const today = new Date();
-        if(today < new Date(startDate)) return { status: "COMING SOON", label: "coming-soon-sale" };
+        if (today < new Date(startDate)) return { status: "COMING SOON", label: "coming-soon-sale" };
         return { status: "ON SALE NOW", label: "buy-now-sale" };
     }
 
-export default function EventPage({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl,
-                                    priceUrl, saleUrl}){
+export default function EventPage(){
     
     const {id} = useParams();
     const navigate = useNavigate();
@@ -21,18 +21,16 @@ export default function EventPage({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapU
 
     useEffect(() => {
         const found = mockEvents.find(e => e.id === Number(id));
-        if(found) setEvent(found);
+        if (found) setEvent(found);
     }, [id]);
 
-    if(!event) return null;
+    if (!event) return null;
 
     const status = getStatus(event.startDate, event.endDate, event.isAvailable);
     const saleStatus = eventStatus(event.startDate, event.endDate, event.isAvailable);
 
     return( <>
-            <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} 
-                                userUrl={userUrl} mapUrl={mapUrl} calendarUrl={calendarUrl} 
-                                searchUrl={searchUrl} />
+            <NavBar />
 
             <div className="event-wrapper">
                 <div className="event-container">
@@ -44,7 +42,7 @@ export default function EventPage({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapU
                             <div className="detail-cell">
                                 <p className="detail-label">Show Date</p>
                                 <div className="details">
-                                    <img style={{width:24}} src={calendarUrl}/>
+                                    <Calendar style={{width: 24, stroke: 'black'}}/>
                                     <span>{event.showDate}</span>
                                 </div>
                             </div>
@@ -52,7 +50,7 @@ export default function EventPage({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapU
                             <div className="detail-cell">
                                 <p className="detail-label">Public Sale</p>
                                 <div className="details">
-                                    <img style={{width:24}} src={saleUrl}/>
+                                    <Sale style={{width:24}} />
                                     <span>{event.startDate}</span>
                                 </div>
                             </div>
@@ -60,7 +58,7 @@ export default function EventPage({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapU
                             <div className="detail-cell">
                                 <p className="detail-label">Venue</p>
                                 <div className="details">
-                                    <img style={{width:24}} src={mapUrl}/>
+                                    <MapPin style={{width:24, stroke: 'black'}} />
                                     <span>{event.province}</span>
                                 </div>
                             </div>
@@ -68,7 +66,7 @@ export default function EventPage({whiteLogoUrl, homeUrl, cartUrl, userUrl, mapU
                             <div className="detail-cell">
                                 <p className="detail-label">Ticket Price</p>
                                 <div className="details">
-                                    <img style={{width:24}} src={priceUrl}/>
+                                    <Price style={{width:24}} />
                                     <span>Zone A 6,000 / Zone B 2,500 / 1,000 / 500 THB</span>
                                 </div>
                             </div>

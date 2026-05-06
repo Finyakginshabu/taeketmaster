@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export function getStatus(startDate, endDate, isAvailable){
-        if(!isAvailable) return { status: "Sold Out", label: "sold-out-btn" };
+export function getStatus(startDate, endDate, isAvailable) {
+        if (!isAvailable) return { status: "Sold Out", label: "sold-out-btn" };
 
         const today = new Date();
-        if(today < new Date(startDate)) return { status: "Coming Soon", label: "coming-soon-btn" };
+        if (today < new Date(startDate)) return { status: "Coming Soon", label: "coming-soon-btn" };
         return { status: "Buy Now", label: "buy-now-btn" };
     }
 
@@ -18,7 +18,6 @@ export default function EventCard({id, title, date, startDate, endDate, isAvaila
                 <img src={image}/>
                 <h2>{title}</h2>
                 <p>{date}</p>
-                {/* <Link to="/event" className={status.label}>{status.status}</Link> */}
                 <button onClick={() => navigate(`/event/${id}`)} className={status.label}>
                     {status.status}
                 </button>
