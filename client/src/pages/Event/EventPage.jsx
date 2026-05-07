@@ -11,7 +11,7 @@ function eventStatus(startDate, endDate, isAvailable) {
         const today = new Date();
         if (today < new Date(startDate)) return { status: "COMING SOON", label: "coming-soon-sale" };
         return { status: "ON SALE NOW", label: "buy-now-sale" };
-    }
+}
 
 export default function EventPage(){
     

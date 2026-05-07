@@ -1,4 +1,4 @@
-export default function AllTablePage(){
+export default function AccountPage(){
     return( <div>
 
             </div>

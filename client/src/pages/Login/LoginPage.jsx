@@ -58,8 +58,9 @@ export default function LoginPage() {
             <Link to="/forgot-password" style={{ fontSize: '12px', color: '#4A5D23', textDecoration: 'none' }}>Forgot your password?</Link>
           </div>
         </div>
-
-        <button className="auth-btn" onClick={handleSubmit}>SIGN IN</button>
+        <Link to="/home" style={{textDecoration: 'none'}}>
+          <button className="auth-btn" onClick={handleSubmit}>SIGN IN</button>
+        </Link>
 
         <div className="auth-links">
           <Link to="/signup">Create new account</Link>

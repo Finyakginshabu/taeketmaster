@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-do
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-/* UserPage */
+// UserPage
 import LoginPage from './pages/Login/LoginPage'; 
 import RegisterPage from './pages/Login/RegisterPage';
 import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
@@ -14,13 +14,18 @@ import HomePage from './pages/Home/HomePage';
 import EventPage from './pages/Event/EventPage';
 import ConcertPlan from './pages/Booking/ConcertPlan';
 
-/* AdminPage */
+// AdminPage
 import DashBoardPage from './pages/DashBoard/DashBoardPage.jsx';
+import AllTablePage from './pages/Tables/AllTablesPage.jsx';
 import TablePage from './pages/Tables/AdminTablesPage.jsx';
+import UserDetailPage from './pages/Tables/AdminUserDetailsPage.jsx';
+import AccountPage from './pages/Account/AccountPage.jsx';
+import ComparisonPage from './pages/Comparison/ComparisonPage.jsx';
+
 import './index.css';
 
 // image URL
-import { GreenLogo, HomeGreen, Table, Report, User, LogOut } from './components/Icons.jsx';
+import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison } from './components/Icons.jsx';
 
 function Sidebar() {
 
@@ -33,23 +38,31 @@ function Sidebar() {
       </div>
       <nav className="sidebar-nav">
         <NavLink to="/dashboard" className={getNavClass}>
-          <span className="nav-icon-box">
-            <HomeGreen size={20} />
-          </span>
-          <span className="nav-label">DashBoard</span>
+        {({ isActive }) => (
+          <>
+            <span className="nav-icon-box">
+              {isActive ? <HomeGreen width={24} /> : <HomeWhite width={24} />}
+            </span>
+            <span className="nav-label">DashBoard</span>
+          </>
+        )}
         </NavLink>
 
         <NavLink to="/tables" className={getNavClass}>
+        {({ isActive }) => (
+          <>
           <span className="nav-icon-box">
-            <Table size={20} />
+            {isActive ? <TableGreen width={24} /> : <Table width={24} /> }
           </span>
           <span className="nav-label">Tables</span>
+          </>
+        )}
         </NavLink>
 
         <div className="nav-group">
         <NavLink to="/reports" className={getNavClass}>
           <span className="nav-icon-box">
-            <Report size={20} />
+            <Report width={24} />
           </span>
           <span className="nav-label">Reports</span>
         </NavLink>
@@ -57,15 +70,19 @@ function Sidebar() {
       </div>
 
         <NavLink to="/account" className={getNavClass}>
+        {({ isActive }) => (
+          <>
           <span className="nav-icon-box">
-            <User size={20} />
+            {isActive ? <UserGreen width={24} /> : <User width={24} /> }
           </span>
           <span className="nav-label">Account</span>
+          </>
+        )}
         </NavLink>
 
         <NavLink to="/signin" className={({ isActive }) => isActive ? "nav-item active logout" : "nav-item logout"}>
           <span className="nav-icon-box logout-icon-box">
-            <LogOut size={20} />
+            <LogOut width={24} />
           </span>
           <span className="nav-label logout-icon-box">Log out</span>
         </NavLink>
@@ -74,11 +91,22 @@ function Sidebar() {
   );
 }
 
+function Layout({ children }) {
+  return( 
+      <div className="app-layout">
+        <Sidebar />
+        <main className="main-wrapper">
+          {children}
+        </main>
+      </div>
+      );
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/signin" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -88,8 +116,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/event-booking/:id" element={<ConcertPlan />} />
         
-        <Route path="/dashboard" element={<Sidebar><DashBoardPage /></Sidebar>} />
-        <Route path="/tables" element={<Sidebar><TablePage /></Sidebar>} />
+        <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
+        <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
+        <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
+        <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
+        <Route path="/account" element={<Layout><AccountPage /></Layout>} />
+        <Route path="/comparison" element={<Layout><ComparisonPage /></Layout>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

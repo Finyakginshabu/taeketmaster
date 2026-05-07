@@ -3,7 +3,7 @@ import SearchBar from './SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import { WhiteLogo, HomeWhite, Cart, User, MapPin, Calendar, Search } from './Icons.jsx';
 
-export default function NavBar({ user = { username: "Sign in" }, cartStartTime}){
+export default function NavBar({ user, cartStartTime}){
 
     const [timeLeft, setTimeLeft] = useState(null);
 
