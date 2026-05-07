@@ -16,6 +16,7 @@ export default function Navbar() {
         
         <div className="navbar-menu">
           <div className="nav-actions">
+            <Link to="/admin" className="nav-link">Admin</Link>
             <Link to="/cart" className="cart-icon">
               🛒 ตะกร้า
               {ticketAmount > 0 && <span className="cart-badge">{ticketAmount}</span>}
@@ -28,6 +29,7 @@ export default function Navbar() {
                 </button>
                 <div className="dropdown-content">
                   <Link to="/profile">ข้อมูลส่วนตัว</Link>
+                  <Link to="/admin">Admin Panel</Link>
                   <button onClick={logout}>ออกจากระบบ</button>
                 </div>
               </div>

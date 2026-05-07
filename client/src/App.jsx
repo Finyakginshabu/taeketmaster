@@ -16,6 +16,12 @@ import CartPage from './pages/user/CartPage';
 import PaymentPage from './pages/user/PaymentPage';
 import ProfilePage from './pages/user/ProfilePage';
 
+// Admin pages
+import AdminLayout from './pages/admin/AdminLayout';
+import Comparison from './pages/admin/Comparison';
+import Tables from './pages/admin/Tables';
+import EventForm from './pages/admin/EventForm';
+
 import './styles/global.css';
 import './styles/components.css';
 
@@ -25,6 +31,29 @@ function ProtectedRoute({ children }) {
 }
 
 function AppRoutes() {
+  return (
+    <>
+      <Routes>
+        {/* ---------- Admin Area ---------- */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="dashboard/comparison" replace />} />
+          <Route path="dashboard" element={<Navigate to="comparison" replace />} />
+          <Route path="dashboard/comparison" element={<Comparison />} />
+          <Route path="tables/events/add" element={<EventForm />} />
+          <Route path="tables/events/edit" element={<EventForm />} />
+          <Route path="tables" element={<Tables />} />
+          <Route path="reports" element={<div style={{ color: '#1E1E1E' }}>Reports page — coming soon</div>} />
+          <Route path="account" element={<div style={{ color: '#1E1E1E' }}>Account page — coming soon</div>} />
+        </Route>
+
+        {/* ---------- User Area ---------- */}
+        <Route path="/*" element={<UserRoutes />} />
+      </Routes>
+    </>
+  );
+}
+
+function UserRoutes() {
   return (
     <>
       <Navbar />
