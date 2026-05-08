@@ -13,7 +13,11 @@ export default function ConcertPlan({whiteLogoUrl, homeUrl, cartUrl, userUrl, ma
 
     useEffect(() => {
         const handleClickOutside = (e) => {
+<<<<<<< HEAD
         if (ref.current && !ref.current.contains(e.target)) {
+=======
+        if(ref.current && !ref.current.contains(e.target)){
+>>>>>>> abe4b13af3510960eb53516038e923370c0abc5b
             setIsOpen(false);
         }
         };
@@ -23,18 +27,30 @@ export default function ConcertPlan({whiteLogoUrl, homeUrl, cartUrl, userUrl, ma
 
     useEffect(() => {
             const found = mockEvents.find(e => e.id === Number(id));
+<<<<<<< HEAD
             if (found) {
+=======
+            if(found){
+>>>>>>> abe4b13af3510960eb53516038e923370c0abc5b
                 setEvent(found);
                 setSelected(found.showDate[0]);
             }
     }, [id]);
 
+<<<<<<< HEAD
     function handleSelect(option) {
+=======
+    function handleSelect(option){
+>>>>>>> abe4b13af3510960eb53516038e923370c0abc5b
         setSelected(option);
         setIsOpen(false);
     };
     
+<<<<<<< HEAD
     if (!event) return null;
+=======
+    if(!event) return null;
+>>>>>>> abe4b13af3510960eb53516038e923370c0abc5b
 
     return( <>
             <NavBar whiteLogoUrl={whiteLogoUrl} homeUrl={homeUrl} cartUrl={cartUrl} 
