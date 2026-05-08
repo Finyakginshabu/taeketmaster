@@ -73,7 +73,7 @@ function UserRoutes() {
         <Route path="/cart" element={<CartPage />} />
 
         {/* Protected */}
-        <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       </Route>
 
