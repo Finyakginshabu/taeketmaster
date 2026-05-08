@@ -48,14 +48,14 @@ export default function SeatBookingPage() {
   const totalPrice = selectedSeats.length * pricePerSeat;
 
   return (
-    <div className="sbp-root">
+    <div className="sbp-root" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh', backgroundColor: '#F4F5F0' }}>
       <div className="sbp-title-container">
         <h1 className="sbp-title">
           Zone {zoneId || 'A1'} - Select Your Seat
         </h1>
       </div>
 
-      <div className="sbp-content" style={{ display: 'flex', justifyContent: 'center', margin: '0 auto', maxWidth: '1200px', gap: '40px' }}>
+      <div className="sbp-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '40px', width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
         
         {/* Left: Seat Grid */}
         <div className="sbp-grid-container">
@@ -183,8 +183,8 @@ export default function SeatBookingPage() {
             <button 
               className="sbp-btn reserve"
               disabled={selectedSeats.length === 0}
-              onClick={() => navigate('/cart')}
-              style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/admin/dashboard')}
+              style={{ cursor: selectedSeats.length === 0 ? 'not-allowed' : 'pointer' }}
             >
               Reserve
             </button>
