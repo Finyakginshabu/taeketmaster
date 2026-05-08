@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, Image as ImageIcon, X } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 
 export default function ConcertDetailPage() {
   const navigate = useNavigate();
@@ -166,7 +166,11 @@ export default function ConcertDetailPage() {
           <div className="bg-[#EAEBDB] rounded-2xl p-6 flex flex-col items-center">
             {/* Image Placeholder */}
             <div className="w-24 h-24 bg-[#F2F2E9] border-2 border-[#D1D5DB] border-dashed rounded-xl flex items-center justify-center mb-6">
-              <ImageIcon className="w-10 h-10 text-gray-400" />
+              <svg className="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
             </div>
 
             <div className="text-sm font-bold tracking-widest text-gray-800 mb-6">
