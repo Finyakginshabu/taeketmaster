@@ -1,0 +1,311 @@
+.cdp-root {
+  min-height: 100vh;
+  background-color: #F9F9F4;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 64px;
+}
+
+.cdp-title-container {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 32px 0 24px;
+  text-align: center;
+}
+
+.cdp-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.cdp-content {
+  max-width: 1152px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  padding: 0 16px;
+}
+@media (min-width: 768px) {
+  .cdp-content { flex-direction: row; }
+}
+
+/* Left: Map */
+.cdp-map {
+  background-color: #EAEBDB;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 32px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  width: 732px;
+  height: 732px;
+  box-sizing: border-box;
+}
+
+.cdp-stage {
+  background-color: #000;
+  color: #fff;
+  width: 384px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  position: relative;
+  margin-bottom: 48px;
+}
+.cdp-stage::before, .cdp-stage::after {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: #000;
+  top: 24px;
+}
+.cdp-stage::before { left: -32px; }
+.cdp-stage::after { right: -32px; }
+
+.cdp-zones-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.cdp-zone-btn {
+  width: 224px;
+  height: 160px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.cdp-zone-btn:hover { transform: scale(1.05); }
+
+.cdp-zone-a { background-color: #E8B98B; }
+.cdp-zone-b { background-color: #C46A3D; }
+
+.cdp-zone-a1 { clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%, 0 20%); }
+.cdp-zone-a2 { clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 0 100%); }
+
+.cdp-foh {
+  background-color: #D1D5DB;
+  width: 128px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4b5563;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+/* Right: Controls */
+.cdp-controls {
+  display: flex;
+  flex-direction: column;
+  width: 288px;
+  position: relative;
+}
+
+.cdp-controls-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.cdp-showtimes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.cdp-showtime-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.cdp-showtime-btn.active {
+  background-color: #6B7E54;
+  color: #fff;
+}
+.cdp-showtime-btn.inactive {
+  background-color: #EAEBDB;
+  color: #4b5563;
+}
+.cdp-showtime-btn.inactive:hover { background-color: #d8d9c7; }
+
+/* Seat Available Modal */
+.cdp-seat-available-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.cdp-seat-available-btn {
+  background-color: #fff;
+  border: 2px solid #6B7E54;
+  color: #6B7E54;
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.cdp-seat-available-btn:hover { background-color: #f4f5f0; }
+
+.cdp-modal {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+  border: 1px solid #f3f4f6;
+  padding: 24px;
+  z-index: 10;
+}
+.cdp-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.cdp-modal-header h4 { margin: 0; font-weight: 700; color: #111827; }
+.cdp-modal-close { background: none; border: none; cursor: pointer; color: #9ca3af; }
+.cdp-modal-close:hover { color: #4b5563; }
+
+.cdp-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.cdp-modal-row {
+  display: flex;
+  font-size: 14px;
+  padding: 4px;
+}
+.cdp-modal-row.highlight { background-color: #f9fafb; border-radius: 4px; }
+.cdp-modal-row span:first-child { font-weight: 600; width: 64px; color: #374151; }
+.cdp-modal-row span:last-child { color: #4b5563; }
+
+.cdp-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.cdp-modal-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.cdp-modal-btn.close {
+  background: #fff; border: 1px solid #d1d5db; color: #4b5563;
+}
+.cdp-modal-btn.close:hover { background: #f9fafb; }
+.cdp-modal-btn.view {
+  background: #6B7E54; border: none; color: #fff;
+}
+.cdp-modal-btn.view:hover { background: #5a6d45; }
+
+.cdp-modal-arrow {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-left: 1px solid #f3f4f6;
+  border-top: 1px solid #f3f4f6;
+}
+
+/* Pricing Card */
+.cdp-pricing {
+  background-color: #EAEBDB;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cdp-pricing-icon {
+  width: 96px;
+  height: 96px;
+  background-color: #F2F2E9;
+  border: 2px dashed #D1D5DB;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.cdp-pricing-icon svg { width: 40px; height: 40px; color: #9ca3af; }
+
+.cdp-pricing-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #1f2937;
+  margin-bottom: 24px;
+}
+
+.cdp-pricing-legends {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cdp-pricing-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cdp-pricing-color {
+  width: 32px;
+  height: 24px;
+  border-radius: 4px;
+}
+.cdp-pricing-color.orange { background-color: #E8B98B; }
+.cdp-pricing-color.brown { background-color: #C46A3D; }
+.cdp-pricing-text {
+  font-weight: 700;
+  color: #1f2937;
+}
