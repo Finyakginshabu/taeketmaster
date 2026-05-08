@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 import './SeatBookingPage.css';
 
 export default function SeatBookingPage() {
   const { zoneId } = useParams();
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   // Mock data for seats (10 rows, 20 columns)
   const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -46,6 +48,22 @@ export default function SeatBookingPage() {
   const selectedSeats = Object.keys(seats).filter(id => seats[id] === 1);
   const pricePerSeat = zoneId?.startsWith('A') ? 5900 : 3500;
   const totalPrice = selectedSeats.length * pricePerSeat;
+
+  const handleReserve = () => {
+    selectedSeats.forEach(seatId => {
+      addItem({
+        showtime_id: 1, // Mock showtime
+        event_title: "Bodyslim The experience 1st Tour",
+        venue_name: "Impact Arena",
+        show_at: "2067-06-27T18:00:00",
+        seat_id: `${zoneId || 'A1'}-${seatId}`,
+        seat_number: seatId,
+        zone_name: zoneId || 'A1',
+        price: pricePerSeat
+      });
+    });
+    navigate('/cart');
+  };
 
   return (
     <div className="sbp-root" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh', backgroundColor: '#F4F5F0' }}>
@@ -183,7 +201,7 @@ export default function SeatBookingPage() {
             <button 
               className="sbp-btn reserve"
               disabled={selectedSeats.length === 0}
-              onClick={() => navigate('/cart')}
+              onClick={handleReserve}
               style={{ cursor: selectedSeats.length === 0 ? 'not-allowed' : 'pointer' }}
             >
               Reserve
