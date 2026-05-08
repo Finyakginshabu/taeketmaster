@@ -10,6 +10,7 @@ import homeRoutes from "./routes/home.routes.js"
 import eventDetailsRoutes from "./routes/eventDetail.routes.js"
 import bookingsRoutes from "./routes/bookings.routes.js"
 import tablesRoutes from "./routes/tables.routes.js"
+import dashboardRoutes from "./routes/dashboard.routes.js"
 import errorHandling from "./middlewares/errorHandler.js";
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use("/api", homeRoutes);
 app.use("/api", eventDetailsRoutes);
 app.use("/api", bookingsRoutes);
 app.use("/api/admin", tablesRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 app.use("/api", express.static('public'));
 
 // Error handling middleware

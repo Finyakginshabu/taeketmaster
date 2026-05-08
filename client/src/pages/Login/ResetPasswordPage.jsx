@@ -14,7 +14,7 @@ const resetPasswordSchema = z.object({
   path: ["confirmPassword"], 
 });
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordPage(){
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

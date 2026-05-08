@@ -5,11 +5,11 @@ import { getStatus } from '../Home/EventCard.jsx';
 import { mockEvents } from "../../api/mockData.js";
 import { Calendar, MapPin, Price, Sale } from '../../components/Icons.jsx';
 
-function eventStatus(startDate, endDate, isAvailable) {
-        if (!isAvailable) return { status: "SOLD OUT", label: "sold-out-sale" };
+function eventStatus(startDate, endDate, isAvailable){
+        if(!isAvailable) return { status: "SOLD OUT", label: "sold-out-sale" };
 
         const today = new Date();
-        if (today < new Date(startDate)) return { status: "COMING SOON", label: "coming-soon-sale" };
+        if(today < new Date(startDate)) return { status: "COMING SOON", label: "coming-soon-sale" };
         return { status: "ON SALE NOW", label: "buy-now-sale" };
     }
 
@@ -21,10 +21,10 @@ export default function EventPage(){
 
     useEffect(() => {
         const found = mockEvents.find(e => e.id === Number(id));
-        if (found) setEvent(found);
+        if(found) setEvent(found);
     }, [id]);
 
-    if (!event) return null;
+    if(!event) return null;
 
     const status = getStatus(event.startDate, event.endDate, event.isAvailable);
     const saleStatus = eventStatus(event.startDate, event.endDate, event.isAvailable);

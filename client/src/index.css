@@ -955,7 +955,7 @@ input::-ms-clear {
   width: 100%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px){
   .mobile-warning {
     display: flex;
   }

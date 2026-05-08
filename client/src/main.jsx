@@ -22,7 +22,7 @@ import './index.css';
 // image URL
 import { GreenLogo, HomeGreen, Table, Report, User, LogOut } from './components/Icons.jsx';
 
-function Sidebar() {
+function Sidebar(){
 
   const getNavClass = ({ isActive }) => isActive ? "nav-item active" : "nav-item";
 

@@ -15,9 +15,9 @@ export default function HomePage(){
 
     const filteredEvents = events.filter((event) => {
         const today = new Date();
-        if (today > new Date(event.endDate) && event.isAvailable) return false;
-        if (hideSoldOut && !event.isAvailable) return false;
-        if (hideComingSoon && today < new Date(event.startDate)) return false;
+        if(today > new Date(event.endDate) && event.isAvailable) return false;
+        if(hideSoldOut && !event.isAvailable) return false;
+        if(hideComingSoon && today < new Date(event.startDate)) return false;
 
         return true;
     });

@@ -9,7 +9,7 @@ export default function TableCard({ id }){
 
     // ยังไม่แก้จาก event เป็น table
     const filteredTables = events.filter((event) => {
-        if (manageable) return false; // เดี๋ยวมาแก้ คิดไม่ออก
+        if(manageable) return false; // เดี๋ยวมาแก้ คิดไม่ออก
 
         return true;
     });

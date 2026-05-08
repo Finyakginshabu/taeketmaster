@@ -1,3 +1,5 @@
+// Fin wrote to line 70, others are generated TT
+
 import * as model from "../models/tables.model.js";
 import { handleResponse } from "./auth.controller.js";
 
@@ -5,7 +7,7 @@ import { handleResponse } from "./auth.controller.js";
 export const getAllArtists = async (req, res, next) => {
     try{
         const artists = await model.getAllArtists();
-        handleResponse(res, 200, "Artists retrieved successfully", artists);
+        handleResponse(res, 200, "Artists fetched successfully", artists);
     }catch(err){
         next(err);
     }
@@ -15,10 +17,10 @@ export const getArtistById = async (req, res, next) => {
     try{
         const { artistId } = req.params;
         const artist = await model.getArtistById(artistId);
-        if (!artist) {
+        if(!artist){
             return handleResponse(res, 404, "Artist not found");
         }
-        handleResponse(res, 200, "Artist retrieved successfully", artist);
+        handleResponse(res, 200, "Artist fetched successfully", artist);
     }catch(err){
         next(err);
     }
@@ -27,7 +29,7 @@ export const getArtistById = async (req, res, next) => {
 export const createArtist = async (req, res, next) => {
     try{
         const { artist_name } = req.body;
-        if (!artist_name) {
+        if(!artist_name){
             return handleResponse(res, 400, "Artist name is required");
         }
         const artist = await model.createArtist(artist_name);
@@ -41,11 +43,11 @@ export const updateArtist = async (req, res, next) => {
     try{
         const { artistId } = req.params;
         const { artist_name } = req.body;
-        if (!artist_name) {
+        if(!artist_name){
             return handleResponse(res, 400, "Artist name is required");
         }
         const artist = await model.updateArtist(artistId, artist_name);
-        if (!artist) {
+        if(!artist){
             return handleResponse(res, 404, "Artist not found");
         }
         handleResponse(res, 200, "Artist updated successfully", artist);
@@ -58,7 +60,7 @@ export const deleteArtist = async (req, res, next) => {
     try{
         const { artistId } = req.params;
         const artist = await model.deleteArtist(artistId);
-        if (!artist) {
+        if(!artist){
             return handleResponse(res, 404, "Artist not found");
         }
         handleResponse(res, 200, "Artist deleted successfully", artist);
@@ -71,7 +73,7 @@ export const deleteArtist = async (req, res, next) => {
 export const getAllGenres = async (req, res, next) => {
     try{
         const genres = await model.getAllGenres();
-        handleResponse(res, 200, "Genres retrieved successfully", genres);
+        handleResponse(res, 200, "Genres fetched successfully", genres);
     }catch(err){
         next(err);
     }
@@ -81,10 +83,10 @@ export const getGenreById = async (req, res, next) => {
     try{
         const { genreId } = req.params;
         const genre = await model.getGenreById(genreId);
-        if (!genre) {
+        if(!genre){
             return handleResponse(res, 404, "Genre not found");
         }
-        handleResponse(res, 200, "Genre retrieved successfully", genre);
+        handleResponse(res, 200, "Genre fetched successfully", genre);
     }catch(err){
         next(err);
     }
@@ -93,7 +95,7 @@ export const getGenreById = async (req, res, next) => {
 export const createGenre = async (req, res, next) => {
     try{
         const { genre_name } = req.body;
-        if (!genre_name) {
+        if(!genre_name){
             return handleResponse(res, 400, "Genre name is required");
         }
         const genre = await model.createGenre(genre_name);
@@ -107,11 +109,11 @@ export const updateGenre = async (req, res, next) => {
     try{
         const { genreId } = req.params;
         const { genre_name } = req.body;
-        if (!genre_name) {
+        if(!genre_name){
             return handleResponse(res, 400, "Genre name is required");
         }
         const genre = await model.updateGenre(genreId, genre_name);
-        if (!genre) {
+        if(!genre){
             return handleResponse(res, 404, "Genre not found");
         }
         handleResponse(res, 200, "Genre updated successfully", genre);
@@ -124,7 +126,7 @@ export const deleteGenre = async (req, res, next) => {
     try{
         const { genreId } = req.params;
         const genre = await model.deleteGenre(genreId);
-        if (!genre) {
+        if(!genre){
             return handleResponse(res, 404, "Genre not found");
         }
         handleResponse(res, 200, "Genre deleted successfully", genre);
@@ -137,7 +139,7 @@ export const deleteGenre = async (req, res, next) => {
 export const getAllAgents = async (req, res, next) => {
     try{
         const agents = await model.getAllAgents();
-        handleResponse(res, 200, "Agents retrieved successfully", agents);
+        handleResponse(res, 200, "Agents fetched successfully", agents);
     }catch(err){
         next(err);
     }
@@ -147,10 +149,10 @@ export const getAgentById = async (req, res, next) => {
     try{
         const { agentId } = req.params;
         const agent = await model.getAgentById(agentId);
-        if (!agent) {
+        if(!agent){
             return handleResponse(res, 404, "Agent not found");
         }
-        handleResponse(res, 200, "Agent retrieved successfully", agent);
+        handleResponse(res, 200, "Agent fetched successfully", agent);
     }catch(err){
         next(err);
     }
@@ -159,7 +161,7 @@ export const getAgentById = async (req, res, next) => {
 export const createAgent = async (req, res, next) => {
     try{
         const { agent_name, email, phone } = req.body;
-        if (!agent_name) {
+        if(!agent_name){
             return handleResponse(res, 400, "Agent name is required");
         }
         const agent = await model.createAgent({ agent_name, email, phone });
@@ -173,11 +175,11 @@ export const updateAgent = async (req, res, next) => {
     try{
         const { agentId } = req.params;
         const { agent_name, email, phone } = req.body;
-        if (!agent_name) {
+        if(!agent_name){
             return handleResponse(res, 400, "Agent name is required");
         }
         const agent = await model.updateAgent(agentId, { agent_name, email, phone });
-        if (!agent) {
+        if(!agent){
             return handleResponse(res, 404, "Agent not found");
         }
         handleResponse(res, 200, "Agent updated successfully", agent);
@@ -190,7 +192,7 @@ export const deleteAgent = async (req, res, next) => {
     try{
         const { agentId } = req.params;
         const agent = await model.deleteAgent(agentId);
-        if (!agent) {
+        if(!agent){
             return handleResponse(res, 404, "Agent not found");
         }
         handleResponse(res, 200, "Agent deleted successfully", agent);
@@ -203,7 +205,7 @@ export const deleteAgent = async (req, res, next) => {
 export const getAllVenues = async (req, res, next) => {
     try{
         const venues = await model.getAllVenues();
-        handleResponse(res, 200, "Venues retrieved successfully", venues);
+        handleResponse(res, 200, "Venues fetched successfully", venues);
     }catch(err){
         next(err);
     }
@@ -213,10 +215,10 @@ export const getVenueById = async (req, res, next) => {
     try{
         const { venueId } = req.params;
         const venue = await model.getVenueById(venueId);
-        if (!venue) {
+        if(!venue){
             return handleResponse(res, 404, "Venue not found");
         }
-        handleResponse(res, 200, "Venue retrieved successfully", venue);
+        handleResponse(res, 200, "Venue fetched successfully", venue);
     }catch(err){
         next(err);
     }
@@ -225,7 +227,7 @@ export const getVenueById = async (req, res, next) => {
 export const createVenue = async (req, res, next) => {
     try{
         const { name, email, phone, seat_capacity, address, province, latitude, longitude } = req.body;
-        if (!name || !seat_capacity || !latitude || !longitude) {
+        if(!name || !seat_capacity || !latitude || !longitude){
             return handleResponse(res, 400, "Name, seat_capacity, latitude, and longitude are required");
         }
         const venue = await model.createVenue({
@@ -241,13 +243,13 @@ export const updateVenue = async (req, res, next) => {
     try{
         const { venueId } = req.params;
         const { name, email, phone, seat_capacity, address, province, latitude, longitude } = req.body;
-        if (!name || !seat_capacity || !latitude || !longitude) {
+        if(!name || !seat_capacity || !latitude || !longitude){
             return handleResponse(res, 400, "Name, seat_capacity, latitude, and longitude are required");
         }
         const venue = await model.updateVenue(venueId, {
             name, email, phone, seat_capacity, address, province, latitude, longitude
         });
-        if (!venue) {
+        if(!venue){
             return handleResponse(res, 404, "Venue not found");
         }
         handleResponse(res, 200, "Venue updated successfully", venue);
@@ -260,7 +262,7 @@ export const deleteVenue = async (req, res, next) => {
     try{
         const { venueId } = req.params;
         const venue = await model.deleteVenue(venueId);
-        if (!venue) {
+        if(!venue){
             return handleResponse(res, 404, "Venue not found");
         }
         handleResponse(res, 200, "Venue deleted successfully", venue);
@@ -274,7 +276,7 @@ export const getZonesByVenueId = async (req, res, next) => {
     try{
         const { venueId } = req.params;
         const zones = await model.getZonesByVenueId(venueId);
-        handleResponse(res, 200, "Zones retrieved successfully", zones);
+        handleResponse(res, 200, "Zones fetched successfully", zones);
     }catch(err){
         next(err);
     }
@@ -284,10 +286,10 @@ export const getZoneById = async (req, res, next) => {
     try{
         const { zoneId } = req.params;
         const zone = await model.getZoneById(zoneId);
-        if (!zone) {
+        if(!zone){
             return handleResponse(res, 404, "Zone not found");
         }
-        handleResponse(res, 200, "Zone retrieved successfully", zone);
+        handleResponse(res, 200, "Zone fetched successfully", zone);
     }catch(err){
         next(err);
     }
@@ -296,7 +298,7 @@ export const getZoneById = async (req, res, next) => {
 export const createZone = async (req, res, next) => {
     try{
         const { venue_id, zone_name, img_path, color, x_pos, y_pos } = req.body;
-        if (!venue_id || !zone_name) {
+        if(!venue_id || !zone_name){
             return handleResponse(res, 400, "Venue ID and zone name are required");
         }
         const zone = await model.createZone({ venue_id, zone_name, img_path, color, x_pos, y_pos });
@@ -310,11 +312,11 @@ export const updateZone = async (req, res, next) => {
     try{
         const { zoneId } = req.params;
         const { zone_name, img_path, color, x_pos, y_pos } = req.body;
-        if (!zone_name) {
+        if(!zone_name){
             return handleResponse(res, 400, "Zone name is required");
         }
         const zone = await model.updateZone(zoneId, { zone_name, img_path, color, x_pos, y_pos });
-        if (!zone) {
+        if(!zone){
             return handleResponse(res, 404, "Zone not found");
         }
         handleResponse(res, 200, "Zone updated successfully", zone);
@@ -327,7 +329,7 @@ export const deleteZone = async (req, res, next) => {
     try{
         const { zoneId } = req.params;
         const zone = await model.deleteZone(zoneId);
-        if (!zone) {
+        if(!zone){
             return handleResponse(res, 404, "Zone not found");
         }
         handleResponse(res, 200, "Zone deleted successfully", zone);
@@ -341,7 +343,7 @@ export const getSeatsByZoneId = async (req, res, next) => {
     try{
         const { zoneId } = req.params;
         const seats = await model.getSeatsByZoneId(zoneId);
-        handleResponse(res, 200, "Seats retrieved successfully", seats);
+        handleResponse(res, 200, "Seats fetched successfully", seats);
     }catch(err){
         next(err);
     }
@@ -351,10 +353,10 @@ export const getSeatById = async (req, res, next) => {
     try{
         const { seatId } = req.params;
         const seat = await model.getSeatById(seatId);
-        if (!seat) {
+        if(!seat){
             return handleResponse(res, 404, "Seat not found");
         }
-        handleResponse(res, 200, "Seat retrieved successfully", seat);
+        handleResponse(res, 200, "Seat fetched successfully", seat);
     }catch(err){
         next(err);
     }
@@ -363,7 +365,7 @@ export const getSeatById = async (req, res, next) => {
 export const createSeat = async (req, res, next) => {
     try{
         const { zone_id, number, diameter, x_pos, y_pos } = req.body;
-        if (!zone_id || !number) {
+        if(!zone_id || !number){
             return handleResponse(res, 400, "Zone ID and seat number are required");
         }
         const seat = await model.createSeat({ zone_id, number, diameter, x_pos, y_pos });
@@ -377,11 +379,11 @@ export const updateSeat = async (req, res, next) => {
     try{
         const { seatId } = req.params;
         const { number, diameter, x_pos, y_pos } = req.body;
-        if (!number) {
+        if(!number){
             return handleResponse(res, 400, "Seat number is required");
         }
         const seat = await model.updateSeat(seatId, { number, diameter, x_pos, y_pos });
-        if (!seat) {
+        if(!seat){
             return handleResponse(res, 404, "Seat not found");
         }
         handleResponse(res, 200, "Seat updated successfully", seat);
@@ -394,7 +396,7 @@ export const deleteSeat = async (req, res, next) => {
     try{
         const { seatId } = req.params;
         const seat = await model.deleteSeat(seatId);
-        if (!seat) {
+        if(!seat){
             return handleResponse(res, 404, "Seat not found");
         }
         handleResponse(res, 200, "Seat deleted successfully", seat);
@@ -407,7 +409,7 @@ export const deleteSeat = async (req, res, next) => {
 export const viewUsers = async (req, res, next) => {
     try{
         const users = await model.viewUsers();
-        handleResponse(res, 200, "Users retrieved successfully (view only)", users);
+        handleResponse(res, 200, "Users fetched successfully (view only)", users);
     }catch(err){
         next(err);
     }
@@ -417,10 +419,10 @@ export const viewUserById = async (req, res, next) => {
     try{
         const { userId } = req.params;
         const user = await model.viewUserById(userId);
-        if (!user) {
+        if(!user){
             return handleResponse(res, 404, "User not found");
         }
-        handleResponse(res, 200, "User retrieved successfully (view only)", user);
+        handleResponse(res, 200, "User fetched successfully (view only)", user);
     }catch(err){
         next(err);
     }
@@ -430,7 +432,7 @@ export const viewUserById = async (req, res, next) => {
 export const viewBookings = async (req, res, next) => {
     try{
         const bookings = await model.viewBookings();
-        handleResponse(res, 200, "Bookings retrieved successfully (view only)", bookings);
+        handleResponse(res, 200, "Bookings fetched successfully (view only)", bookings);
     }catch(err){
         next(err);
     }
@@ -440,10 +442,10 @@ export const viewBookingById = async (req, res, next) => {
     try{
         const { bookingId } = req.params;
         const booking = await model.viewBookingById(bookingId);
-        if (!booking) {
+        if(!booking){
             return handleResponse(res, 404, "Booking not found");
         }
-        handleResponse(res, 200, "Booking retrieved successfully (view only)", booking);
+        handleResponse(res, 200, "Booking fetched successfully (view only)", booking);
     }catch(err){
         next(err);
     }
@@ -453,7 +455,7 @@ export const viewTicketsByBooking = async (req, res, next) => {
     try{
         const { bookingId } = req.params;
         const tickets = await model.viewTicketsByBooking(bookingId);
-        handleResponse(res, 200, "Tickets for booking retrieved successfully (view only)", tickets);
+        handleResponse(res, 200, "Tickets for booking fetched successfully (view only)", tickets);
     }catch(err){
         next(err);
     }
@@ -463,7 +465,7 @@ export const viewTicketsByBooking = async (req, res, next) => {
 export const viewPayments = async (req, res, next) => {
     try{
         const payments = await model.viewPayments();
-        handleResponse(res, 200, "Payments retrieved successfully (view only)", payments);
+        handleResponse(res, 200, "Payments fetched successfully (view only)", payments);
     }catch(err){
         next(err);
     }
@@ -473,10 +475,10 @@ export const viewPaymentById = async (req, res, next) => {
     try{
         const { paymentId } = req.params;
         const payment = await model.viewPaymentById(paymentId);
-        if (!payment) {
+        if(!payment){
             return handleResponse(res, 404, "Payment not found");
         }
-        handleResponse(res, 200, "Payment retrieved successfully (view only)", payment);
+        handleResponse(res, 200, "Payment fetched successfully (view only)", payment);
     }catch(err){
         next(err);
     }
@@ -486,7 +488,7 @@ export const viewPaymentById = async (req, res, next) => {
 export const viewTickets = async (req, res, next) => {
     try{
         const tickets = await model.viewTickets();
-        handleResponse(res, 200, "Tickets retrieved successfully (view only)", tickets);
+        handleResponse(res, 200, "Tickets fetched successfully (view only)", tickets);
     }catch(err){
         next(err);
     }
@@ -496,10 +498,10 @@ export const viewTicketById = async (req, res, next) => {
     try{
         const { ticketId } = req.params;
         const ticket = await model.viewTicketById(ticketId);
-        if (!ticket) {
+        if(!ticket){
             return handleResponse(res, 404, "Ticket not found");
         }
-        handleResponse(res, 200, "Ticket retrieved successfully (view only)", ticket);
+        handleResponse(res, 200, "Ticket fetched successfully (view only)", ticket);
     }catch(err){
         next(err);
     }

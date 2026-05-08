@@ -8,7 +8,7 @@ export default function NavBar({ user = { username: "Sign in" }, cartStartTime})
     const [timeLeft, setTimeLeft] = useState(null);
 
     useEffect(() => {
-        if (!cartStartTime) {
+        if(!cartStartTime){
             setTimeLeft(null);
             return;
         }
@@ -17,7 +17,7 @@ export default function NavBar({ user = { username: "Sign in" }, cartStartTime})
             const now = new Date().getTime();
             const distance = (cartStartTime + 15 * 60 * 1000) - now;
 
-            if (distance <= 0) {
+            if(distance <= 0){
                 clearInterval(interval);
                 setTimeLeft("00:00");
             } else {

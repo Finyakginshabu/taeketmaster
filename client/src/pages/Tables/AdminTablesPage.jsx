@@ -53,9 +53,9 @@ const AdminTablesPage = () => {
   };
 
   const handleDeleteEvent = (id) => {
-    if (window.confirm('Are you sure you want to delete this event?')) {
+    if(window.confirm('Are you sure you want to delete this event?')){
       setEvents(events.filter(e => e.id !== id));
-      if (editingEventId === id) {
+      if(editingEventId === id){
         setEditingEventId(null);
       }
     }
