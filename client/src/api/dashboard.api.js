@@ -36,7 +36,7 @@ export async function getTopTicketSpenders(){
   return res.data;
 }
 
-// Monthly Revenue (current year)
+// Monthly Revenue (this year)
 export async function getMonthlyRevenue(){
   const res = unwrap(await http("/api/dashboard/004", {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -44,7 +44,7 @@ export async function getMonthlyRevenue(){
   return res.data;
 }
 
-// Quarterly Revenue (last 6 quarters)
+// Quarterly Revenue
 export async function getQuaterRevenue(){
   const res = unwrap(await http("/api/dashboard/005", {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -52,7 +52,7 @@ export async function getQuaterRevenue(){
   return res.data;
 }
 
-// Popular Events (top 10 selling events)
+// Popular Events
 export async function getPopularEvent(){
   const res = unwrap(await http("/api/dashboard/006", {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -60,7 +60,7 @@ export async function getPopularEvent(){
   return res.data;
 }
 
-// Top Spenders (top 5 users by money spent)
+// Top Spenders
 export async function getTopSpender(){
   const res = unwrap(await http("/api/dashboard/007", {
     headers: { Authorization: `Bearer ${getToken()}` }
