@@ -1,0 +1,155 @@
+/* src/styles/components.css */
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background-color: #F2F2E9; 
+}
+
+.auth-logo {
+  font-size: 2.3rem; 
+  font-weight: 800;
+  font-style: italic;
+  color: #596B37;
+  /* 🟢 ปรับให้โลโก้ดันลงมาและชิดกล่องมากขึ้น */
+  margin-top: 20px; 
+  margin-bottom: 12px; 
+  letter-spacing: -0.5px;
+}
+
+.auth-box {
+  background-color: #D9E3C1;
+  border-radius: 20px;
+  padding: 35px 30px; 
+  width: 100%;
+  max-width: 350px; 
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1E1E1E; 
+  margin-bottom: 24px;
+}
+
+.auth-field {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1E1E1E; 
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+.auth-label .required {
+  color: #FF0000;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 10px 14px; 
+  background-color: #E8EED9;
+  border: 1px solid transparent;
+  border-radius: 10px; 
+  font-size: 0.9rem;
+  color: #1E1E1E;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  border-color: #596B37;
+}
+
+.auth-btn {
+  background-color: #596B37;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 0;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: block;
+  width: 75%; 
+  margin: 10px auto 10px auto; 
+}
+
+.auth-btn:hover {
+  opacity: 0.9;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.auth-links a {
+  font-size: 0.8rem;
+  color: #596B37; 
+  text-decoration: none;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+/* --- Additional styles for Wide Box and Placeholders --- */
+
+/* 1. ขยายความกว้างกล่องสำหรับหน้า Register (Sign Up) */
+.auth-box.wide {
+  max-width: 650px; /* กว้างขึ้นตามรูปแบบ Figma */
+}
+
+/* 2. จัด Layout 2 คอลัมน์ด้วย Grid */
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* แบ่งซ้าย-ขวาเท่ากัน */
+  gap: 0 20px; /* ระยะห่างระหว่างคอลัมน์ */
+}
+
+/* 3. ปรับ Placeholder ให้สีเทาและตัวบางลง (ตามที่ทักว่ามันหนาไป) */
+.auth-input::placeholder {
+  color: #9CA3AF; /* สีเทาอ่อน */
+  font-weight: 400; /* ตัวบางปกติ */
+  font-size: 0.85rem;
+  opacity: 1; 
+}
+
+/* 4. จัดการกลุ่มปุ่มเลือกเพศ (Gender Radio) */
+.auth-radio-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  height: 40px;
+}
+
+.auth-radio-label {
+  font-size: 0.85rem;
+  color: #1E1E1E;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* รองรับหน้าจอเล็กให้กลับมาเป็นแถวเดียว */
+@media (max-width: 600px) {
+  .auth-grid {
+    grid-template-columns: 1fr;
+  }
+  .auth-box.wide {
+    max-width: 350px;
+  }
+}
