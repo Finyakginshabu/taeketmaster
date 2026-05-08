@@ -154,3 +154,18 @@ export const mockData = {
       { quarter: '2025-Q2', sales: 55000 },
     ]
 };
+
+export const monthlyRevenueData = [
+  { month: 'Jan', revenue: 380000 },
+  { month: 'Feb', revenue: 230000 },
+  { month: 'Mar', revenue: 235000 },
+  { month: 'Apr', revenue: 200000 },
+  { month: 'May', revenue: 480000 },
+  { month: 'Jun', revenue: 310000 },
+  { month: 'Jul', revenue: 180000 },
+  { month: 'Aug', revenue: 110000 },
+  { month: 'Sep', revenue: 60000 },
+  { month: 'Oct', revenue: 105000 },
+  { month: 'Nov', revenue: 160000 },
+  { month: 'Dec', revenue: 130000 },
+];

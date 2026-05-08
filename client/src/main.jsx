@@ -1,7 +1,6 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React, { StrictMode } from 'react';
+import ReactDOM, { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useParams, NavLink } from 'react-router-dom';
 
 // UserPage
 import LoginPage from './pages/Login/LoginPage'; 
