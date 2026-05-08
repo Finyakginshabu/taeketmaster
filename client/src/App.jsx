@@ -9,7 +9,7 @@ import LoginPage from './pages/Login/LoginPage';
 import RegisterPage from './pages/Login/RegisterPage';
 import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
 import OtpPage from './pages/Login/OtpPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
+import ResetPasswordPage from './pages/Login/ResetPasswordPage';
 
 import HomePage from './pages/user/HomePage';
 import ConcertDetailPage from './pages/user/ConcertDetailPage';
