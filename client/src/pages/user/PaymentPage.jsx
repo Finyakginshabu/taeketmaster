@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function PaymentPage() {
   const navigate = useNavigate();
+
+  // 15 minutes countdown
+  const [timeLeft, setTimeLeft] = useState(900);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timerId = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
   return (
     <div style={{
@@ -16,7 +31,7 @@ export default function PaymentPage() {
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
       
-      {/* Left Column (Payment Card) */}
+      {/* Left Column (Payment Details) */}
       <div style={{
         width: '100%',
         maxWidth: '800px',
@@ -25,7 +40,10 @@ export default function PaymentPage() {
         padding: '32px',
         boxSizing: 'border-box'
       }}>
-        <h2 style={{ marginTop: 0, marginBottom: '24px', fontSize: '28px', color: '#1E1E1E' }}>Payment</h2>
+        <h2 style={{ marginTop: 0, marginBottom: '8px', fontSize: '28px', color: '#1E1E1E' }}>Confirm Booking</h2>
+        <div style={{ fontSize: '14px', color: '#EF4444', fontWeight: 'bold', marginBottom: '24px' }}>
+          Please complete payment within {timeString}
+        </div>
         
         {/* Grid Details */}
         <div style={{
@@ -69,10 +87,10 @@ export default function PaymentPage() {
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
           color: '#1E1E1E'
         }}>
-          {/* Left: Payment Method */}
+          {/* Left: Payment Method & QR Placeholder */}
           <div>
             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Payment Method</div>
             <select style={{
@@ -82,30 +100,37 @@ export default function PaymentPage() {
               width: '240px',
               fontSize: '14px',
               backgroundColor: 'white',
-              outline: 'none'
+              outline: 'none',
+              marginBottom: '16px'
             }}>
               <option value="pingpay">Pingpay</option>
               <option value="finza">Finza</option>
-              <option value="masternam">MasterNam</option>
-              <option value="jerrypal">JerryPal</option>
-              <option value="online_banking">Online Banking</option>
+              <option value="mobile_banking">Mobile Banking</option>
             </select>
+
+            <div style={{
+              width: '180px',
+              height: '180px',
+              border: '2px dashed #9CA3AF',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'white',
+              color: '#6B7280',
+              fontWeight: '500'
+            }}>
+              Mock QR Code
+            </div>
           </div>
 
-          {/* Right: Total Price & Subtitles */}
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '18px', marginBottom: '8px' }}>
+          {/* Right: Total Price & Buttons */}
+          <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%' }}>
+            <div style={{ fontSize: '18px', marginBottom: '32px', marginTop: 'auto' }}>
               <strong>Total Price: 5,900</strong>
-            </div>
-            <div style={{ fontSize: '14px', marginBottom: '4px' }}>
-              Thank you for your purchase.
-            </div>
-            <div style={{ fontSize: '14px', color: '#EF4444', fontWeight: 'bold', marginBottom: '16px' }}>
-              Please pay within 15 minutes
             </div>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end', marginTop: '100px' }}>
               <button 
                 onClick={() => navigate('/cart')}
                 style={{
@@ -119,7 +144,7 @@ export default function PaymentPage() {
                   fontSize: '15px'
                 }}
               >
-                Back
+                Back to Cart
               </button>
               <button 
                 onClick={() => navigate('/success')}
@@ -134,7 +159,7 @@ export default function PaymentPage() {
                   fontSize: '15px'
                 }}
               >
-                Pay
+                Confirm Payment
               </button>
             </div>
           </div>
@@ -159,7 +184,7 @@ export default function PaymentPage() {
         <div style={{ marginBottom: '24px', lineHeight: '1.5' }}>
           <strong>Customer:</strong> TaeInwZa<br/>
           <strong>Address:</strong> 123 Mock Street, BKK 10110<br/>
-          <strong>Tax ID:</strong> 1234567890123
+          <strong>Order Date:</strong> 01 May 2067
         </div>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '24px' }}>
@@ -172,15 +197,15 @@ export default function PaymentPage() {
           </thead>
           <tbody>
             <tr>
-              <td style={{ paddingTop: '8px', paddingBottom: '8px' }}>P002 - Product B</td>
-              <td style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px' }}>1 PCS</td>
+              <td style={{ paddingTop: '8px', paddingBottom: '8px' }}>Bodyslim The experience 1st Tour</td>
+              <td style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px' }}>1x</td>
               <td style={{ textAlign: 'right', paddingTop: '8px', paddingBottom: '8px' }}>5,900</td>
             </tr>
           </tbody>
         </table>
 
-        <div style={{ borderTop: '1px dashed #D1D5DB', paddingTop: '16px', textAlign: 'right' }}>
-          <strong>Total: 5,900 THB</strong>
+        <div style={{ borderTop: '2px dashed #D1D5DB', paddingTop: '16px', textAlign: 'right' }}>
+          <strong>Total Amount: 5,900 THB</strong>
         </div>
       </div>
       

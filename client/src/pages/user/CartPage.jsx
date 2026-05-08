@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import { X } from 'lucide-react';
+import { X, Edit2 } from 'lucide-react';
 import './CartPage.css';
 
 export default function CartPage() {
   const navigate = useNavigate();
   const { items, removeItem, totalPrice, ticketAmount } = useCart();
+  
+  // 15 minutes countdown (900 seconds)
+  const [timeLeft, setTimeLeft] = useState(900);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timerId = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
   // If cart is empty, use mock data for the UI mockup as requested
   const displayItems = items.length > 0 ? items : [
@@ -32,7 +47,7 @@ export default function CartPage() {
         <div className="cartpage-header">
           <h2>Ticket Cart</h2>
           <div className="cartpage-timer">
-            Tickets reserved! Please complete order within 14:34
+            Time remaining to pay: {timeString}
           </div>
         </div>
         
@@ -62,12 +77,20 @@ export default function CartPage() {
                   <td>1</td>
                   <td>{item.seat_number}</td>
                   <td>
-                    <button 
-                      className="cartpage-remove-btn"
-                      onClick={() => items.length > 0 && removeItem(item.seat_id, item.showtime_id)}
-                    >
-                      <X size={18} color="#EF4444" strokeWidth={3} />
-                    </button>
+                    <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', alignItems: 'center' }}>
+                      <button 
+                        className="cartpage-edit-btn"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', color: '#4B5563', fontSize: '13px', padding: 0 }}
+                      >
+                        <Edit2 size={16} /> Edit
+                      </button>
+                      <button 
+                        className="cartpage-remove-btn"
+                        onClick={() => items.length > 0 && removeItem(item.seat_id, item.showtime_id)}
+                      >
+                        <X size={18} color="#EF4444" strokeWidth={3} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
