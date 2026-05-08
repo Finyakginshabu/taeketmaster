@@ -1,166 +1,189 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
-//import './PaymentPage.css';
-
-const PAYMENT_METHODS = [
-  { id: 'promptpay', label: 'PromptPay', icon: '📱', desc: 'ชำระด้วย QR Code PromptPay' },
-  { id: 'mobile_banking', label: 'Mobile Banking', icon: '🏦', desc: 'โอนผ่านแอปธนาคาร' },
-  { id: 'credit_card', label: 'บัตรเครดิต / เดบิต', icon: '💳', desc: 'Visa, Mastercard, JCB' },
-];
-
-const DEADLINE_SECONDS = 15 * 60; // 15 minutes
-
-function formatDate(dt) {
-  return new Date(dt).toLocaleString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-}
 
 export default function PaymentPage() {
-  const { items, totalPrice, ticketAmount, clearCart } = useCart();
   const navigate = useNavigate();
 
-  const [method, setMethod] = useState('');
-  const [timeLeft, setTimeLeft] = useState(DEADLINE_SECONDS);
-  const [paying, setPaying] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  // Countdown timer
-  useEffect(() => {
-    if (success) return;
-    if (timeLeft <= 0) { navigate('/cart'); return; }
-    const t = setTimeout(() => setTimeLeft(p => p - 1), 1000);
-    return () => clearTimeout(t);
-  }, [timeLeft, success, navigate]);
-
-  const mm = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-  const ss = String(timeLeft % 60).padStart(2, '0');
-  const urgent = timeLeft <= 120;
-
-  const handlePay = async () => {
-    if (!method) return;
-    setPaying(true);
-    try {
-      // TODO: await api.post('/bookings', { items, payment_method: method })
-      await new Promise(r => setTimeout(r, 1500));
-      setSuccess(true);
-      clearCart();
-    } finally { setPaying(false); }
-  };
-
-  if (items.length === 0 && !success) {
-    navigate('/cart');
-    return null;
-  }
-
-  if (success) {
-    return (
-      <div className="payment-page">
-        <div className="container">
-          <div className="success-card card animate-fadeUp">
-            <div className="success-icon">🎉</div>
-            <h2 className="success-title">ชำระเงินสำเร็จ!</h2>
-            <p className="success-sub">ขอบคุณที่จองตั๋วกับ OnePing ตั๋วของคุณพร้อมแล้ว</p>
-            <div className="success-detail">
-              <p>ระบบจะส่งรายละเอียดไปยังอีเมลของคุณ</p>
-            </div>
-            <button className="btn btn-primary btn-lg" onClick={() => navigate('/')}>กลับหน้าหลัก</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="payment-page">
-      <div className="container">
-        <h1 className="payment-heading">ชำระเงิน</h1>
-
-        {/* Timer */}
-        <div className={`timer-bar ${urgent ? 'urgent' : ''}`}>
-          <span className="timer-label">⏱ เวลาชำระเงินที่เหลือ</span>
-          <span className="timer-clock">{mm}:{ss}</span>
-          {urgent && <span className="timer-warn">ใกล้หมดเวลา!</span>}
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      gap: '32px',
+      minHeight: '100vh',
+      padding: '40px 20px',
+      backgroundColor: '#F4F5F0',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
+      
+      {/* Left Column (Payment Card) */}
+      <div style={{
+        width: '100%',
+        maxWidth: '800px',
+        backgroundColor: '#EAEBDB',
+        borderRadius: '16px',
+        padding: '32px',
+        boxSizing: 'border-box'
+      }}>
+        <h2 style={{ marginTop: 0, marginBottom: '24px', fontSize: '28px', color: '#1E1E1E' }}>Payment</h2>
+        
+        {/* Grid Details */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: '32px',
+          color: '#1E1E1E',
+          lineHeight: '1.6'
+        }}>
+          <div>
+            <div><strong>Customer Name:</strong> TaeInwZa</div>
+            <div><strong>Event:</strong> Bodyslim The experience 1st Tour</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div><strong>Booking Date:</strong> Fri 1 May 2067 23:32</div>
+            <div><strong>Booking ID:</strong> 206705012332</div>
+          </div>
         </div>
 
-        <div className="payment-layout">
-          {/* Left: method + summary */}
-          <div className="payment-left">
-            {/* Order summary */}
-            <div className="card pay-section">
-              <h3 className="pay-section-title">รายการตั๋ว</h3>
-              {items.map(item => (
-                <div key={`${item.seat_id}-${item.showtime_id}`} className="pay-ticket-row">
-                  <div className="pay-ticket-info">
-                    <p className="pay-event">{item.event_title}</p>
-                    <p className="pay-meta">📅 {formatDate(item.show_at)} · 📍 {item.venue_name}</p>
-                    <p className="pay-meta">💺 {item.seat_number} — {item.zone_name}</p>
-                  </div>
-                  <span className="pay-price">฿{item.price.toLocaleString()}</span>
-                </div>
-              ))}
-              <div className="divider" style={{ margin: '16px 0' }} />
-              <div className="pay-total-row">
-                <span>รวม {ticketAmount} ใบ</span>
-                <span className="pay-grand-total">฿{totalPrice.toLocaleString()}</span>
-              </div>
-            </div>
+        <hr style={{ border: 'none', borderTop: '1px solid #D1D5DB', marginBottom: '24px' }} />
 
-            {/* Payment method */}
-            <div className="card pay-section">
-              <h3 className="pay-section-title">ช่องทางการชำระเงิน</h3>
-              <div className="method-list">
-                {PAYMENT_METHODS.map(m => (
-                  <label key={m.id} className={`method-option ${method === m.id ? 'active' : ''}`}>
-                    <input type="radio" name="method" value={m.id} checked={method === m.id} onChange={() => setMethod(m.id)} />
-                    <span className="method-icon">{m.icon}</span>
-                    <div className="method-text">
-                      <span className="method-label">{m.label}</span>
-                      <span className="method-desc">{m.desc}</span>
-                    </div>
-                    <span className="method-check">{method === m.id ? '✅' : ''}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+        {/* Ticket Details Flex Row */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          fontWeight: '500',
+          marginBottom: '24px',
+          color: '#1E1E1E',
+          fontSize: '15px'
+        }}>
+          <div>Sat 27 Jun 2067 18:00</div>
+          <div>Zone A2</div>
+          <div>5,900</div>
+          <div>Amount 1</div>
+          <div>Seat no. C03</div>
+        </div>
+
+        <hr style={{ border: 'none', borderTop: '1px solid #D1D5DB', marginBottom: '32px' }} />
+
+        {/* Bottom Section */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          color: '#1E1E1E'
+        }}>
+          {/* Left: Payment Method */}
+          <div>
+            <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Payment Method</div>
+            <select style={{
+              padding: '10px 16px',
+              borderRadius: '8px',
+              border: '1px solid #D1D5DB',
+              width: '240px',
+              fontSize: '14px',
+              backgroundColor: 'white',
+              outline: 'none'
+            }}>
+              <option value="pingpay">Pingpay</option>
+              <option value="finza">Finza</option>
+              <option value="masternam">MasterNam</option>
+              <option value="jerrypal">JerryPal</option>
+              <option value="online_banking">Online Banking</option>
+            </select>
           </div>
 
-          {/* Right: confirm */}
-          <div className="payment-right">
-            <div className="card confirm-card">
-              <h3 className="pay-section-title">ยืนยันการชำระ</h3>
-              <div className="confirm-amount">
-                <span className="confirm-label">ยอดชำระ</span>
-                <span className="confirm-value">฿{totalPrice.toLocaleString()}</span>
-              </div>
-              {method && (
-                <div className="confirm-method">
-                  <span>ช่องทาง:</span>
-                  <span>{PAYMENT_METHODS.find(m => m.id === method)?.label}</span>
-                </div>
-              )}
+          {/* Right: Total Price & Subtitles */}
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: '18px', marginBottom: '8px' }}>
+              <strong>Total Price: 5,900</strong>
+            </div>
+            <div style={{ fontSize: '14px', marginBottom: '4px' }}>
+              Thank you for your purchase.
+            </div>
+            <div style={{ fontSize: '14px', color: '#EF4444', fontWeight: 'bold', marginBottom: '16px' }}>
+              Please pay within 15 minutes
+            </div>
 
-              <button
-                className="btn btn-primary btn-full btn-lg"
-                style={{ marginTop: 20 }}
-                disabled={!method || paying}
-                onClick={handlePay}
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end' }}>
+              <button 
+                onClick={() => navigate('/cart')}
+                style={{
+                  backgroundColor: 'white',
+                  color: '#1E1E1E',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '30px',
+                  padding: '10px 24px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontSize: '15px'
+                }}
               >
-                {paying ? <span className="spinner" /> : `ชำระ ฿${totalPrice.toLocaleString()}`}
+                Back
               </button>
-
-              {!method && (
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: 10 }}>
-                  กรุณาเลือกช่องทางการชำระเงิน
-                </p>
-              )}
-
-              <p className="confirm-note">
-                🔒 การชำระเงินของคุณปลอดภัย ข้อมูลถูกเข้ารหัสทุกครั้ง
-              </p>
+              <button 
+                onClick={() => navigate('/success')}
+                style={{
+                  backgroundColor: '#6B7E54',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '30px',
+                  padding: '10px 32px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontSize: '15px'
+                }}
+              >
+                Pay
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Right Column (Invoice Preview Card) */}
+      <div style={{
+        width: '300px',
+        backgroundColor: '#FFFFFF',
+        padding: '24px',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+        fontSize: '0.8rem',
+        borderRadius: '8px',
+        color: '#1E1E1E',
+        boxSizing: 'border-box'
+      }}>
+        <h3 style={{ color: '#2563EB', marginTop: 0, marginBottom: '16px', fontSize: '16px' }}>
+          InvoiceDoc v2
+        </h3>
+        
+        <div style={{ marginBottom: '24px', lineHeight: '1.5' }}>
+          <strong>Customer:</strong> TaeInwZa<br/>
+          <strong>Address:</strong> 123 Mock Street, BKK 10110<br/>
+          <strong>Tax ID:</strong> 1234567890123
+        </div>
+
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '24px' }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: 'left', borderBottom: '1px solid #E5E7EB', paddingBottom: '8px' }}>Product</th>
+              <th style={{ textAlign: 'center', borderBottom: '1px solid #E5E7EB', paddingBottom: '8px' }}>Qty</th>
+              <th style={{ textAlign: 'right', borderBottom: '1px solid #E5E7EB', paddingBottom: '8px' }}>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ paddingTop: '8px', paddingBottom: '8px' }}>P002 - Product B</td>
+              <td style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px' }}>1 PCS</td>
+              <td style={{ textAlign: 'right', paddingTop: '8px', paddingBottom: '8px' }}>5,900</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style={{ borderTop: '1px dashed #D1D5DB', paddingTop: '16px', textAlign: 'right' }}>
+          <strong>Total: 5,900 THB</strong>
+        </div>
+      </div>
+      
     </div>
   );
 }
