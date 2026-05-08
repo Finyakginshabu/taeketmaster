@@ -10,6 +10,6 @@ router.get("/003", verifyAdmin, controller.getTopTicketSpenders);
 router.get("/004", verifyAdmin, controller.getMonthlyRevenue);
 router.get("/005", verifyAdmin, controller.getQuaterRevenue);
 router.get("/006", verifyAdmin, controller.getPopularEvent);
-router.get("/007", verifyAdmin, controller.getTopSpenders);
+router.get("/007", verifyAdmin, controller.getTopSpender);
 
 export default router;

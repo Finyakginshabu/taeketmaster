@@ -18,5 +18,3 @@ pool.on('connect', () => {
 })
 
 export default pool;
-
-export const query = (sql, params) => pool.execute(sql, params);

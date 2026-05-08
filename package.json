@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "recharts": "^3.8.1",
-    "vite-plugin-svgr": "^5.2.0"
-  }
-}
