@@ -2,8 +2,8 @@ import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Home, MapPin, Calendar, Search, ShoppingCart, User } from 'lucide-react';
 import './UserLayout.css';
-import { useCart } from '../../../context/CartContext';
-import { useAuth } from '../../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function UserLayout() {
   const { ticketAmount } = useCart();
