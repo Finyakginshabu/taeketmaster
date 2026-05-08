@@ -19,6 +19,8 @@ import DashBoardPage from './pages/DashBoard/DashBoardPage.jsx';
 import AllTablePage from './pages/Tables/AllTablesPage.jsx';
 import TablePage from './pages/Tables/AdminTablesPage.jsx';
 import UserDetailPage from './pages/Tables/AdminUserDetailsPage.jsx';
+import AdminAddPage from './pages/Tables/AdminAddPage.jsx';
+import AdminEditPage from './pages/Tables/AdminEditPage.jsx';
 import AccountPage from './pages/Account/AccountPage.jsx';
 import ComparisonPage from './pages/Comparison/ComparisonPage.jsx';
 
@@ -120,6 +122,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
         <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
         <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
+        <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
+        <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
         <Route path="/account" element={<Layout><AccountPage /></Layout>} />
         <Route path="/comparison" element={<Layout><ComparisonPage /></Layout>} />
       </Routes>

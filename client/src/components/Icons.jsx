@@ -21,8 +21,12 @@ import Report from '../assets/Report.svg?react';
 import LogOut from '../assets/LogOut.svg?react';
 import Filter from '../assets/Filter.svg?react';
 import Comparison from '../assets/Comparison.svg?react';
+import Add from '../assets/Add.svg?react';
+import Edit from '../assets/Edit.svg?react';
+import Delete from '../assets/Delete.svg?react';
 
 export { GreenLogo, WhiteLogo, HomeGreen, Cart, User, MapPin, Calendar, 
         Search, Price, Sale, ChevronDown, Table, Report, LogOut, 
         Filter, Comparison, ChevronLeft, ChevronRight, ChevronsLeft,
-        ChevronsRight, HomeWhite, TableGreen, UserGreen };
+        ChevronsRight, HomeWhite, TableGreen, UserGreen,
+        Add, Edit, Delete };

@@ -4,13 +4,12 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from '../../co
 import { INITIAL_DATA, MOCK_BOOKINGS } from '../../api/tablesConfig.js';
 
 // ── Status badge style ───────────────────────────────────────────────────────
-const STATUS_STYLE = {
-  Confirmed: { background: 'rgba(89,107,55,0.12)', color: '#3d5a1e', border: '1px solid rgba(89,107,55,0.3)' },
-  Cancelled: { background: 'rgba(220,53,69,0.1)',  color: '#b91c1c', border: '1px solid rgba(220,53,69,0.3)' },
-  Pending:   { background: 'rgba(202,138,4,0.1)',  color: '#92400e', border: '1px solid rgba(202,138,4,0.3)' },
-};
+// const STATUS_STYLE = {
+//   Confirmed: { background: 'rgba(89,107,55,0.12)', color: '#3d5a1e', border: '1px solid rgba(89,107,55,0.3)' },
+//   Cancelled: { background: 'rgba(220,53,69,0.1)',  color: '#b91c1c', border: '1px solid rgba(220,53,69,0.3)' },
+//   Pending:   { background: 'rgba(202,138,4,0.1)',  color: '#92400e', border: '1px solid rgba(202,138,4,0.3)' },
+// };
 
-// ── Field definitions ────────────────────────────────────────────────────────
 const USER_FIELDS = [
   { key: 'id',    label: 'ID' },
   { key: ['houseNo', 'streetName'], label: 'Address Line 1' },
@@ -158,36 +157,3 @@ export default function AdminUserDetailPage() {
     </div>
   );
 }
-
-const styles = {
-  fieldGrid: {
-    display:             'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap:                 '40px 100px',
-    margin:              0,
-  },
-  fieldItem: {
-    display:       'flex',
-    flexDirection: 'column',
-    gap:           '6px',
-  },
-  fieldLabel: {
-    fontSize:      '18px',
-    color:         '#737373',
-    fontWeight:     400,
-    margin:        0,
-  },
-  fieldValue: {
-    fontSize:  '18px',
-    color:     '#1a1a1a',
-    margin:    0,
-    wordBreak: 'break-all',
-  },
-  badge: {
-    display:      'inline-block',
-    padding:      '2px 10px',
-    borderRadius: '999px',
-    fontSize:     '0.8rem',
-    fontWeight:   600,
-  },
-};

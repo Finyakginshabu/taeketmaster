@@ -61,8 +61,27 @@ export const INITIAL_DATA = {
       houseNo: '42', streetName: 'Phahon Yothin', subDistrict: 'Chatuchak', district: 'Chatuchak', province: 'Bangkok', postalCode: '10900' 
     },
   ],
-  Event: [],
-  Venue: [],
+  Event: [
+    { id: '5001', title: 'Neon Bloom Festival',   artist: 'Milli',          agentEmail: 'booking@millitae.com'       },
+    { id: '5002', title: 'Acoustic Sunday',        artist: 'Jeff Satur',     agentEmail: 'jeff.agent@waymaker.th'     },
+    { id: '5003', title: 'Bass Drop Bangkok',      artist: 'Youngohm',       agentEmail: 'contact@yohmagency.com'     },
+    { id: '5004', title: 'Four Women Up',          artist: 'Pimchaya',       agentEmail: 'chromosomelab@chro.ac.th'   },
+    { id: '5005', title: 'Youngampere Live',       artist: 'Supattra',       agentEmail: 'allreadylife@gmail.com'     },
+    { id: '5006', title: 'Green Season Concert',   artist: 'Tilly Birds',    agentEmail: 'tilly@birdsnest.agency'     },
+    { id: '5007', title: 'Midnight Garden Gala',   artist: 'Phum Viphurit',  agentEmail: 'phum@wonderfruit.co'        },
+    { id: '5008', title: 'Electric Rain',          artist: 'Jannine W',      agentEmail: 'jan.booking@gmm.co.th'     },
+  ],
+
+  Venue: [
+    { id: 'V01', name: 'Impact Arena',            location: 'Muang Thong Thani, Nonthaburi', capacity: '12000' },
+    { id: 'V02', name: 'Thunder Dome',            location: 'Muang Thong Thani, Nonthaburi', capacity: '8000'  },
+    { id: 'V03', name: 'Royal Paragon Hall',      location: 'Siam Paragon, Bangkok',         capacity: '5000'  },
+    { id: 'V04', name: 'Maya Hall',               location: 'Maya Mall, Chiang Mai',         capacity: '2000'  },
+    { id: 'V05', name: 'CentralWorld Live Stage', location: 'CentralWorld, Bangkok',         capacity: '3500'  },
+    { id: 'V06', name: 'Rajamangala Stadium',     location: 'Bang Kapi, Bangkok',            capacity: '49722' },
+    { id: 'V07', name: 'Nimman Music Hall',       location: 'Nimmanahaeminda, Chiang Mai',   capacity: '1200'  },
+    { id: 'V08', name: 'Hua Hin Night Stage',     location: 'Hua Hin, Prachuap Khiri Khan',  capacity: '1500'  },
+  ],
 };
 
 export const MOCK_BOOKINGS = {
