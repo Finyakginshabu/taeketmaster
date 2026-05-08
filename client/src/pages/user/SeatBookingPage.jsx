@@ -183,7 +183,7 @@ export default function SeatBookingPage() {
             <button 
               className="sbp-btn reserve"
               disabled={selectedSeats.length === 0}
-              onClick={() => navigate('/admin/dashboard')}
+              onClick={() => navigate('/cart')}
               style={{ cursor: selectedSeats.length === 0 ? 'not-allowed' : 'pointer' }}
             >
               Reserve
