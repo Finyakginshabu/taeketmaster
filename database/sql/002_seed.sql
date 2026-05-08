@@ -1,25 +1,158 @@
--- test seed
+-- tae seed
 
-insert into users (first_name, last_name, email, username, password) values 
-('customer', 'one', 'customer@test.com', 'buyer1', 'pass');
+insert into users (first_name, last_name, gender, date_of_birth, email, phone, username, password, role) values 
+('Khanatip', 'Nokhunthot', 'gay', '2006-04-28', 'tae.admin@tae.ac.th', '0670701008', 'Tae', 'tae123', 'admin'),
+('Chawin', 'Chinpraditsuk', 'male', '2006-06-27', 'chawin.chin@tae.ac.th', '0670501012', 'Fin', 'fin123', 'user'),
+('Norawit', 'Mahaprom', 'male', '2005-12-06', 'norawit.maha@tae.ac.th', '0670701026', 'Nam', 'nam123', 'user'),
+('Chetsada', 'Kiatkamonwong', 'male', '2005-12-05', 'chetsada.kiat@tae.ac.th', '0670501080', 'Jerry', 'jerry123', 'user'),
+('Supichaya', 'Limwatanasamut', 'female', '2005-12-03', 'supichaya.limw@tae.ac.th', '0670701087', 'Ping', 'ping123', 'user'),
+('Pimchaya', 'Suprateravanit', 'female', '2000-01-01', 'pimchaya.supr@tae.ac.th', '0670505223', 'Mairoowa', '123', 'user'),
+('Supattra', 'Kaikrut', 'female', '2000-01-01', 'supattra.kaik@tae.ac.th', '0670705228', 'Mairooar', '123', 'user'),
+('Lalisa', 'Manotham', 'female', '1997-03-27', 'lalisa.m@tae.ac.th', '0670502001', 'Lisa', 'lisa123', 'user'),
+('Bam', 'Kunpimak', 'male', '1997-05-02', 'bam.k@tae.ac.th', '0670502002', 'BamBam', 'bam123', 'user'),
+('Jacksin', 'Wang', 'male', '1994-03-28', 'jackson.w@tae.ac.th', '0670502003', 'Jackson', 'jack123', 'user'),
+('Davikayothin', 'Hoorne', 'female', '1992-05-16', 'davika.h@tae.ac.th', '0670502004', 'Mai', 'mai123', 'user'),
+('Mario', 'Kart', 'male', '1988-12-04', 'mario.m@tae.ac.th', '0670502005', 'Mario', 'mario123', 'user'),
+('Urus', 'Lamborghini', 'female', '1993-03-18', 'urassaya.s@tae.ac.th', '0670502006', 'Yaya', 'yaya123', 'user'),
+('Dech', 'Kugimaikab', 'male', '1991-12-17', 'nadech.k@tae.ac.th', '0670502007', 'Nadech', 'barry123', 'user'),
+('Krit', 'Amnuay', 'male', '1999-04-30', 'krit.a@tae.ac.th', '0670502008', 'PPKrit', 'pp123', 'user'),
+('Putthipong', 'Assarahabucha', 'male', '1999-10-08', 'putthipong.a@tae.ac.th', '0670502009', 'Billkin', 'bk123', 'user'),
+('Araya', 'Handsomeandcool', 'female', '1981-06-28', 'araya.h@tae.ac.th', '0670502010', 'Chompoo', 'chom123', 'user'),
+('Pimchanok', 'Thungsuk', 'female', '1992-09-30', 'pimchanok.l@tae.ac.th', '0670502011', 'Baifern', 'fern123', 'user'),
+('Sunny', 'Handsomeandcool', 'male', '1981-05-18', 'sunny.s@tae.ac.th', '0670502012', 'Sunny', 'sun123', 'user'),
+('Ranee', 'Wine', 'female', '1989-12-24', 'ranee.c@tae.ac.th', '0670502013', 'Bella', 'bella123', 'user');
 
-insert into venues (name, seat_capacity, latitude, longitude) values 
-('micro theater', 2, 13.7, 100.5);
+insert into genres (genre_name) values
+('Rock'), ('Pop'), ('Hip-Hop'), ('Jazz'), ('R&B'), ('K-pop');
+
+insert into artists (artist_name) values
+('67hours'), ('NONT TANINT'), ('Ink Warunran'), ('Billding'), ('PP Kritone'), ('BowkyTiger'),
+('Jeff Saturday'), ('Violette Water'), ('The CarToys'), ('Tomato'), ('Me-U'),
+('Bodyslim'), ('Small Ass'), ('Cooktail'), ('Tilly Bat'), ('Four Women Up'),
+('Taitosmile'), ('Slot Machine888'), ('hiso'), ('Safestar'), ('Sweet n Roll'),
+('5EVE'), ('PigXY'), ('Kliptonnai'), ('Monodog'),
+('Oldohmn'), ('F.SUPERHERO'), ('Blinkpack'), ('OldJeans');
+
+insert into genre_artists (genre_id, artist_id) values
+(1, 1), (1, 4), (1, 12), (1, 13), (1, 14), (1, 17), (1, 18), (1, 21), (1, 24), (1, 25),
+(2, 2), (2, 3), (2, 5), (2, 6), (2, 8), (2, 9), (2, 10), (2, 11), (2, 15), (2, 16), (2, 20), (2, 26),
+(3, 27), (5, 7), (5, 19), (6, 22), (6, 23), (6, 28), (6, 29);
+
+insert into agents (agent_name, email, phone) values
+('GNN Music', 'contact@gnngranny.com', '026699000'),
+('Bigroom', 'info@bigroom.co.th', '022617560'),
+('What The Buck', 'contact@whatthebuck.com', '026196099'),
+('Coollight', 'contact@coollight.com', '027128605'),
+('Chromosomelab', 'contact@chro.co.th', '020263592');
+
+insert into venues (name, seat_capacity, province, latitude, longitude) values 
+('Rachiangmaigala National Stadium', 726, 'Chiang Mai', 18.7883, 98.9853),
+('Impact Korat', 100, 'Nakhon Ratchasima', 14.9750, 102.0971),
+('King Mongkut''s Food Center', 100, 'Bangkok', 13.6515, 100.4965);
 
 insert into events (event_id, title, img_path, sales_started_at, sales_ended_at, event_status) values
-(1, 'future festival 1', '/img/f1.jpg', '2026-10-01', '2026-11-01', 'active'),
-(2, 'future festival 2', '/img/f2.jpg', '2026-11-01', '2026-12-01', 'active'),
-(3, 'current concert 1', '/img/c1.jpg', '2026-01-01', '2026-06-01', 'active'),
-(4, 'current concert 2', '/img/c2.jpg', '2026-01-01', '2026-06-01', 'active'),
-(5, 'sold out show 1', '/img/s1.jpg', '2026-01-01', '2026-06-01', 'active'),
-(6, 'sold out show 2', '/img/s2.jpg', '2026-01-01', '2026-06-01', 'active');
+(1, '67hours', 'events/67hours.jpg', '2024-05-01', '2024-05-06', 'active'),
+(2, 'NONT TANINT', 'events/nont_tanint.jpg', '2024-05-20', '2024-05-25', 'active'),
+(3, 'Ink Warunran', 'events/ink_warunran.jpg', '2024-06-09', '2024-06-15', 'active'),
+(4, 'Billding', 'events/billding.jpg', '2024-06-28', '2024-07-03', 'active'),
+(5, 'PP Kritone', 'events/pp_kritone.jpg', '2024-07-17', '2024-07-24', 'active'),
+(6, 'BowkyTiger', 'events/bowkytiger.jpg', '2024-08-05', '2024-08-10', 'active'),
+(7, 'Jeff Saturday', 'events/jeff_saturday.jpg', '2024-08-24', '2024-08-31', 'active'),
+(8, 'Violette Water', 'events/violette_water.jpg', '2024-09-12', '2024-09-17', 'active'),
+(9, 'The CarToys', 'events/the_cartoys.jpg', '2024-10-01', '2024-10-08', 'active'),
+(10, 'Tomato', 'events/tomato.jpg', '2024-10-20', '2024-10-25', 'active'),
+(11, 'Me-U', 'events/me_u.jpg', '2024-11-08', '2024-11-15', 'active'),
+(12, 'Bodyslim', 'events/bodyslim.jpg', '2024-11-27', '2024-12-02', 'active'),
+(13, 'Small Ass', 'events/small_ass.jpg', '2024-12-16', '2024-12-23', 'active'),
+(14, 'Cooktail', 'events/cooktail.jpg', '2025-01-04', '2025-01-09', 'active'),
+(15, 'Tilly Bat', 'events/tilly_bat.jpg', '2025-01-23', '2025-01-30', 'active'),
+(16, 'Four Women Up', 'events/four_women_up.jpg', '2025-02-11', '2025-02-16', 'active'),
+(17, 'Taitosmile', 'events/taitosmile.jpg', '2025-03-02', '2025-03-09', 'active'),
+(18, 'Slot Machine888', 'events/slot_machine888.jpg', '2025-03-21', '2025-03-26', 'active'),
+(19, 'hiso', 'events/hiso.jpg', '2025-04-09', '2025-04-16', 'active'),
+(20, 'Safestar', 'events/safestar.jpg', '2025-04-28', '2025-05-03', 'active'),
+(21, 'Sweet n Roll', 'events/sweet_n_roll.jpg', '2025-05-17', '2025-05-24', 'active'),
+(22, '5EVE', 'events/5eve.jpg', '2025-06-05', '2025-06-10', 'active'),
+(23, 'PigXY', 'events/pigxy.jpg', '2025-06-24', '2025-07-01', 'active'),
+(24, 'Kliptonnai', 'events/kliptonnai.jpg', '2025-07-13', '2025-07-18', 'active'),
+(25, 'Monodog', 'events/monodog.jpg', '2025-08-01', '2025-08-08', 'active'),
+(26, 'Oldohmn', 'events/oldohmn.jpg', '2025-08-20', '2025-08-25', 'active'),
+(27, 'F.SUPERHERO', 'events/f_superhero.jpg', '2025-09-08', '2025-09-15', 'active'),
+(28, 'Blinkpack', 'events/blinkpack.jpg', '2025-09-27', '2025-10-02', 'active'),
+(29, 'OldJeans', 'events/oldjeans.jpg', '2025-10-16', '2025-10-23', 'active'),
+(30, 'Cooktail 2025', 'events/cooktail_2025.jpg', '2025-11-04', '2025-11-09', 'active'),
+(31, 'Tomato 2025', 'events/tomato_2025.jpg', '2025-11-23', '2025-11-30', 'active'),
+(32, 'NONT TANINT 2025', 'events/nont_tanint_2025.jpg', '2025-12-12', '2025-12-17', 'active'),
+(33, 'Bodyslim 2026', 'events/bodyslim_2026.jpg', '2025-12-31', '2026-01-07', 'active'),
+(34, 'Slot Machine888 2026', 'events/slot_machine888_2026.jpg', '2026-01-19', '2026-01-24', 'active'),
+(35, 'PigXY 2026', 'events/pigxy_2026.jpg', '2026-02-07', '2026-02-14', 'active'),
+(36, 'Monodog 2026', 'events/monodog_2026.jpg', '2026-02-26', '2026-03-03', 'active'),
+(37, 'Small Ass 2026', 'events/small_ass_2026.jpg', '2026-03-17', '2026-03-24', 'active'),
+(38, 'The CarToys 2026', 'events/the_cartoys_2026.jpg', '2026-04-05', '2026-04-10', 'active'),
+(39, 'BowkyTiger 2026', 'events/bowkytiger_2026.jpg', '2026-04-24', '2026-05-01', 'active'),
+(40, '67hours 2026', 'events/67hours_2026.jpg', '2026-05-24', '2026-05-31', 'active');
 
-insert into zones (venue_id, zone_name, img_path, color, x_pos, y_pos) values 
-(1, 'A1', '1a1.svg', '#abc875', 77, 264),
-(1, 'A2', '1a2.svg', '#abc875', 376, 264),
-(1, 'B1', '1b1.svg', '#596b37', 77, 481),
-(1, 'B2', '1b2.svg', '#596b37', 376, 481),
-(1, 'stage', '1stg.svg', '#1a2700', 77, 29);
+update events set description = case
+    when event_id = 1 then 'Experience the debut of the 67hours tour. A night filled with high-energy indie rock and mesmerizing visuals that will keep you dancing until the early morning hours. Get tickets now!'
+    when event_id = 2 then 'NONT TANINT brings his soulful voice and chart-topping hits to the big stage. Join us for an intimate evening of melodic pop and heartfelt performances that you will never forget.'
+    when event_id = 3 then 'The princess of synth-pop, Ink Waruntorn, returns with her signature sound. Prepare for a nostalgic journey through her greatest hits in a beautifully produced show designed for every dedicated fan.'
+    when event_id = 4 then 'Billding captures the essence of the modern alternative scene. This concert features powerful vocals and experimental sounds that push the boundaries of live music. Do not miss this unique performance.'
+    when event_id = 5 then 'PP Kritone takes the spotlight with a glamorous and high-fashion musical extravaganza. Expect stunning choreography, dazzling costumes, and a setlist that celebrates self-expression and modern pop at its very best.'
+    when event_id = 6 then 'BowkyTiger delivers a fierce and emotional performance, blending soul-stirring ballads with upbeat anthems. Her unique style and powerful stage presence make this a must-see event for all Thai music lovers.'
+    when event_id = 7 then 'Jeff Saturday invites you into his world of genre-bending music and cinematic storytelling. Experience his incredible vocal range and artistic vision in this highly anticipated solo concert tour this year.'
+    when event_id = 8 then 'Violette Wautier brings her enchanting vocals and dreamy pop melodies to the stage. This concert offers a perfect blend of upbeat tracks and acoustic moments in a cozy, welcoming atmosphere.'
+    when event_id = 9 then 'The CarToys are ready to rock the stadium with their signature alternative sound. Join the crowd for a night of high-octane energy, driving guitar riffs, and classic sing-along choruses today.'
+    when event_id = 10 then 'Tomato brings a fresh and quirky vibe to the local indie scene. Enjoy a night of catchy hooks, fun lyrics, and a vibrant stage design that guarantees a good time.'
+    when event_id = 11 then 'Mew Suppasit (Me-U) delivers a charismatic performance featuring his latest hits and fan favorites. This show promises a mix of upbeat dance numbers and emotional ballads for all his supporters.'
+    when event_id = 12 then 'Bodyslim, the legendary rock icons, return for an epic night of stadium-sized anthems. Feel the power of Thai rock as they perform their greatest hits with unmatched energy and passion.'
+    when event_id = 13 then 'Small Ass brings the heat with their legendary rock sound. Experience the raw power and emotion of one of Thailand’s most influential bands in a high-energy live environment.'
+    when event_id = 14 then 'Cooktail presents a grand musical experience, blending rock with orchestral elements. Their storytelling lyrics and dramatic performances create a powerful atmosphere that resonates deeply with every single person present.'
+    when event_id = 15 then 'Tilly Bat brings their unique alternative pop sound to the stage. Known for their emotional lyrics and creative arrangements, this concert is a journey through love, loss, and everything between.'
+    when event_id = 16 then 'Four Women Up celebrates the power of female voices in the industry. Featuring four top artists, this collaborative concert showcases incredible talent, harmony, and a shared passion for great music.'
+    when event_id = 17 then 'Taitosmile brings the spirit of modern Pheua Chiwit to the city. Their honest lyrics and energetic folk-rock sound provide a voice for the people in a truly unforgettable live show.'
+    when event_id = 18 then 'Slot Machine888 takes you on an out-of-this-world musical journey with their signature rock sound and sci-fi visuals. Experience their high-energy performance and world-class production in this stunning concert event.'
+    when event_id = 19 then 'HISO brings a sophisticated blend of jazz and pop to the stage. Enjoy a night of smooth melodies, expert musicianship, and a refined atmosphere perfect for a relaxing evening out.'
+    when event_id = 20 then 'Safestar invites you to their indie-pop world of lush textures and catchy melodies. Get lost in their signature soundscapes and enjoy a night of effortlessly cool and relaxing music.'
+    when event_id = 21 then 'Sweet n Roll delivers a heavy-hitting performance for all rock and metal fans. Expect high energy, aggressive riffs, and a mosh pit that never stops in this intense show.'
+    when event_id = 22 then '5EVE brings the fire with their high-energy girl group performance. Featuring sharp choreography and catchy T-Pop hits, this concert is a celebration of talent, charm, and girl power.'
+    when event_id = 23 then 'PigXY delivers a playful and energetic pop performance. Join the trio for a night of catchy tunes, adorable dance moves, and a bright, colorful stage show that inspires joy.'
+    when event_id = 24 then 'Kliptonnai brings their emotional rock ballads to the stage. Join the band for a night of powerful vocals and relatable lyrics that have touched the hearts of many fans.'
+    when event_id = 25 then 'Monodog, the pioneers of Thai alternative rock, return to the stage. Experience their experimental sound and legendary hits in a performance that celebrates decades of musical innovation and creativity.'
+    when event_id = 26 then 'Oldohmn brings the laughs and the hits in this unique variety concert. Expect a night of soulful singing, hilarious banter, and unexpected surprises from Thailand’s favorite entertainer.'
+    when event_id = 27 then 'F.SUPERHERO dominates the stage with his powerful rap and massive collaborations. This hip-hop extravaganza features heavy beats, clever wordplay, and some of the biggest names in the industry.'
+    when event_id = 28 then 'Blinkpack style tribute or high-energy dance event. Join the party for a night of global hits, synchronized dancing, and a production that rivals the biggest pop shows on earth.'
+    when event_id = 29 then 'OldJeans inspired pop event celebrating the latest trends in music. Enjoy a night of nostalgic yet fresh sounds, catchy choruses, and a youthful energy that defines a generation.'
+    when event_id = 30 then 'Cooktail 2025 returns with an even bigger production and new arrangements. Experience their classic hits alongside new material in a show that blends rock, drama, and classical music seamlessly.'
+    when event_id = 31 then 'Tomato 2025 brings more indie-pop fun to the stage. This updated tour features new songs and an expanded stage design, perfect for fans who love their unique and quirky style.'
+    when event_id = 32 then 'NONT TANINT 2025 showcases the artist’s evolution with new hits and a more mature sound. Don’t miss this chance to see one of Thailand’s best vocalists in an all-new production.'
+    when event_id = 33 then 'Bodyslim 2026 kicks off the year with a massive stadium tour. Expect the same legendary energy with a completely new setlist and stage technology that will blow your mind away.'
+    when event_id = 34 then 'Slot Machine888 2026 continues their legacy of world-class rock performances. This tour features a new conceptual theme and futuristic visuals that complement their powerful and iconic alternative rock sound perfectly.'
+    when event_id = 35 then 'PigXY 2026 returns with even more charm and talent. This new tour features updated choreography and their latest chart-topping hits in a show that is sure to delight every fan.'
+    when event_id = 36 then 'Monodog 2026 celebrates the enduring legacy of alternative music. Join the band for a night of classic anthems and new explorations in sound, proving why they remain icons today.'
+    when event_id = 37 then 'Small Ass 2026 brings the heavy rock energy into the new year. This tour is all about the fans, featuring a setlist voted on by the community and intense performances.'
+    when event_id = 38 then 'The CarToys showcases the genius of his production and guitar skills. Experience his unique blend of pop, rap, and jazz in a visually stunning and minimalist show.'
+    when event_id = 39 then 'BowkyTiger 2026 returns with her most ambitious tour yet. Experience her powerful vocals and artistic storytelling in a show that explores themes of love, strength, and personal growth.'
+    when event_id = 40 then '67hours 2026 concludes our season with a bang. This special anniversary show features guest artists, extended jam sessions, and a celebration of the indie spirit that started it all.'
+end where event_id between 1 and 40;
+
+insert into event_artists (event_id, artist_id) values
+(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15),
+(16, 16), (17, 17), (18, 18), (19, 19), (20, 20), (21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 14),
+(31, 10), (32, 2), (33, 12), (34, 18), (35, 23), (36, 25), (37, 13), (38, 9), (39, 6), (40, 1);
+
+insert into event_agents (event_id, agent_id) values
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1),
+(9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2),
+(17, 3), (18, 3), (19, 3), (20, 3), (21, 3), (22, 3), (23, 3), (24, 3),
+(25, 4), (26, 4), (27, 4), (28, 4), (29, 4), (30, 2), (31, 2), (32, 1),
+(33, 2), (34, 3), (35, 3), (36, 4), (37, 2), (38, 2), (39, 1), (40, 1);
+
+insert into zones (zone_id, venue_id, zone_name, img_path, color, x_pos, y_pos) values 
+(1, 1, 'A1', '1a1.svg', '#abc875', 77, 264),
+(2, 1, 'A2', '1a2.svg', '#abc875', 376, 264),
+(3, 1, 'B1', '1b1.svg', '#596b37', 77, 481),
+(4, 1, 'B2', '1b2.svg', '#596b37', 376, 481),
+(5, 1, 'stage', '1stg.svg', '#1a2700', 77, 29);
 
 insert into seats (zone_id, number, x_pos, y_pos) values
 (1, 'A1-006', 302, 99), (1, 'A1-007', 347, 99), (1, 'A1-008', 392, 99), (1, 'A1-009', 437, 99), (1, 'A1-010', 482, 99), (1, 'A1-011', 527, 99), (1, 'A1-012', 572, 99), (1, 'A1-013', 617, 99), (1, 'A1-014', 662, 99), (1, 'A1-015', 707, 99), (1, 'A1-016', 752, 99), (1, 'A1-017', 797, 99),
@@ -75,21 +208,61 @@ insert into seats (zone_id, number, x_pos, y_pos) values
 (4, 'B2-194', 347, 594), (4, 'B2-195', 392, 594), (4, 'B2-196', 437, 594), (4, 'B2-197', 482, 594), (4, 'B2-198', 527, 594), (4, 'B2-199', 572, 594), (4, 'B2-200', 617, 594), (4, 'B2-201', 662, 594);
 
 insert into event_zones (event_id, zone_id, price) values 
-(1, 1, 2000.00),
-(1, 2, 2000.00),
-(1, 3, 1200.00),
-(1, 4, 1200.00);
+(3, 1, 3500.00), (3, 2, 3500.00), (3, 3, 1800.00), (3, 4, 1800.00),
+(6, 1, 3200.00), (6, 2, 3200.00), (6, 3, 1500.00), (6, 4, 1500.00),
+(9, 1, 2800.00), (9, 2, 2800.00), (9, 3, 1200.00), (9, 4, 1200.00),
+(12, 1, 5500.00), (12, 2, 5500.00), (12, 3, 2500.00), (12, 4, 2500.00),
+(15, 1, 3000.00), (15, 2, 3000.00), (15, 3, 1400.00), (15, 4, 1400.00),
+(18, 1, 4000.00), (18, 2, 4000.00), (18, 3, 2000.00), (18, 4, 2000.00),
+(21, 1, 2500.00), (21, 2, 2500.00), (21, 3, 1000.00), (21, 4, 1000.00),
+(24, 1, 3500.00), (24, 2, 3500.00), (24, 3, 1800.00), (24, 4, 1800.00),
+(27, 1, 4500.00), (27, 2, 4500.00), (27, 3, 2200.00), (27, 4, 2200.00),
+(30, 1, 3800.00), (30, 2, 3800.00), (30, 3, 1900.00), (30, 4, 1900.00),
+(33, 1, 5500.00), (33, 2, 5500.00), (33, 3, 2500.00), (33, 4, 2500.00),
+(36, 1, 4000.00), (36, 2, 4000.00), (36, 3, 2000.00), (36, 4, 2000.00),
+(37, 1, 3200.00), (37, 2, 3200.00), (37, 3, 1500.00), (37, 4, 1500.00),
+(38, 1, 4000.00), (38, 2, 4000.00), (38, 3, 2000.00), (38, 4, 2000.00),
+(39, 1, 3200.00), (39, 2, 3200.00), (39, 3, 1500.00), (39, 4, 1500.00),
+(40, 1, 3200.00), (40, 2, 3200.00), (40, 3, 1500.00), (40, 4, 1500.00);
 
 insert into showtimes (showtime_id, event_id, venue_id, show_at) values
-(1, 1, 1, '2026-12-01 19:00'), (2, 2, 1, '2026-12-02 19:00'),
-(7, 1, 1, '2026-12-02 23:00'), (8, 1, 1, '2026-12-02 10:00'),
-(3, 3, 1, '2026-07-01 19:00'), (4, 4, 1, '2026-07-02 19:00'),
-(5, 5, 1, '2026-07-03 19:00'), (6, 6, 1, '2026-07-04 19:00');
+(1, 1, 3, '2024-07-05 19:00:00'), (2, 1, 3, '2024-07-06 18:00:00'),
+(3, 2, 2, '2024-07-20 19:00:00'), (4, 2, 2, '2024-07-21 18:00:00'),
+(5, 3, 1, '2024-08-15 19:00:00'), (6, 3, 1, '2024-08-16 18:00:00'),
+(7, 4, 3, '2024-09-01 19:00:00'), (8, 4, 3, '2024-09-02 18:00:00'),
+(9, 5, 2, '2024-09-15 19:00:00'), (10, 5, 2, '2024-09-16 18:00:00'),
+(11, 6, 1, '2024-10-10 19:00:00'), (12, 6, 1, '2024-10-11 18:00:00'),
+(13, 7, 3, '2024-11-01 19:00:00'), (14, 7, 3, '2024-11-02 18:00:00'),
+(15, 8, 2, '2024-11-15 19:00:00'), (16, 8, 2, '2024-11-16 18:00:00'),
+(17, 9, 1, '2024-12-05 19:00:00'), (18, 9, 1, '2024-12-06 18:00:00'),
+(19, 10, 3, '2024-12-20 19:00:00'), (20, 10, 3, '2024-12-21 18:00:00'),
+(21, 11, 2, '2025-01-10 19:00:00'), (22, 11, 2, '2025-01-11 18:00:00'),
+(23, 12, 1, '2025-01-25 19:00:00'), (24, 12, 1, '2025-01-26 18:00:00'),
+(25, 13, 3, '2025-02-14 19:00:00'), (26, 13, 3, '2025-02-15 18:00:00'),
+(27, 14, 2, '2025-03-01 19:00:00'), (28, 14, 2, '2025-03-02 18:00:00'),
+(29, 15, 1, '2025-03-20 19:00:00'), (30, 15, 1, '2025-03-21 18:00:00'),
+(31, 16, 3, '2025-04-10 19:00:00'), (32, 16, 3, '2025-04-11 18:00:00'),
+
+(33, 17, 2, '2025-05-05 19:00:00'), (34, 18, 1, '2025-05-25 19:00:00'),
+(35, 19, 3, '2025-06-10 19:00:00'), (36, 20, 2, '2025-07-01 19:00:00'),
+(37, 21, 1, '2025-07-15 19:00:00'), (38, 22, 3, '2025-08-05 19:00:00'),
+(39, 23, 2, '2025-08-25 19:00:00'), (40, 24, 1, '2025-09-10 19:00:00'),
+(41, 25, 3, '2025-10-01 19:00:00'), (42, 26, 2, '2025-10-20 19:00:00'),
+(43, 27, 1, '2025-11-10 19:00:00'), (44, 28, 3, '2025-11-28 19:00:00'),
+(45, 29, 2, '2025-12-15 19:00:00'), (46, 30, 1, '2026-01-05 19:00:00'),
+(47, 31, 3, '2026-01-25 19:00:00'), (48, 32, 2, '2026-02-14 19:00:00'),
+(49, 33, 1, '2026-03-05 19:00:00'), (50, 34, 3, '2026-03-20 19:00:00'), 
+(51, 34, 3, '2026-03-21 18:00:00'), (52, 35, 2, '2026-04-10 19:00:00'), 
+(53, 35, 2, '2026-04-11 18:00:00'), (54, 36, 1, '2026-04-30 19:00:00'),
+(55, 37, 1, '2026-05-15 19:00:00'), (56, 37, 1, '2026-05-16 18:00:00'),
+(57, 38, 1, '2026-06-06 18:00:00'), (58, 39, 1, '2026-06-25 19:00:00'), 
+(59, 39, 1, '2026-06-26 18:00:00'), (60, 40, 1, '2026-07-16 18:00:00');
 
 insert into bookings (booking_id, user_id, booked_at, total_price) values 
 (1, 1, now(), 1000.00);
 
-insert into payments (booking_id, payment_method) values (1, 'credit_card');
+insert into payments (booking_id, payment_method) values 
+(1, 'credit_card');
 
 insert into tickets (booking_id, showtime_id, seat_id, price) values 
 (1, 5, 1, 250.00), (1, 5, 2, 250.00);

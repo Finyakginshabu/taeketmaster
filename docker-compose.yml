@@ -18,5 +18,18 @@ services:
       timeout: 5s
       retries: 5
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tae.admin@tae.ac.th
+      PGADMIN_DEFAULT_PASSWORD: tae123
+    ports:
+      - "5050:80"
+    depends_on:
+      taeketmaster_db:
+        condition: service_healthy
+    restart: always
+
 volumes:
   postgres_data:
