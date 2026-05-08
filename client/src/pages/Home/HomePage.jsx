@@ -29,10 +29,7 @@ export default function HomePage(){
             setEvents(mockEvents);
     }, []);
 
-    return( <>
-            <NavBar />
-
-            <div className="wrapper">
+    return( <div className="wrapper">
                 <div className="filter">
                     <button className={hideSoldOut ? "hide-sold-out" : "filter-btn"}
                         onClick={() => setHideSoldOut((v) => !v)}>
@@ -56,6 +53,6 @@ export default function HomePage(){
                     ))}
                 </div>
             </div>
-            </>);
+        );
             
 }

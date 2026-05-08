@@ -3,7 +3,7 @@ import SearchBar from './SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import { WhiteLogo, HomeWhite, Cart, User, MapPin, Calendar, Search } from './Icons.jsx';
 
-export default function NavBar({ user, cartStartTime}){
+export default function NavBar({ user, cartStartTime, children}){
 
     const [timeLeft, setTimeLeft] = useState(null);
 
@@ -31,32 +31,37 @@ export default function NavBar({ user, cartStartTime}){
     }, [cartStartTime]);
     
     return(
-        <div className="nav-bar">
-            <WhiteLogo className="logo-user" />
-        
-            <div className="nav-bar-content">
-                <div className="back-to-home">
-                    <HomeWhite className="nav-bar-icon" />
-                    <Link to="/home" className="home">Home</Link>
-                </div>
-
-                <div className="search-bar">
-                    <SearchBar />
-                </div>
-                <div className="cart-login">
-                    <Link to="/cart" className={`cart-link ${timeLeft ? 'active-timer' : ''}`}>
-                        <Cart />
-                        {timeLeft && <span className="cart-timer">{timeLeft}</span>}
-                    </Link>
-        
-                    <div className="user-log-in">
-                        <User className="nav-bar-icon" />
-                        {user ? ( <Link to="/profile" className="sign-in">{user.username}</Link>) 
-                        : (<Link to="/signin" className="sign-in">Sign In</Link>)}
+        <div className="layout-container">
+            <div className="nav-bar">
+                <WhiteLogo className="logo-user" />
+            
+                <div className="nav-bar-content">
+                    <div className="back-to-home">
+                        <HomeWhite className="nav-bar-icon" />
+                        <Link to="/home" className="home">Home</Link>
                     </div>
+
+                    <div className="search-bar">
+                        <SearchBar />
+                    </div>
+                    <div className="cart-login">
+                        <Link to="/cart" className={`cart-link ${timeLeft ? 'active-timer' : ''}`}>
+                            <Cart />
+                            {timeLeft && <span className="cart-timer">{timeLeft}</span>}
+                        </Link>
+            
+                        <div className="user-log-in">
+                            <User className="nav-bar-icon" />
+                            {user ? ( <Link to="/account-setting" className="sign-in">{user.username}</Link>) 
+                            : (<Link to="/signin" className="sign-in">Sign In</Link>)}
+                        </div>
+                    </div>
+                    
                 </div>
-                
             </div>
+            <main className="main-content">
+                {children}
+            </main>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { INITIAL_DATA, TABLE_CONFIGS } from '../../api/tablesConfig.js';
+import { INITIAL_DATA, TABLE_CONFIGS } from '../../utils.js';
 
 export default function AdminEditPage () {
   const navigate = useNavigate();

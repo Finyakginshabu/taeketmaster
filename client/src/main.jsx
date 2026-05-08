@@ -13,6 +13,7 @@ import ResetPasswordPage from './pages/Login/ResetPasswordPage';
 import HomePage from './pages/Home/HomePage';
 import EventPage from './pages/Event/EventPage';
 import ConcertPlan from './pages/Booking/ConcertPlan';
+import NavBar from './components/NavBar.jsx';
 
 // AdminPage
 import DashBoardPage from './pages/DashBoard/DashBoardPage.jsx';
@@ -27,11 +28,41 @@ import ComparisonPage from './pages/Comparison/ComparisonPage.jsx';
 import './index.css';
 
 // image URL
-import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison } from './components/Icons.jsx';
+import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison, ChevronDown } from './components/Icons.jsx';
+
+function SubMenu({ icon, label, children, basePath }) {
+  const location = window.location.pathname;
+  const isActive = location.startsWith(basePath);
+  const [isOpen, setIsOpen] = React.useState(isActive);
+
+  return (
+    <div className={`nav-group ${isOpen ? 'open' : ''}`}>
+      <button 
+        type="button" 
+        className={`nav-item ${isActive ? 'active' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="nav-icon-box">{icon}</span>
+        <span style={{ flex: 1 }}>{label}</span>
+        <svg 
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{ transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0)' }}
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div className="nav-submenu" style={{ display: isOpen ? 'block' : 'none' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 function Sidebar() {
 
   const getNavClass = ({ isActive }) => isActive ? "nav-item active" : "nav-item";
+  const getSubLinkClass = ({ isActive }) => isActive ? "nav-subitem active" : "nav-subitem";
 
   return (
     <aside className="sidebar">
@@ -62,14 +93,28 @@ function Sidebar() {
         </NavLink>
 
         <div className="nav-group">
-        <NavLink to="/reports" className={getNavClass}>
-          <span className="nav-icon-box">
-            <Report width={24} />
-          </span>
-          <span className="nav-label">Reports</span>
-        </NavLink>
-        <hr className="nav-separator" />
-      </div>
+          <SubMenu 
+            basePath="/reports"
+            icon={<Report width={24} />}
+            label="Reports">
+            <NavLink to="/reports/todays-booking" className={getSubLinkClass}>
+              Today's Booking
+            </NavLink>
+            <NavLink to="/reports/todays-revenue" className={getSubLinkClass}>
+              Today's Revenue
+            </NavLink>
+            <NavLink to="/reports/customer-sales" className={getSubLinkClass}>
+              Customer Buying
+            </NavLink>
+            <NavLink to="/reports/receipt-list" className={getSubLinkClass}>
+              Receipt List
+            </NavLink>
+            <NavLink to="/reports/invoice-receipt" className={getSubLinkClass}>
+              Invoice &amp; Receipt
+            </NavLink>
+          </SubMenu>
+          <hr className="nav-separator" />
+        </div>
 
         <NavLink to="/account" className={getNavClass}>
         {({ isActive }) => (
@@ -114,8 +159,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/event/:id" element={<EventPage />} />
+        <Route path="/account-setting" element={<NavBar><AccountPage /></NavBar>} />
+        <Route path="/home" element={<NavBar><HomePage /></NavBar>} />
+        <Route path="/event/:id" element={<NavBar><EventPage /></NavBar>} />
         <Route path="/event-booking/:id" element={<ConcertPlan />} />
         
         <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />

@@ -29,10 +29,7 @@ export default function EventPage(){
     const status = getStatus(event.startDate, event.endDate, event.isAvailable);
     const saleStatus = eventStatus(event.startDate, event.endDate, event.isAvailable);
 
-    return( <>
-            <NavBar />
-
-            <div className="event-wrapper">
+    return( <div className="event-wrapper">
                 <div className="event-container">
                     <img className="poster" src={event.imageUrl} />
                     <div className="event-info">
@@ -92,5 +89,5 @@ export default function EventPage(){
                 </div>
                 
             </div>
-            </>);
+        );
 }

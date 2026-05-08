@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { TABLE_CONFIGS } from '../../api/tablesConfig.js';
+import { TABLE_CONFIGS } from '../../utils.js';
 
 export default function AdminAddPage() {
   const navigate    = useNavigate();

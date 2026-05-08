@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Add, Edit, Delete } from '../../components/Icons.jsx';
 import { mockTables } from "../../api/mockData.js";
-import { TABLE_CONFIGS, INITIAL_DATA } from '../../api/tablesConfig.js';
+import { TABLE_CONFIGS, INITIAL_DATA } from '../../utils.js';
 
 function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
   const [rows, setRows]     = useState(INITIAL_DATA[title] ?? []);
