@@ -26,7 +26,7 @@ export default function HomePage() {
   }, [search]);
 
   return (
-    <div className="page-container">
+    <div className="page-container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem' }}>
       <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>ค้นหาคอนเสิร์ต</h1>
         <input 
