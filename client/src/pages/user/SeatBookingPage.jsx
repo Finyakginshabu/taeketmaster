@@ -55,7 +55,7 @@ export default function SeatBookingPage() {
         </h1>
       </div>
 
-      <div className="sbp-content">
+      <div className="sbp-content" style={{ display: 'flex', justifyContent: 'center', margin: '0 auto', maxWidth: '1200px', gap: '40px' }}>
         
         {/* Left: Seat Grid */}
         <div className="sbp-grid-container">
@@ -183,6 +183,8 @@ export default function SeatBookingPage() {
             <button 
               className="sbp-btn reserve"
               disabled={selectedSeats.length === 0}
+              onClick={() => navigate('/cart')}
+              style={{ cursor: 'pointer' }}
             >
               Reserve
             </button>
