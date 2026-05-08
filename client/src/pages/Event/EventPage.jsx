@@ -1,18 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import NavBar from '../../components/NavBar.jsx';
-import { getStatus } from '../Home/EventCard.jsx';
-import { mockEvents } from "../../api/mockData.js";
-import { Calendar, MapPin, Price, Sale } from '../../components/Icons.jsx';
-
-function eventStatus(startDate, endDate, isAvailable) {
-        if (!isAvailable) return { status: "SOLD OUT", label: "sold-out-sale" };
-
-        const today = new Date();
-        if (today < new Date(startDate)) return { status: "COMING SOON", label: "coming-soon-sale" };
-        return { status: "ON SALE NOW", label: "buy-now-sale" };
-}
-
 export default function EventPage(){
     
     const {id} = useParams();

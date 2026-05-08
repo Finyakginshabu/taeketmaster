@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import CalendarPicker from '../../components/CalendarPicker';
-import { Calendar, GreenLogo } from '../../components/Icons';
 
-export default function RegisterPage() {
+export default function RegisterPage({ calendarUrl }) {
   const [username, setUsername]   = useState('');
   const [password, setPassword]   = useState('');
   const [firstName, setFirstName] = useState('');
@@ -49,12 +48,14 @@ export default function RegisterPage() {
 
   return (
     <div className="auth-page">
-      <GreenLogo className="sign-up-logo" />
+      {/* 🟢 แก้โลโก้ให้เป็น Text แบบเดียวกับหน้าอื่นๆ เพื่อความสม่ำเสมอ */}
+      <div className="auth-logo">taeketmaster<sup>®</sup></div>
 
       <div className="auth-box wide">
         <h2 className="auth-title">Sign Up</h2>
 
         <div className="auth-grid">
+          {/* ช่อง Username */}
           <div className="auth-field">
             <label className="auth-label">Username <span className="required">*</span></label>
             <input type="text" className="auth-input" placeholder="cool_username" value={username}
@@ -62,6 +63,7 @@ export default function RegisterPage() {
               style={errors.username ? { border: '1.5px solid #FF0000' } : {}}/>
           </div>
 
+          {/* ช่อง Password */}
           <div className="auth-field">
             <label className="auth-label">Password <span className="required">*</span></label>
             <div style={{ position: 'relative', width: '100%' }}>
@@ -69,20 +71,14 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)} 
               style={errors.password ? { border: '1.5px solid #FF0000' } : {}}
               />
-
               <span 
                 onClick={() => setShowPassword(!showPassword)}
-                style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                {/* 🟢 เปลี่ยนลูกกะตาเป็นแบบ SVG มินิมอลเหมือนหน้าอื่นๆ */}
                 {showPassword ? (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E1E1E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                  </svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E1E1E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                 )}
               </span>
             </div>
@@ -111,51 +107,55 @@ export default function RegisterPage() {
 
           <div className="auth-field">
             <label className="auth-label">Phone number</label>
-            <input type="tel" className="auth-input" placeholder="xxxxxxxxxx" />
+            <input type="tel" className="auth-input" placeholder="xxxxxxxxx" />
           </div>
 
-         <div className="auth-field">
-          <label className="auth-label">Date of Birth</label>
-          <div ref={calendarRef} style={{ position: 'relative', width: '100%' }}>
-            <div className="auth-input" style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ flex: 1, color: dob ? 'inherit' : '#A0B08C' }}>
-                {dob ? formatDateTH(dob) : "DD/MM/YYYY"}
-              </span>
-              <Calendar width="16" height="16"
-                onClick={() => setShowCalendar((v) => !v)} style={{ cursor: 'pointer' }} />
+          {/* ช่อง Date of Birth */}
+          <div className="auth-field">
+            <label className="auth-label">Date of Birth</label>
+            <div ref={calendarRef} style={{ position: 'relative', width: '100%' }}>
+              <div className="auth-input" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setShowCalendar((v) => !v)}>
+                <span style={{ flex: 1, color: dob ? '#1E1E1E' : '#9CA3AF' }}>
+                  {dob ? formatDateTH(dob) : "DD/MM/YYYY"}
+                </span>
+                <img src={calendarUrl} width="16" height="16" alt="calendar icon" />
+              </div>
+
+              {showCalendar && (
+                <div style={{ position: 'absolute', zIndex: 10, top: '100%', left: 0 }}>
+                  <CalendarPicker
+                    value={dob}
+                    onChange={setDob}
+                    onClose={() => setShowCalendar(false)}
+                  />
+                </div>
+              )}
             </div>
-
-            {showCalendar && (
-              <CalendarPicker
-                value={dob}
-                onChange={setDob}
-                onClose={() => setShowCalendar(false)}
-              />
-            )}
           </div>
-        </div>
 
+          {/* ช่อง Gender */}
           <div className="auth-field">
             <label className="auth-label">Gender</label>
             <div className="auth-radio-group">
-              <label><input type="radio" name="gender" value="male"   onChange={handleGenderChange} /> male</label>
-              <label><input type="radio" name="gender" value="female" onChange={handleGenderChange} /> female</label>
-              <label><input type="radio" name="gender" value="other"  onChange={handleGenderChange} /> other</label>
+              <label className="auth-radio-label"><input type="radio" name="gender" value="male" onChange={handleGenderChange} /> male</label>
+              <label className="auth-radio-label"><input type="radio" name="gender" value="female" onChange={handleGenderChange} /> female</label>
+              <label className="auth-radio-label"><input type="radio" name="gender" value="other" onChange={handleGenderChange} /> other</label>
 
               {gender === 'other' && (
                   <input
                       type="text"
                       className="auth-input"
-                      placeholder=""
-                      style={{ width: '70px', padding: '0.3rem', marginLeft: '0.2rem' }}
+                      style={{ width: '80px', padding: '0.2rem 0.5rem', marginLeft: '0.5rem', height: '28px' }}
                   />
               )}
-          </div>
+            </div>
           </div>
         </div>
 
-        <button className="auth-btn" style={{ marginTop: '1.5rem' }}
-          onClick={handleSubmit}>Create Account</button>
+        {/* 🟢 ปุ่ม Create Account แบบแคปซูลตรงกลางตาม Figma */}
+        <button className="auth-btn" style={{ width: '220px', margin: '2rem auto 0 auto' }} onClick={handleSubmit}>
+          Create Account
+        </button>
       </div>
     </div>
   );

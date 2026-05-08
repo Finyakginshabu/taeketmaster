@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-
 :root{
   --gree-on-white: #3b4b1b;
   --green-on-green: #1a2700;
   --light-green: #d6e7b6;
   --user-core-green: #596b37;
   --red: #FF0000;
-  --cream: #F2EFDB;
 
   --bg-body: #f7f9ef;
   --bg-surface: #ffffff;
@@ -21,9 +18,21 @@
   --border-focus: #596b37;
   --border-muted: #999999;
 
-  --font-sans: 'Noto Sans', system-ui, -apple-system, sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --radius-sm: 0.375rem;
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
+
+  --font-sans: Noto Sans, system-ui, -apple-system, sans-serif;
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* *{
+  box-sizing: border-box;
+} */
 
 body{
   margin: 0;
@@ -80,7 +89,7 @@ body{
 }
 
 .auth-label{
-  font-size: 12px;
+  font-size: 0.65rem;
   font-weight: 600;
   color: var(--gree-on-white);
   margin-bottom: 0.3rem;
@@ -165,7 +174,7 @@ body{
 .auth-links {
   text-align: center;
   margin-top: 0.5rem;
-  font-size: 12px;
+  font-size: 0.65rem;
   margin-bottom: 2.5rem;
 }
 
@@ -176,27 +185,6 @@ body{
 
 .auth-links a:hover {
   text-decoration: underline;
-}
-
-.error-message{
-  min-height: 20px;
-  font-size: 12px;
-  color: var(--red);
-  margin-top: 10px;
-  margin-bottom: 0;
-}
-
-.auth-description{
-  font-size: 0.9rem;
-  color: var(--green-on-green);
-  text-align: center;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-input::-ms-reveal,
-input::-ms-clear {
-  display: none;
 }
 
 .nav-bar{
@@ -313,7 +301,7 @@ input::-ms-clear {
   background: var(--bg-body);
   border: none;
   cursor: pointer;
-  padding: 0px 8px;
+  padding: 4px 8px;
   color: var(--gree-on-white);
   font-size: 18px;
   transition: background 0.15s;
@@ -322,7 +310,7 @@ input::-ms-clear {
 
 .divider {
   width: 1px;
-  height: 28px;
+  height: 36px;
   background: var(--border-muted);
 }
 
@@ -341,7 +329,7 @@ input::-ms-clear {
   align-items: center;
   background: var(--bg-body);
   border-radius: 10px;
-  padding: 0px 14px;
+  padding: 6px 14px;
   gap: 8px;
 }
 
@@ -351,34 +339,13 @@ input::-ms-clear {
 
 .search-input{
   border: none;
-  background-color: var(--bg-body);
+  outline: none;
+  background: none;
   font-size: 16px;
 }
 
 .nav-bar-icon{
   margin-left: 30px;
-}
-
-.cart-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  margin-right: 20px;
-}
-
-.cart-link.active-timer {
-  background-color: var(--red);
-  padding: 6px 14px;
-  border: 2px solid #B30000;
-  border-radius: 10px;
-  gap: 8px;
-  margin-right: 20px;
-}
-
-.cart-timer {
-  color: var(--bg-body);
-  font-weight: 700;
-  font-size: 1.15rem;
 }
 
 .sign-in{
@@ -455,6 +422,7 @@ input::-ms-clear {
   border-radius: 16px;
   margin-bottom: 0;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
 }
 
 .card h2{
@@ -471,7 +439,6 @@ input::-ms-clear {
 .card{
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .card a{
@@ -479,6 +446,10 @@ input::-ms-clear {
 }
 
 .buy-now-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-size: 22px;
   width: 200px;
   height: 56px;
@@ -486,7 +457,6 @@ input::-ms-clear {
   border-radius: 30px;
   color: var(--bg-body);
   background-color: var(--gree-on-white);
-  margin-top: auto;
 }
 
 .buy-now-btn:hover{
@@ -495,6 +465,10 @@ input::-ms-clear {
 }
 
 .coming-soon-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-size: 22px;
   width: 200px;
   height: 56px;
@@ -502,10 +476,13 @@ input::-ms-clear {
   border-radius: 30px;
   color: var(--gree-on-white);
   background-color: var(--bg-body);
-  margin-top: auto;
 }
 
 .sold-out-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-size: 22px;
   width: 200px;
   height: 58px;
@@ -513,7 +490,6 @@ input::-ms-clear {
   border-radius: 30px;
   color: var(--bg-body);
   background-color: #DEDEDE;
-  margin-top: auto;
 }
 
 .event-wrapper{

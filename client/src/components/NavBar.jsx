@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import SearchBar from './SearchBar.jsx';
+import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
-import { WhiteLogo, HomeWhite, Cart, User, MapPin, Calendar, Search } from './Icons.jsx';
 
 export default function NavBar({ user, cartStartTime, children}){
 

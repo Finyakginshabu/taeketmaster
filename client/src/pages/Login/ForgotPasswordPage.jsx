@@ -2,12 +2,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { GreenLogo } from '../../components/Icons';
 
 // 1. สร้าง Zod Schema กำหนดกฎของข้อมูล
 const forgotPasswordSchema = z.object({
-  email: z.string().min(1, { message: "Please enter your email" })
-                    .email({ message: "Please enter your correct email" }),
+  email: z.string().min(1, { message: "กรุณากรอกอีเมล" }).email({ message: "รูปแบบอีเมลไม่ถูกต้อง" }),
 });
 
 export default function ForgotPasswordPage() {
@@ -33,24 +31,24 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="auth-page">
-      <GreenLogo className="sign-up-logo" />
+      <h1 className="auth-logo">taeketmaster®</h1>
 
       <div className="auth-box">
-        <h2 className="auth-title">Forgot password</h2>
+        <h2 className="auth-title">ลืมรหัสผ่าน</h2>
 
-        <p className="auth-description">
-          Enter your registered email <br/> We will send an OTP to verify your identity
+        <p style={{ fontSize: '0.8rem', color: '#4A5D23', textAlign: 'center', marginBottom: '1.5rem', lineHeight: '1.5' }}>
+          กรอกอีเมลที่ลงทะเบียนไว้ <br/> เราจะส่ง OTP ให้คุณ
         </p>
 
         {/* 4. ครอบฟอร์มทั้งหมดด้วยแท็ก <form> และเรียกใช้ handleSubmit */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="auth-field">
-            <label className="auth-label">Email<span className="required">*</span></label>
+            <label className="auth-label">อีเมล (Email) <span className="required">*</span></label>
             {/* ผูก input ตัวนี้เข้ากับตัวแปร email ของ Zod */}
             <input 
               type="email" 
               className={`auth-input ${errors.email ? 'input-error' : ''}`} 
-              placeholder="" 
+              placeholder="example@mail.taeket.ac.th" 
               {...register('email')}
             />
             {/* แสดงข้อความ Error สีแดง ถ้าผู้ใช้กรอกผิดกฎ */}
@@ -58,11 +56,11 @@ export default function ForgotPasswordPage() {
           </div>
 
           {/* ปุ่มสีเขียวตุ่นเต็มกล่อง ต้องเปลี่ยน type เป็น submit */}
-          <button type="submit" className="auth-btn" style={{ width: '60%', marginTop: '2rem' }}>Next</button>
+          <button type="submit" className="auth-btn" style={{ width: '100%', marginTop: '1rem' }}>ส่ง OTP</button>
         </form>
 
-        <div className="auth-links" style={{ marginTop: '1.5rem', marginBottom: '0' }}>
-          <Link to="/signin">← Back to sign in</Link>
+        <div className="auth-links" style={{ marginTop: '1.5rem' }}>
+          <Link to="/login">← กลับไปหน้าเข้าสู่ระบบ</Link>
         </div>
       </div>
     </div>

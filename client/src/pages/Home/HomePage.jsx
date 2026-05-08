@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import EventCard from './EventCard.jsx';
-import NavBar from '../../components/NavBar.jsx';
+import EventCard from './EventCard';
+import NavBar from '../../components/NavBar';
 import { mockEvents } from "../../api/mockData.js";
 
-export default function HomePage(){
+export default function HomePage({whiteLogoUrl, homeUrl, posterUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl}){
 
     const [events, setEvents] = useState([]);
     const [hideSoldOut, setHideSoldOut] = useState(false);
@@ -42,7 +42,6 @@ export default function HomePage(){
                     {filteredEvents.map(event => (
                         <EventCard
                             key={event.id}
-                            id={event.id}
                             title={event.title}
                             date={event.showDate}
                             startDate={event.startDate}
