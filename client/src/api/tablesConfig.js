@@ -7,10 +7,6 @@ export const TABLE_CONFIGS = {
       { key: 'name',  label: 'Name'  },
       { key: 'email', label: 'Email' },
       { key: 'phone', label: 'Phone' },
-      { key: ['houseNo', 'streetName'], label: 'Address Line 1' },
-      { key: ['subDistrict', 'district'], label: 'Address Line 2' },
-      { key: 'province', label: 'Address Line 3' },
-      { key: 'postalCode', label: 'Postal Code' }
     ],
     searchKeys: ['id', 'name', 'email'],
     clickable:  true,
