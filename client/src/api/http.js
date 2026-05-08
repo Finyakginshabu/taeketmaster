@@ -1,4 +1,3 @@
-// I'm so proud to 100% copy this from InvoiceDoc2
 // Backend API base URL (override via .env VITE_API_BASE)
 export const API_BASE = import.meta.env.VITE_API_BASE !== undefined ? import.meta.env.VITE_API_BASE : "http://localhost:6700";
 

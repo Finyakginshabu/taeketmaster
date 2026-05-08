@@ -3,47 +3,107 @@ import { Link } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Label } from 'recharts';
 import { Comparison } from '../../components/Icons';
 import { monthNamesFull } from '../../utils.js';
-import { mockData, monthlyRevenueData, quarterlySalesData } from '../../api/mockData.js';
+import { getTodayTicketSold, getTopSellingArtists, getTopTicketSpenders,
+        getMonthlyRevenue, getQuaterRevenue, getPopularEvent, getTopSpender, } from '../../api/dashboard.api.js';
 
 export default function Dashboard() {
-  //store query data here
-  const [dashboardData, setDashboardData] = useState({
-    stats: null,
-    topSpenders: [],
-    monthlyBookings: null,
-    quarterlySales: null,
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  const [stats,           setStats]           = useState(null);
+  const [topArtists,      setTopArtists]      = useState([]);
+  const [topSpenders,     setTopSpenders]     = useState([]);
+  const [monthlyRevenue,  setMonthlyRevenue]  = useState([]);
+  const [quarterRevenue,  setQuarterRevenue]  = useState([]);
+  const [popularEvents,   setPopularEvents]   = useState([]);
+  const [allTimeSpenders, setAllTimeSpenders] = useState([]);
+  const [isLoading,       setIsLoading]       = useState(true);
+  const [error,           setError]           = useState(null);
 
-  // API
   useEffect(() => {
-    const fetchDashboardData = async () => {
+    const fetchAll = async () => {
       try {
-        // const response = await fetch('/api/dashboard-summary');
-        // const data = await response.json();
+        const [
+          todayData,
+          artistsData,
+          spendersData,
+          monthlyData,
+          quarterData,
+          popularData,
+          allTimeData,
+        ] = await Promise.all([
+          getTodayTicketSold(),
+          getTopSellingArtists(),
+          getTopTicketSpenders(),
+          getMonthlyRevenue(),
+          getQuaterRevenue(),
+          getPopularEvent(),
+          getTopSpender(),
+        ]);
 
-        setDashboardData(mockData);
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
+        // 1. Stats ของวันนี้ (เก็บ object ไว้เหมือนเดิม ไปดึงค่าตอน Render)
+        setStats(todayData);
+
+        // 2. Top Artists: แปลงจาก Array of Objects ให้เหลือแค่ Array ของชื่อศิลปิน
+        setTopArtists(artistsData.map(a => a.artist_name));
+
+        // 3. Top Spenders (Quarter): แมป key ให้ตรงกับที่ตารางเรียกใช้
+        setTopSpenders(spendersData.map(s => ({
+          rank: s.rank,
+          name: s.name,
+          tickets: s.total_tickets
+        })));
+
+        // 4. Monthly Revenue: แปลง Object { jan: 100, feb: 200 } เป็น Array ให้ Recharts
+        const formattedMonthly = Object.entries(monthlyData.monthly_revenue || {}).map(([month, rev]) => ({
+          month: month,
+          revenue: Number(rev)
+        }));
+        setMonthlyRevenue(formattedMonthly);
+
+        // 5. Quarter Revenue: แปลง Object เป็น Array ให้ Recharts
+        const formattedQuarter = Object.entries(quarterData.quater_revenue || {}).map(([quarter, rev]) => ({
+          quarter: quarter,
+          revenue: Number(rev)
+        }));
+        setQuarterRevenue(formattedQuarter);
+
+        // 6. Popular Events: แปลง Object เป็น Array ให้ตาราง
+        const formattedPopular = Object.entries(popularData.popular_events || {}).map(([eventName, seats], index) => ({
+          rank: index + 1,
+          name: eventName,
+          remainingSeats: Number(seats)
+        }));
+        setPopularEvents(formattedPopular);
+
+        // 7. All Time Spenders: แปลง Object เป็น Array ให้ตาราง
+        const formattedAllTime = Object.entries(allTimeData.top_spenders || {}).map(([name, spent], index) => ({
+          rank: index + 1,
+          name: name,
+          totalSpent: Number(spent)
+        }));
+        setAllTimeSpenders(formattedAllTime);
+
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err);
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchDashboardData();
+    fetchAll();
   }, []);
 
   if (isLoading) return <div className="dashboard-loading">Loading Dashboard...</div>;
+  if (error)     return <div className="dashboard-loading">เกิดข้อผิดพลาด: {error}</div>;
 
-  const peakMonth = monthlyRevenueData.reduce((max, current) => (current.revenue > max.revenue ? current : max), monthlyRevenueData[0]);
-  const lowestMonth = monthlyRevenueData.reduce((min, current) => (current.revenue < min.revenue ? current : min), monthlyRevenueData[0]);
+  const peakMonth   = monthlyRevenue.reduce((max, cur) => cur.revenue > max.revenue ? cur : max, monthlyRevenue[0] ?? {});
+  const lowestMonth = monthlyRevenue.reduce((min, cur) => cur.revenue < min.revenue ? cur : min, monthlyRevenue[0] ?? {});
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h2>Dashboard</h2>
         <Link to="/comparison" className="comparison-btn">
-          <Comparison width={24}/> Comparison
+          <Comparison width={24} /> Comparison
         </Link>
       </div>
 
@@ -53,16 +113,30 @@ export default function Dashboard() {
           <div className="dash-card" style={{ flex: 1 }}>
             <h3 className="card-title">Today's Tickets Sold</h3>
             <div className="stat-content">
-              <span className="stat-number">{dashboardData.stats.todayBooking}</span>
-              <div className="stat-growth green"> {dashboardData.stats.todayBookingGrowth} <br/><small>tickets sold</small></div>
+              {/* ดึงจำนวนตั๋ว */}
+              <span className="stat-number">{stats?.today?.total_tickets_sold || 0}</span>
+              {/* ดึง % ticket_percent */}
+              <div className="stat-growth green">
+                {stats?.difference_percent?.ticket_percent > 0 ? '+' : ''}
+                {stats?.difference_percent?.ticket_percent || 0}%
+                <br /><small>vs avg last 7 days</small>
+              </div>
             </div>
           </div>
 
           <div className="dash-card" style={{ flex: 1 }}>
             <h3 className="card-title">Today's Revenue</h3>
             <div className="stat-content">
-              <span className="stat-number">{dashboardData.stats.todayPayment}</span>
-              <div className="stat-growth green"> {dashboardData.stats.todayPaymentGrowth} <br/><small>THB</small></div>
+              {/* ดึงรายได้ */}
+              <span className="stat-number">
+                ฿{(stats?.today?.total_revenue || 0).toLocaleString()}
+              </span>
+              {/* ดึง % revenue_percent */}
+              <div className="stat-growth green">
+                {stats?.difference_percent?.revenue_percent > 0 ? '+' : ''}
+                {stats?.difference_percent?.revenue_percent || 0}%
+                <br /><small>vs avg last 7 days</small>
+              </div>
             </div>
           </div>
         </div>
@@ -70,7 +144,7 @@ export default function Dashboard() {
         <div className="dash-card span-1x2">
           <h3 className="card-title center">Top Selling Artist</h3>
           <div className="artist-list">
-            {dashboardData.stats.topArtists.map((artist, idx) => (
+            {topArtists.map((artist, idx) => (
               <h4 key={idx} className={idx === 0 ? 'top-1' : ''}>{artist}</h4>
             ))}
           </div>
@@ -80,14 +154,10 @@ export default function Dashboard() {
           <h3 className="card-title center">Top Ticket Spenders (Quarterly)</h3>
           <table className="spenders-table">
             <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Total Tickets</th>
-              </tr>
+              <tr><th>Rank</th><th>Name</th><th>Total Tickets</th></tr>
             </thead>
             <tbody>
-              {dashboardData.topSpenders.map((user) => (
+              {topSpenders.map((user) => (
                 <tr key={user.rank}>
                   <td>{user.rank}</td>
                   <td>{user.name}</td>
@@ -100,8 +170,6 @@ export default function Dashboard() {
 
         <div className="dash-card span-2x2 chart-container" style={{ display: 'flex', flexDirection: 'column' }}>
           <h3 className="card-title center">Monthly Revenue</h3>
-          
-          {/* ย้าย Peak/Lowest มาเรียงแนวนอนไว้ด้านบนกราฟ */}
           <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', marginBottom: '15px', marginTop: '10px' }}>
             <div style={{ textAlign: 'center' }}>
               <span style={{ fontSize: '20px', color: 'var(--text-main)' }}>Peak Month: </span>
@@ -116,15 +184,13 @@ export default function Dashboard() {
               </span>
             </div>
           </div>
-
-          {/* กราฟเส้น (จะกว้างเต็มกล่องพอดี) */}
           <div style={{ flex: 1, backgroundColor: '#FFFFFF', padding: '15px 20px 10px 0', borderRadius: '8px', border: '1px solid #e5e7eb', width: '97%' }}>
             <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={monthlyRevenueData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <LineChart data={monthlyRevenue} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} tickFormatter={(value) => `${value / 1000}k`} dx={-5} />
-                <Tooltip formatter={(value) => [`฿${value.toLocaleString()}`, "Revenue"]} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} tickFormatter={(v) => `${v / 1000}k`} dx={-5} />
+                <Tooltip formatter={(v) => [`฿${v.toLocaleString()}`, 'Revenue']} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                 <Line type="linear" dataKey="revenue" stroke="#6366f1" strokeWidth={2.5} dot={{ r: 4, fill: '#6366f1', strokeWidth: 0 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
@@ -133,21 +199,19 @@ export default function Dashboard() {
 
         <div className="dash-card span-2x2" style={{ display: 'flex', flexDirection: 'column' }}>
           <h3 className="card-title center" style={{ marginBottom: '16px' }}>Quarterly Revenue</h3>
-
           <div style={{ flex: 1, backgroundColor: '#FFFFFF', padding: '15px 20px 20px 0', borderRadius: '8px', border: '1px solid #e5e7eb', width: '97%' }}>
-              <ResponsiveContainer width="100%" height={280}>
-                {/* ... โค้ด <BarChart> ตัวเดิมของคุณใส่ตรงนี้ได้เลย ... */}
-                <BarChart data={quarterlySalesData} margin={{ top: 15, right: 10, left: 15, bottom: 20 }}>
-                  <XAxis dataKey="quarter" tick={{ fontSize: 12, fill: '#333' }}>
-                    <Label value="Quarter" offset={-15} position="insideBottom" style={{ fontSize: 13, fill: '#333' }} />
-                  </XAxis>
-                  <YAxis tick={{ fontSize: 12, fill: '#333' }}>
-                    <Label value="Revenue" angle={-90} position="insideLeft" style={{ fontSize: 13, fill: '#333', textAnchor: 'middle' }} />
-                  </YAxis>
-                  <Tooltip formatter={(value) => [`฿${value.toLocaleString()}`, "Revenue"]} cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                  <Bar dataKey="revenue" fill="#6366f1" barSize={45} />
-                </BarChart>
-              </ResponsiveContainer>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={quarterRevenue} margin={{ top: 15, right: 10, left: 15, bottom: 20 }}>
+                <XAxis dataKey="quarter" tick={{ fontSize: 12, fill: '#333' }}>
+                  <Label value="Quarter" offset={-15} position="insideBottom" style={{ fontSize: 13, fill: '#333' }} />
+                </XAxis>
+                <YAxis tick={{ fontSize: 12, fill: '#333' }}>
+                  <Label value="Revenue" angle={-90} position="insideLeft" style={{ fontSize: 13, fill: '#333', textAnchor: 'middle' }} />
+                </YAxis>
+                <Tooltip formatter={(v) => [`฿${v.toLocaleString()}`, 'Revenue']} cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <Bar dataKey="revenue" fill="#6366f1" barSize={45} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -155,18 +219,14 @@ export default function Dashboard() {
           <h3 className="card-title center">Most Popular Events</h3>
           <table className="spenders-table">
             <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Concert Title</th>
-                <th>Remaining Seats</th>
-              </tr>
+              <tr><th>Rank</th><th>Concert Title</th><th>Remaining Seats</th></tr>
             </thead>
             <tbody>
-              {dashboardData.topSpenders.map((user) => (
-                <tr key={user.rank}>
-                  <td>{user.rank}</td>
-                  <td>{user.name}</td>
-                  <td>{user.tickets}</td>
+              {popularEvents.map((event) => (
+                <tr key={event.rank}>
+                  <td>{event.rank}</td>
+                  <td>{event.name}</td>
+                  <td>{event.remainingSeats}</td>
                 </tr>
               ))}
             </tbody>
@@ -177,18 +237,14 @@ export default function Dashboard() {
           <h3 className="card-title center">Top Spender (All-time)</h3>
           <table className="spenders-table">
             <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Total spent</th>
-              </tr>
+              <tr><th>Rank</th><th>Name</th><th>Total Spent</th></tr>
             </thead>
             <tbody>
-              {dashboardData.topSpenders.map((user) => (
+              {allTimeSpenders.map((user) => (
                 <tr key={user.rank}>
                   <td>{user.rank}</td>
                   <td>{user.name}</td>
-                  <td>{user.tickets}</td>
+                  <td>{user.totalSpent}</td>
                 </tr>
               ))}
             </tbody>
