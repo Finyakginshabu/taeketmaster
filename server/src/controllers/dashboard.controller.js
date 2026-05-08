@@ -76,7 +76,7 @@ export const getQuaterRevenue = async (req, res, next) => {
         // YYYY-QX
         const quaterRevenue = {};
         quaterData.sort((a, b) => {
-            if (a.year !== b.year) return a.year - b.year;
+            if(a.year !== b.year) return a.year - b.year;
             return a.quarter - b.quarter;
         }).forEach(row => {
             const quaterKey = `${row.year}-Q${row.quarter}`;

@@ -20,7 +20,7 @@ export default function NavBar({ user = { username: "Sign in" }, cartStartTime})
             if(distance <= 0){
                 clearInterval(interval);
                 setTimeLeft("00:00");
-            } else {
+            }else{
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 setTimeLeft(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);

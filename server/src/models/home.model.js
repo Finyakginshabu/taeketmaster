@@ -16,7 +16,7 @@ export const getEventFeedService = async (filters) => {
     if(startDate && endDate){
         queryParams.push(startDate, endDate);
         queryConditions.push(`s.show_at::date between $${queryParams.length - 1} and $${queryParams.length}`);
-    } else if(startDate){
+    }else if(startDate){
         queryParams.push(startDate);
         queryConditions.push(`s.show_at::date >= $${queryParams.length}`);
     }

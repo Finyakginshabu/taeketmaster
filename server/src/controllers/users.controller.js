@@ -60,7 +60,7 @@ export const upsertAddress = async (req, res, next) => {
                 house_no, street_name, sub_district, district, province, postal_code
             });
             handleResponse(res, 200, "Address updated successfully", result);
-        } else {
+        }else{
             // Create
             result = await model.createAddress(userId, {
                 house_no, street_name, sub_district, district, province, postal_code

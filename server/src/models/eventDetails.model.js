@@ -39,11 +39,7 @@ export const getEventDetailService = async (id) => {
 // Click buy now and show available tickets
 export const getEventDetailTwoService = async (id) => {
     const result = await pool.query(`
-        select 
-            e.title,
-            e.img_path,
-            json_agg(distinct to_char(s.show_at, 'Dy fmdd Mon yyyy hh24:mi')) as showtimes,
-            json_object_agg(z.zone_name, ez.price) as ticket_prices
+        select  e.title, e.img_path, json_agg(distinct to_char(s.show_at, 'Dy fmdd Mon yyyy hh24:mi')) as showtimes, json_object_agg(z.zone_name, ez.price) as ticket_prices
         from events e
         join showtimes s on e.event_id = s.event_id
         join venues v on s.venue_id = v.venue_id

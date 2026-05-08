@@ -148,7 +148,7 @@ const AdminTablesPage = () => {
                 <option value="10">10</option>
                 <option value="20">20</option>
               </select>
-              <span className="pagination-text page-info">Page {usersPage} of {Math.ceil(filteredUsers.length / usersPerPage) || 1}</span>
+              <span className="pagination-text page-info">Page{usersPage} of {Math.ceil(filteredUsers.length / usersPerPage) || 1}</span>
               <div className="pagination-buttons">
                 <button className="page-btn" onClick={() => setUsersPage(1)}><ChevronsLeft size={16} /></button>
                 <button className="page-btn" onClick={() => setUsersPage(Math.max(1, usersPage - 1))}><ChevronLeft size={16} /></button>

@@ -585,7 +585,7 @@ input::-ms-clear {
   gap: 6px;
 }
 
-.buy-now-sale {
+.buy-now-sale{
   padding: 5px 14px;
   border: 2px solid var(--border-focus);
   border-radius: 6px;
@@ -822,7 +822,7 @@ input::-ms-clear {
   background-color: rgba(89, 107, 55, 0.12);
 }
 
-.nav-item.active {
+.nav-item.active{
   background-color: var(--border-focus);
   color: #ffffff;
 }
@@ -892,7 +892,7 @@ input::-ms-clear {
   text-decoration: underline;
   font-weight: 600;
 }
-.update-banner code {
+.update-banner code{
   background: rgba(255,255,255,0.3);
   padding: 2px 6px;
   border-radius: 4px;
@@ -965,7 +965,7 @@ input::-ms-clear {
 
 
 
-.admin-tables-page {
+.admin-tables-page{
   width: 100%;
 }
 
@@ -976,7 +976,7 @@ input::-ms-clear {
   margin-bottom: 30px;
 }
 
-.page-title {
+.page-title{
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-main, #0f172a);
@@ -1064,7 +1064,7 @@ input::-ms-clear {
   margin-bottom: 20px;
 }
 
-.card-title {
+.card-title{
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-main, #0f172a);
@@ -1113,7 +1113,7 @@ input::-ms-clear {
   filter: brightness(0.95);
 }
 
-.admin-table {
+.admin-table{
   width: 100%;
   border-collapse: collapse;
 }
@@ -1192,7 +1192,7 @@ input::-ms-clear {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.admin-user-details-page {
+.admin-user-details-page{
   width: 100%;
 }
 
@@ -1241,7 +1241,7 @@ input::-ms-clear {
   gap: 16px;
 }
 
-.section-title {
+.section-title{
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-main, #0f172a);
@@ -1259,7 +1259,7 @@ input::-ms-clear {
   color: var(--text-muted, #737373);
 }
 
-.info-value {
+.info-value{
   font-size: 1rem;
   color: var(--text-main, #0f172a);
 }
@@ -1268,7 +1268,7 @@ input::-ms-clear {
   padding: 24px 32px;
 }
 
-.history-card .section-title {
+.history-card .section-title{
   margin-bottom: 20px;
 }
 
