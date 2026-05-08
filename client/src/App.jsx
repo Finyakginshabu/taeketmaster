@@ -2,13 +2,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/common/Navbar';
+import UserLayout from './components/layout/UserLayout';
 
 // อัปเดต Path เป็นโฟลเดอร์ Login ทั้งหมด
 import LoginPage from './pages/Login/LoginPage';
 import RegisterPage from './pages/Login/RegisterPage';
 import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
 import OtpPage from './pages/Login/OtpPage';
-import ResetPasswordPage from './pages/Login/ResetPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 import HomePage from './pages/user/HomePage';
 import ConcertDetailPage from './pages/user/ConcertDetailPage';
@@ -56,9 +57,8 @@ function AppRoutes() {
 
 function UserRoutes() {
   return (
-    <>
-      <Navbar />
-      <Routes>
+    <Routes>
+      <Route element={<UserLayout />}>
         {/* Auth */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -75,11 +75,11 @@ function UserRoutes() {
         {/* Protected */}
         <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+      </Route>
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </>
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 

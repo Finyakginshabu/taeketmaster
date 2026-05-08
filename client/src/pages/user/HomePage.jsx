@@ -1,63 +1,57 @@
-import { useState, useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './HomePage.css';
 
-// Mock data
-const MOCK_CONCERTS = [
-  { event_id: 1, title: 'BEDROOM SESSIONS LIVE', artist_name: 'Phum Viphurit', genre: 'Indie Pop', event_status: 'active', min_price: 1500, max_price: 4500, showtimes: [{ show_datetime: '2025-07-20T19:00:00', venue_name: 'Thunder Dome' }] },
-  { event_id: 2, title: 'AFTERHOURS', artist_name: 'Slot Machine', genre: 'Rock', event_status: 'active', min_price: 1200, max_price: 3500, showtimes: [{ show_datetime: '2025-08-10T18:30:00', venue_name: 'Impact Arena' }] },
-  { event_id: 3, title: 'NIGHT FREQUENCY', artist_name: 'MILLI', genre: 'Hip-Hop', event_status: 'active', min_price: 800, max_price: 2800, showtimes: [{ show_datetime: '2025-09-05T19:30:00', venue_name: 'Moonstar Studio' }] },
+const mockConcerts = [
+  { id: 1, title: "Four Woman Up", date: "06 May 2067", status: "Coming Soon" },
+  { id: 2, title: "Bodyslim Tour", date: "27 Jun 2067", status: "Buy Now" },
+  { id: 3, title: "Tattoo Grayscale", date: "03 Dec 2067", status: "Sold out" },
+  { id: 4, title: "Reality Lizard", date: "04 Dec 2067", status: "Buy Now" },
+  { id: 5, title: "Adult Angel", date: "25 Dec 2067", status: "Buy Now" },
+  { id: 6, title: "Placeholder 6", date: "TBA", status: "Coming Soon" },
+  { id: 7, title: "Placeholder 7", date: "TBA", status: "Coming Soon" },
 ];
 
-const GRADIENT_COLORS = ['#e8ff47,#2dd4bf', '#f97316,#ec4899', '#818cf8,#3b82f6'];
-
-function formatDate(dt) {
-  if (!dt) return "";
-  return new Date(dt).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
-}
-
 export default function HomePage() {
-  const [search, setSearch] = useState('');
-
-  const filtered = useMemo(() => {
-    return MOCK_CONCERTS.filter(c => 
-      c.title.toLowerCase().includes(search.toLowerCase()) || 
-      c.artist_name.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [search]);
-
   return (
-    <div className="page-container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem' }}>
-      <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>ค้นหาคอนเสิร์ต</h1>
-        <input 
-          type="text" 
-          placeholder="ค้นหาศิลปินหรือชื่องาน..." 
-          className="form-input"
-          style={{ maxWidth: '500px' }}
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-      </div>
+    <div className="homepage-root">
+      <div className="homepage-container">
+        
+        {/* Filters */}
+        <div className="homepage-filters">
+          <button className="filter-btn">Hide Sold out</button>
+          <button className="filter-btn">Hide Coming Soon</button>
+        </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
-        {filtered.map((concert, idx) => (
-          <Link to={`/concerts/${concert.event_id}`} key={concert.event_id} className="card" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ height: '200px', background: `linear-gradient(135deg, ${GRADIENT_COLORS[idx % 3]})`, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-              <h2 style={{ color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.3)', textAlign: 'center' }}>{concert.title}</h2>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <p style={{ color: 'var(--primary-green)', fontWeight: 'bold', marginBottom: '0.5rem' }}>{concert.genre}</p>
-              <h3 style={{ marginBottom: '0.5rem' }}>🎤 {concert.artist_name}</h3>
-              {/* เพิ่มตัวเช็คความปลอดภัยด้วย ?. เพื่อไม่ให้หน้าเว็บขาว */}
-              <p>📅 {formatDate(concert.showtimes?.[0]?.show_datetime)}</p>
-              <p>📍 {concert.showtimes?.[0]?.venue_name}</p>
-              <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontWeight: '800', fontSize: '1.2rem' }}>฿{concert.min_price.toLocaleString()}</span>
-                <button className="btn btn-primary" style={{ width: 'auto' }}>จองตั๋ว</button>
+        {/* Event Grid */}
+        <div className="event-grid">
+          {mockConcerts.map((concert) => (
+            <div key={concert.id} className="event-card">
+              <div className="event-image-placeholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+              </div>
+              <div className="event-card-body">
+                <h3 className="event-title">{concert.title}</h3>
+                <p className="event-date">{concert.date}</p>
+                
+                {concert.status === 'Buy Now' && (
+                  <Link to={`/concerts/${concert.id}`} className="event-btn buy-now">Buy Now</Link>
+                )}
+                {concert.status === 'Coming Soon' && (
+                  <button className="event-btn coming-soon" disabled>Coming Soon</button>
+                )}
+                {concert.status === 'Sold out' && (
+                  <button className="event-btn sold-out" disabled>Sold out</button>
+                )}
               </div>
             </div>
-          </Link>
-        ))}
+          ))}
+        </div>
+        
       </div>
     </div>
   );
