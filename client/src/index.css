@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root{
-  --gree-on-white: #3b4b1b;
+  --green-on-white: #3b4b1b;
   --green-on-green: #1a2700;
   --light-green: #d6e7b6;
   --user-core-green: #596b37;
@@ -82,7 +82,7 @@ body{
 .auth-label{
   font-size: 12px;
   font-weight: 600;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   margin-bottom: 0.3rem;
 }
 
@@ -98,7 +98,7 @@ body{
   border-radius: 8px;
   background-color: var(--bg-body);
   font-size: 0.75rem;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   box-sizing: border-box;
   outline: none;
   transition: var(--transition);
@@ -155,7 +155,7 @@ body{
 
 .auth-radio-group label {
   font-size: 0.7rem;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   display: flex;
   align-items: center;
   gap: 0.2rem;
@@ -170,7 +170,7 @@ body{
 }
 
 .auth-links a {
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   text-decoration: none;
 }
 
@@ -297,7 +297,7 @@ input::-ms-clear {
   border: none;
   background: none;
   font-size: 18px;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
 }
 
 .section{
@@ -314,7 +314,7 @@ input::-ms-clear {
   border: none;
   cursor: pointer;
   padding: 0px 8px;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   font-size: 18px;
   transition: background 0.15s;
   line-height: 2px;
@@ -485,22 +485,22 @@ input::-ms-clear {
   border: 3px solid var(--border-lightgreen);
   border-radius: 30px;
   color: var(--bg-body);
-  background-color: var(--gree-on-white);
+  background-color: var(--green-on-white);
   margin-top: auto;
 }
 
 .buy-now-btn:hover{
   border: 3px solid color-mix(in srgb, var(--border-lightgreen), var(--bg-body)15%);
-  background-color: color-mix(in srgb, var(--gree-on-white), var(--bg-body)15%);
+  background-color: color-mix(in srgb, var(--green-on-white), var(--bg-body)15%);
 }
 
 .coming-soon-btn{
   font-size: 22px;
   width: 200px;
   height: 56px;
-  border: 3px solid var(--gree-on-white);
+  border: 3px solid var(--green-on-white);
   border-radius: 30px;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   background-color: var(--bg-body);
   margin-top: auto;
 }
@@ -715,7 +715,7 @@ input::-ms-clear {
 }
 
 .showtime-option:hover{
-  background: color-mix(in srgb, var(--gree-on-white) 70%, var(--bg-body) 30%);
+  background: color-mix(in srgb, var(--green-on-white) 70%, var(--bg-body) 30%);
 }
 
 .select-showtime{
@@ -726,7 +726,7 @@ input::-ms-clear {
 .showtime-topic{
   font-size: 28px;
   font-weight: bold;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   margin-left: 50px;
 }
 
@@ -1118,7 +1118,7 @@ button.nav-item {
 .comparison-btn {
   background-color: var(--light-green);
   border: 2px solid var(--border-lightgreen);
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   padding: 0px 14px;
   border-radius: 14px;
   cursor: pointer;
@@ -1185,7 +1185,7 @@ button.nav-item {
 .stat-number {
   font-size: 4.5rem;
   font-weight: 600;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
   line-height: 1;
 }
 
@@ -1250,7 +1250,7 @@ button.nav-item {
 .artist-list .top-1 {
   font-size: 1.35rem;
   font-weight: 700;
-  color: var(--gree-on-white);
+  color: var(--green-on-white);
 }
 
 .chart-container {

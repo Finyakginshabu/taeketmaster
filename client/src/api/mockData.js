@@ -169,3 +169,13 @@ export const monthlyRevenueData = [
   { month: 'Nov', revenue: 160000 },
   { month: 'Dec', revenue: 130000 },
 ];
+
+// ตัวอย่าง Mock Data เอาไว้ทดสอบดูก่อนต่อ API จริง
+export const quarterlySalesData = [
+  { quarter: '2025-Q1', revenue: 70000 },
+  { quarter: '2025-Q2', revenue: 54000 },
+  { quarter: '2025-Q3', revenue: 68000 },
+  { quarter: '2025-Q4', revenue: 78000 },
+  { quarter: '2026-Q1', revenue: 95000 },
+  { quarter: '2026-Q2', revenue: 95000 },
+];

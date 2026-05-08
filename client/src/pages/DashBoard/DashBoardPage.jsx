@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Label } from 'recharts';
 import { Comparison } from '../../components/Icons';
-import { mockData, monthlyRevenueData } from '../../api/mockData.js';
+import { monthNamesFull } from '../../utils.js';
+import { mockData, monthlyRevenueData, quarterlySalesData } from '../../api/mockData.js';
 
 export default function Dashboard() {
   //store query data here
@@ -46,7 +47,6 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* Grid Container ที่กำหนดขนาด Base size ไว้ */}
       <div className="dashboard-grid">
 
         <div className="span-1x2" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -76,7 +76,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* กล่องขนาด 2x2 (กว้าง 2 เท่า สูง 2 เท่า ของ Base size) */}
         <div className="dash-card span-2x2">
           <h3 className="card-title center">Top Ticket Spenders (Quarterly)</h3>
           <table className="spenders-table">
@@ -99,79 +98,101 @@ export default function Dashboard() {
           </table>
         </div>
 
-        {/* กล่องขนาด 3x2 (กว้าง 3 ส่วน สูง 2 ส่วน สำหรับกราฟ) */}
-        <div className="dash-card span-3x2 chart-container" style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="dash-card span-2x2 chart-container" style={{ display: 'flex', flexDirection: 'column' }}>
           <h3 className="card-title center">Monthly Revenue</h3>
           
-          {/* เพิ่มกล่องคลุมตรงนี้ เพื่อแบ่งซ้าย-ขวา */}
-          <div style={{ display: 'flex', flex: 1, gap: '20px', alignItems: 'center', marginTop: '10px' }}>
-            
-            {/* ฝั่งซ้าย: ข้อความสถิติ */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minWidth: '200px', gap: '40px' }}>
-              <div style={{ textAlign: 'center' }}>
-                <h4 style={{ margin: '0 0 10px 0', fontSize: '1.2rem', color: 'var(--text-main)' }}>Peak Month</h4>
-                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--user-core-green)' }}>
-                  {peakMonth.month === 'May' ? 'May' : peakMonth.month} 
-                </div>
-              </div>
-
-              <div style={{ textAlign: 'center' }}>
-                <h4 style={{ margin: '0 0 10px 0', fontSize: '1.2rem', color: 'var(--text-main)' }}>Lowest Month</h4>
-                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#3b82f6' }}> {/* สีฟ้า */}
-                  {lowestMonth.month === 'Sep' ? 'September' : lowestMonth.month}
-                </div>
-              </div>
+          {/* ย้าย Peak/Lowest มาเรียงแนวนอนไว้ด้านบนกราฟ */}
+          <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', marginBottom: '15px', marginTop: '10px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <span style={{ fontSize: '20px', color: 'var(--text-main)' }}>Peak Month: </span>
+              <span style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--green-on-white)' }}>
+                {monthNamesFull[peakMonth.month] || peakMonth.month}
+              </span>
             </div>
-
-            {/* ฝั่งขวา: Line Chart */}
-            <div style={{ flex: 1, height: '80%', minHeight: '280px', backgroundColor: '#FFFFFF', borderRadius: '12px', padding: '15px' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={monthlyRevenueData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                  
-                  <XAxis 
-                    dataKey="month" 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{ fontSize: 12, fill: '#6b7280' }} 
-                    dy={10}
-                  />
-                  
-                  <YAxis 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{ fontSize: 12, fill: '#6b7280' }}
-                    tickFormatter={(value) => `${value / 1000}k`}
-                    dx={-10}
-                  />
-                  
-                  <Tooltip 
-                    formatter={(value) => [`฿${value.toLocaleString()}`, "Revenue"]}
-                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                  />
-                  
-                  <Line 
-                    type="linear" 
-                    dataKey="revenue" 
-                    stroke="#6366f1" 
-                    strokeWidth={2} 
-                    dot={{ r: 4, fill: '#6366f1', strokeWidth: 0 }} 
-                    activeDot={{ r: 6 }} 
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <div style={{ textAlign: 'center' }}>
+              <span style={{ fontSize: '20px', color: 'var(--text-main)' }}>Lowest Month: </span>
+              <span style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
+                {monthNamesFull[lowestMonth.month] || lowestMonth.month}
+              </span>
             </div>
+          </div>
 
+          {/* กราฟเส้น (จะกว้างเต็มกล่องพอดี) */}
+          <div style={{ flex: 1, backgroundColor: '#FFFFFF', padding: '15px 20px 10px 0', borderRadius: '8px', border: '1px solid #e5e7eb', width: '97%' }}>
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={monthlyRevenueData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} tickFormatter={(value) => `${value / 1000}k`} dx={-5} />
+                <Tooltip formatter={(value) => [`฿${value.toLocaleString()}`, "Revenue"]} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <Line type="linear" dataKey="revenue" stroke="#6366f1" strokeWidth={2.5} dot={{ r: 4, fill: '#6366f1', strokeWidth: 0 }} activeDot={{ r: 6 }} />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
-        {/* กล่องขนาด 2x2 สำหรับกราฟ Bar chart */}
-        <div className="dash-card span-1x2 chart-container">
-          <h3 className="card-title center">Quarterly Sales</h3>
-          <div className="chart-placeholder">
-             {/* TODO: นำ Component กราฟแท่งมาใส่ตรงนี้ พร้อมส่ง props dashboardData.quarterlySales ไปให้ */}
-             <p className="placeholder-text">Bar Chart Component Here</p>
+        <div className="dash-card span-2x2" style={{ display: 'flex', flexDirection: 'column' }}>
+          <h3 className="card-title center" style={{ marginBottom: '16px' }}>Quarterly Revenue</h3>
+
+          <div style={{ flex: 1, backgroundColor: '#FFFFFF', padding: '15px 20px 20px 0', borderRadius: '8px', border: '1px solid #e5e7eb', width: '97%' }}>
+              <ResponsiveContainer width="100%" height={280}>
+                {/* ... โค้ด <BarChart> ตัวเดิมของคุณใส่ตรงนี้ได้เลย ... */}
+                <BarChart data={quarterlySalesData} margin={{ top: 15, right: 10, left: 15, bottom: 20 }}>
+                  <XAxis dataKey="quarter" tick={{ fontSize: 12, fill: '#333' }}>
+                    <Label value="Quarter" offset={-15} position="insideBottom" style={{ fontSize: 13, fill: '#333' }} />
+                  </XAxis>
+                  <YAxis tick={{ fontSize: 12, fill: '#333' }}>
+                    <Label value="Revenue" angle={-90} position="insideLeft" style={{ fontSize: 13, fill: '#333', textAnchor: 'middle' }} />
+                  </YAxis>
+                  <Tooltip formatter={(value) => [`฿${value.toLocaleString()}`, "Revenue"]} cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                  <Bar dataKey="revenue" fill="#6366f1" barSize={45} />
+                </BarChart>
+              </ResponsiveContainer>
           </div>
+        </div>
+
+        <div className="dash-card span-2x2">
+          <h3 className="card-title center">Most Popular Events</h3>
+          <table className="spenders-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Concert Title</th>
+                <th>Remaining Seats</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dashboardData.topSpenders.map((user) => (
+                <tr key={user.rank}>
+                  <td>{user.rank}</td>
+                  <td>{user.name}</td>
+                  <td>{user.tickets}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="dash-card span-2x2">
+          <h3 className="card-title center">Top Spender (All-time)</h3>
+          <table className="spenders-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Total spent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dashboardData.topSpenders.map((user) => (
+                <tr key={user.rank}>
+                  <td>{user.rank}</td>
+                  <td>{user.name}</td>
+                  <td>{user.tickets}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
       </div>
