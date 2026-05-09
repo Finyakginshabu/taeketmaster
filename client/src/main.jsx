@@ -3,14 +3,14 @@ import ReactDOM, { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useParams, NavLink } from 'react-router-dom';
 
 // UserPage
-import LoginPage from './pages/Login/LoginPage'; 
-import RegisterPage from './pages/Login/RegisterPage';
-import ForgotPasswordPage from './pages/Login/ForgotPasswordPage';
-import OtpPage from './pages/Login/OtpPage';
-import ResetPasswordPage from './pages/Login/ResetPasswordPage';
-import HomePage from './pages/Home/HomePage';
-import EventPage from './pages/Event/EventPage';
-import ConcertPlan from './pages/Booking/ConcertPlan';
+import LoginPage from './pages/Login/LoginPage.jsx'; 
+import RegisterPage from './pages/Login/RegisterPage.jsx';
+import ForgotPasswordPage from './pages/Login/ForgotPasswordPage.jsx';
+import OtpPage from './pages/Login/OtpPage.jsx';
+import ResetPasswordPage from './pages/Login/ResetPasswordPage.jsx';
+import HomePage from './pages/Home/HomePage.jsx';
+import EventPage from './pages/Event/EventPage.jsx';
+import ConcertPlan from './pages/Booking/ConcertPlan.jsx';
 import NavBar from './components/NavBar.jsx';
 
 // AdminPage
@@ -160,7 +160,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/account-setting" element={<NavBar><AccountPage /></NavBar>} />
         <Route path="/home" element={<NavBar><HomePage /></NavBar>} />
         <Route path="/event/:id" element={<NavBar><EventPage /></NavBar>} />
-        <Route path="/event-booking/:id" element={<ConcertPlan />} />
+        <Route path="/event-booking/:id" element={<NavBar><ConcertPlan /></NavBar>} />
+        <Route path="/event-booking/:id/zone/:zoneId" element={<NavBar><ConcertPlan /></NavBar>} />
         
         <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
         <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />

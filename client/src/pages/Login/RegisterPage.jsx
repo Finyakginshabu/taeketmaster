@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CalendarPicker from '../../components/CalendarPicker';
 import { Calendar, GreenLogo } from '../../components/Icons';
+import { signUp } from '../../api/auth.api.js';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -45,37 +46,25 @@ export default function RegisterPage() {
     if (Object.keys(newErrors).length > 0) return;
 
     try {
-      // 🟢 แปลงวันที่ให้อยู่ในรูปแบบที่ Database เข้าใจ (YYYY-MM-DD)
       const formattedDob = dob ? 
         `${dob.getFullYear()}-${String(dob.getMonth() + 1).padStart(2, '0')}-${String(dob.getDate()).padStart(2, '0')}` 
         : null;
 
       const finalGender = gender === 'other' ? otherGender : gender;
 
-      // 🟢 ยิง API ไปที่ Backend ของคุณ
-      const response = await fetch('http://localhost:6700/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          gender: finalGender,
-          date_of_birth: formattedDob,
-          email: email,
-          phone: phone,
-          username: username,
-          password: password
-        })
+      await signUp({
+        first_name: firstName,
+        last_name: lastName,
+        gender: finalGender,
+        date_of_birth: formattedDob,
+        email: email,
+        phone: phone,
+        username: username,
+        password: password
       });
 
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(data.message || 'Information incorrect');
-      }
-
       alert("Sign up Complete! Please Sign in");
-      navigate('/login');
+      navigate('/signin');
 
     } catch (error) {
       setApiError(error.message);

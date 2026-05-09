@@ -19,6 +19,8 @@ export const provinces = [
 
 export const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+export const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
 export const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -67,6 +69,26 @@ export const TABLE_CONFIGS = {
     newRowTemplate: { name: '', location: '', capacity: '' },
   },
 };
+
+export function formatDateTime(dateString, showTime) {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'short' }); 
+    const year = date.getFullYear();
+
+    let formattedDate = `${day} ${month} ${year}`;
+
+    if (showTime) {
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        formattedDate += ` ${hours}:${minutes}`;
+    }
+
+    return formattedDate;
+}
 
 export const INITIAL_DATA = {
   User: [

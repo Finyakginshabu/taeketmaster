@@ -199,7 +199,23 @@ input::-ms-clear {
   display: none;
 }
 
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 80px;
+}
+
 .nav-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   background-color: var(--user-core-green);
   display: flex;
   gap: 20px;
@@ -551,7 +567,7 @@ input::-ms-clear {
 
 .details{
   display: flex;
-  flex-direction: row;
+  align-items: center;
   gap: 10px;
 }
 
@@ -1689,3 +1705,4 @@ button.nav-item {
 .acct-btn-save:hover {
   opacity: 0.9;
 }
+

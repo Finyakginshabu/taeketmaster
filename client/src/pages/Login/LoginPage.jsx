@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GreenLogo } from '../../components/Icons';
+import { signIn } from '../../api/auth.api.js';
 
 export default function LoginPage(){
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const [loginError, setLoginError] = useState(''); // เพิ่ม State สำหรับเก็บ Error จาก Backend
+  const [loginError, setLoginError] = useState('');
 
   const navigate = useNavigate();
 
@@ -17,43 +18,21 @@ export default function LoginPage(){
     if(!password) newErrors.password = true;
 
     setErrors(newErrors);
-    setLoginError(''); // เคลียร์ Error เดิมก่อนเริ่มยิง API
+    setLoginError('');
 
     if(Object.keys(newErrors).length > 0) return;
 
     try {
-      // ยิง API ไปที่ Endpoint /api/signin
-      // (ถ้าคุณไม่ได้ใช้ Port 6700 ให้แก้ตรงนี้ให้ตรงกับ Backend ของคุณ หรือใช้ API_BASE ที่คุณมี)
-      const response = await fetch('http://localhost:6700/api/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // ส่งตัวแปร usorem ไปให้ตรงกับที่ Backend ต้องการ
-        body: JSON.stringify({ usorem: username, password: password }) 
-      });
+      const data = await signIn({ usorem: username, password });
 
-      const result = await response.json();
-
-      // เช็กจาก HTTP Status และค่า success จากฟังก์ชัน handleResponse ของคุณ
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+      if (data && data.token) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
       }
 
-      // ถ้าสำเร็จ เก็บ Token ที่ได้จาก Backend ลง localStorage
-      // สังเกตว่าต้องดึงจาก result.data.token เพราะคุณส่งข้อมูลแนบมาใน parameter data
-      if (result.data && result.data.token) {
-        localStorage.setItem('token', result.data.token);
-        
-        // ถ้าอยากเก็บข้อมูล User ไว้ใช้หน้าอื่นด้วย ก็สามารถเก็บเพิ่มได้
-        localStorage.setItem('user', JSON.stringify(result.data.user)); 
-      }
-
-      // นำทางไปยังหน้า home
       navigate('/home');
 
     } catch (error) {
-      // นำข้อความแจ้งเตือน (เช่น "One of those was wrong. Guess which?") มาแสดง
       setLoginError(error.message);
     }
   }

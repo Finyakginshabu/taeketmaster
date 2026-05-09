@@ -2,32 +2,69 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Add, Edit, Delete } from '../../components/Icons.jsx';
 import { mockTables } from "../../api/mockData.js";
-import { TABLE_CONFIGS, INITIAL_DATA } from '../../utils.js';
+import { TABLE_CONFIGS } from '../../utils.js';
+import {
+  getArtists, deleteArtist,
+  getGenres, deleteGenre,
+  getAgents, deleteAgent,
+  getVenues, deleteVenue,
+  getUsers,
+  getBookings,
+  getPayments,
+  getTickets,
+} from '../../api/tables.api.js';
+
+// Map table title -> { fetch, delete, idKey }
+const API_MAP = {
+  Artists:  { fetch: getArtists,  del: deleteArtist,  idKey: 'artist_id'  },
+  Genres:   { fetch: getGenres,   del: deleteGenre,   idKey: 'genre_id'   },
+  Agents:   { fetch: getAgents,   del: deleteAgent,   idKey: 'agent_id'   },
+  Venues:   { fetch: getVenues,   del: deleteVenue,   idKey: 'venue_id'   },
+  Users:    { fetch: getUsers,    del: null,           idKey: 'user_id'    },
+  Bookings: { fetch: getBookings, del: null,           idKey: 'booking_id' },
+  Payments: { fetch: getPayments, del: null,           idKey: 'payment_id' },
+  Tickets:  { fetch: getTickets,  del: null,           idKey: 'ticket_id'  },
+};
 
 function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
-  const [rows, setRows]     = useState(INITIAL_DATA[title] ?? []);
+  const [rows, setRows]     = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [page, setPage]     = useState(1);
   const [perPage, setPerPage] = useState(5);
 
   useEffect(() => {
-    setRows(INITIAL_DATA[title] ?? []);
     setSearch(''); setPage(1);
+    const apiEntry = API_MAP[title];
+    if (apiEntry) {
+      setLoading(true);
+      apiEntry.fetch()
+        .then(data => setRows(data || []))
+        .catch(err => { console.error(`Failed to fetch ${title}:`, err); setRows([]); })
+        .finally(() => setLoading(false));
+    } else {
+      setRows([]);
+      setLoading(false);
+    }
   }, [title]);
 
-  const totalPages = Math.ceil(rows.length / perPage) || 1;
-  const paginated  = rows.slice((page - 1) * perPage, page * perPage);
+  const filtered = rows.filter(row =>
+    config.searchKeys.some(k => String(row[k] ?? '').toLowerCase().includes(search.toLowerCase()))
+  );
+  const totalPages = Math.ceil(filtered.length / perPage) || 1;
+  const paginated  = filtered.slice((page - 1) * perPage, page * perPage);
 
-  // Add api here
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this record?')) return;
-
+    const apiEntry = API_MAP[title];
+    if (!apiEntry?.del) return;
     try {
-      await fetch(`/api/${title.toLowerCase()}/${id}`, { method: 'DELETE' });
-      setRows(rows.filter(r => r.id !== id));
+      await apiEntry.del(id);
+      const idKey = apiEntry.idKey;
+      setRows(rows.filter(r => r[idKey] !== id));
     } catch (err) {
       console.error('Delete failed:', err);
-      alert('Delete failed. Please try again.');
+      alert('Delete failed: ' + err.message);
     }
   };
 
@@ -56,9 +93,14 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
           </tr>
         </thead>
         <tbody>
-          {paginated.length > 0 ? paginated.map(row => (
+          {loading ? (
+            <tr><td colSpan={config.columns.length + (config.editable ? 1 : 0)} style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+          ) : paginated.length > 0 ? paginated.map(row => {
+            const idKey = API_MAP[title]?.idKey || 'id';
+            const rowId = row[idKey] ?? row.id;
+            return (
             <tr
-              key={row.id}
+              key={rowId}
               onClick={config.clickable && onRowClick ? () => onRowClick(row) : undefined}
               className={config.clickable ? 'clickable-row' : ''}
             >
@@ -75,14 +117,15 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
                     />
                     <Delete
                       style={{ cursor: 'pointer' }}
-                      onClick={(e) => { e.stopPropagation(); handleDelete(row.id); }}
+                      onClick={(e) => { e.stopPropagation(); handleDelete(rowId); }}
                       title="Delete"
                     />
                   </div>
                 </td>
               )}
             </tr>
-          )) : (
+            );
+          }) : (
             <tr>
               <td colSpan={config.columns.length + (config.editable ? 1 : 0)}
                   style={{ textAlign: 'center', padding: '20px' }}>
