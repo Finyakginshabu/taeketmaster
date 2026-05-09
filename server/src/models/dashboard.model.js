@@ -1,4 +1,4 @@
-import { query } from "../config/db.js";
+import pool from "../config/db.js";
 
 export const getTodayTicketSold = async () => {
     const result = await query(

@@ -112,3 +112,17 @@ export const createPaymentService = async (bookingId, paymentMethod) => {
   }
 };
 
+export const getBookingByIdService = async (bookingId) => {
+  try{
+    const query = `
+      select booking_id, user_id, booked_at, total_price 
+      from bookings 
+      where booking_id = $1
+    `;
+    const result = await pool.query(query, [bookingId]);
+    return result.rows[0] || null;
+  }catch(error){
+    throw error;
+  }
+};
+

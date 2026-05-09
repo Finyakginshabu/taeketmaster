@@ -14,7 +14,7 @@ const resetPasswordSchema = z.object({
   path: ["confirmPassword"], 
 });
 
-export default function ResetPasswordPage(){
+export default function ResetPasswordPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -73,7 +73,7 @@ export default function ResetPasswordPage(){
           </div>
 
           <div className="auth-field" style={{ marginTop: '16px' }}>
-            <label className="auth-label">Confirm new password <span className="required">*</span></label>
+            <label className="auth-label">Confirm password <span className="required">*</span></label>
             <div style={{ position: 'relative', width: '100%' }}>
               <input 
                 type={showConfirmPassword ? "text" : "password"} 

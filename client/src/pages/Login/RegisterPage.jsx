@@ -1,49 +1,83 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CalendarPicker from '../../components/CalendarPicker';
 import { Calendar, GreenLogo } from '../../components/Icons';
+import { signUp } from '../../api/auth.api.js';
 
-export default function RegisterPage(){
+export default function RegisterPage() {
+  const navigate = useNavigate();
   const [username, setUsername]   = useState('');
   const [password, setPassword]   = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName]   = useState('');
   const [email, setEmail]         = useState('');
+  const [phone, setPhone]         = useState('');
   const [dob, setDob] = useState(null);
+  const [gender, setGender] = useState('');
+  const [otherGender, setOtherGender] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef(null);
-  const [gender, setGender] = useState('');
+  
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
 
   useEffect(() => {
     const handler = (e) => {
-      if(calendarRef.current && !calendarRef.current.contains(e.target))
+      if (calendarRef.current && !calendarRef.current.contains(e.target))
         setShowCalendar(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  function handleSubmit(){
+  async function handleSubmit() {
     const newErrors = {};
-    if(!username) newErrors.username = true;
-    if(!password) newErrors.password = true;
-    if(!firstName) newErrors.firstName = true;
-    if(!lastName)  newErrors.lastName  = true;
-    if(!email)     newErrors.email     = true;
+    if (!username) newErrors.username = true;
+    if (!password) newErrors.password = true;
+    if (!firstName) newErrors.firstName = true;
+    if (!lastName)  newErrors.lastName  = true;
+    if (!email)     newErrors.email     = true;
 
     setErrors(newErrors);
-    if(Object.keys(newErrors).length > 0) return;
+    setApiError('');
+
+    if (Object.keys(newErrors).length > 0) return;
+
+    try {
+      const formattedDob = dob ? 
+        `${dob.getFullYear()}-${String(dob.getMonth() + 1).padStart(2, '0')}-${String(dob.getDate()).padStart(2, '0')}` 
+        : null;
+
+      const finalGender = gender === 'other' ? otherGender : gender;
+
+      await signUp({
+        first_name: firstName,
+        last_name: lastName,
+        gender: finalGender,
+        date_of_birth: formattedDob,
+        email: email,
+        phone: phone,
+        username: username,
+        password: password
+      });
+
+      alert("Sign up Complete! Please Sign in");
+      navigate('/signin');
+
+    } catch (error) {
+      setApiError(error.message);
+    }
   }
 
-  function formatDateTH(d){
+  function formatDateTH(d) {
     const dd = String(d.getDate()).padStart(2, "0");
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     return `${dd}/${mm}/${d.getFullYear()}`;
   }
 
-  function handleGenderChange(e){
+  function handleGenderChange(e) {
     setGender(e.target.value);
   }
 
@@ -111,7 +145,13 @@ export default function RegisterPage(){
 
           <div className="auth-field">
             <label className="auth-label">Phone number</label>
-            <input type="tel" className="auth-input" placeholder="xxxxxxxxxx" />
+            <input 
+              type="tel" 
+              className="auth-input" 
+              placeholder="xxxxxxxxxx" 
+              value={phone} 
+              onChange={(e) => setPhone(e.target.value)} 
+            />
           </div>
 
          <div className="auth-field">
@@ -143,12 +183,14 @@ export default function RegisterPage(){
               <label><input type="radio" name="gender" value="other"  onChange={handleGenderChange} /> other</label>
 
               {gender === 'other' && (
-                  <input
-                      type="text"
-                      className="auth-input"
-                      placeholder=""
-                      style={{ width: '70px', padding: '0.3rem', marginLeft: '0.2rem' }}
-                  />
+                <input
+                    type="text"
+                    className="auth-input"
+                    placeholder=""
+                    style={{ width: '70px', padding: '0.3rem', marginLeft: '0.2rem' }}
+                    value={otherGender} 
+                    onChange={(e) => setOtherGender(e.target.value)}
+                />
               )}
           </div>
           </div>

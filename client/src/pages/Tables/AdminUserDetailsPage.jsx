@@ -1,135 +1,93 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import '../../styles/admin/AdminUserDetailsPage.css';
-import '../../styles/admin/AdminTablesPage.css'; // For shared table and pagination styles
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from '../../components/Icons.jsx';
+import { INITIAL_DATA, MOCK_BOOKINGS } from '../../utils.js';
 
-// Mock Data
-const mockUserDetails = {
-  '1008': {
-    id: '1008',
-    name: 'Khanatip Nokhuthot',
-    email: 'khanatip.nokh@tae.ac.th',
-    phone: '0670701008',
-    address: { line1: '126 Pracha Uthit Rd.', line2: 'Bang Mod, Thung Khru', line3: 'Bangkok', country: 'Thailand' },
-    history: [
-      { id: 1, date: '28-04-2025', ticket: '8001070760', title: 'Four Woman Up Live', artist: 'Four Woman Up', venue: 'Suphachalasai Stadium', seat: 'C28', price: '3800.00' },
-      { id: 2, date: '21-11-2022', ticket: '3377210176', title: 'Bodyslim Fest', artist: 'Bodyslim', venue: 'Rajamangala National Stadium', seat: 'A21', price: '3900.00' }
-    ]
-  },
-  '1012': {
-    id: '1012',
-    name: 'Chawin Chinpraditsuk',
-    email: 'chawin.chin@tae.ac.th',
-    phone: '0670501012',
-    address: { line1: '45 Sukhumvit 101', line2: 'Phra Khanong', line3: 'Bangkok', country: 'Thailand' },
-    history: [
-      { id: 1, date: '15-08-2024', ticket: '9002102911', title: 'Rock the Night', artist: 'Slot Machine', venue: 'Impact Arena', seat: 'B12', price: '2500.00' }
-    ]
-  },
-  '1026': {
-    id: '1026',
-    name: 'Norawit Mahaprom',
-    email: 'norawit.maha@tae.ac.th',
-    phone: '0670701026',
-    address: { line1: '88/1 Chiang Mai Road', line2: 'Muang', line3: 'Chiang Mai', country: 'Thailand' },
-    history: [
-      { id: 1, date: '10-01-2025', ticket: '1029381029', title: 'Indie Vibes', artist: 'Phum Viphurit', venue: 'Thunder Dome', seat: 'VIP1', price: '4500.00' },
-      { id: 2, date: '05-09-2024', ticket: '1092837465', title: 'Hip Hop Night', artist: 'MILLI', venue: 'Moonstar Studio', seat: 'S01', price: '2000.00' }
-    ]
-  },
-  '1080': {
-    id: '1080',
-    name: 'Chetsada Kiatkamonwong',
-    email: 'chetsada.kiat@tae.ac.th',
-    phone: '0670501080',
-    address: { line1: '99 Silom Road', line2: 'Bang Rak', line3: 'Bangkok', country: 'Thailand' },
-    history: []
-  },
-  '1087': {
-    id: '1087',
-    name: 'Supichaya Limwatanasamut',
-    email: 'supichaya.limw@tae.ac.th',
-    phone: '0670701087',
-    address: { line1: '12 Ladprao 112', line2: 'Wang Thonglang', line3: 'Bangkok', country: 'Thailand' },
-    history: [
-      { id: 1, date: '22-12-2024', ticket: '4091827364', title: 'Pop Fever', artist: 'Youngampere', venue: 'Lido Connect', seat: 'F15', price: '1500.00' }
-    ]
-  }
-};
+// ── Status badge style ───────────────────────────────────────────────────────
+// const STATUS_STYLE = {
+//   Confirmed: { background: 'rgba(89,107,55,0.12)', color: '#3d5a1e', border: '1px solid rgba(89,107,55,0.3)' },
+//   Cancelled: { background: 'rgba(220,53,69,0.1)',  color: '#b91c1c', border: '1px solid rgba(220,53,69,0.3)' },
+//   Pending:   { background: 'rgba(202,138,4,0.1)',  color: '#92400e', border: '1px solid rgba(202,138,4,0.3)' },
+// };
 
-const AdminUserDetailsPage = () => {
+const USER_FIELDS = [
+  { key: 'id',    label: 'ID' },
+  { key: ['houseNo', 'streetName'], label: 'Address Line 1' },
+  { key: 'name',  label: 'Name' },
+  { key: ['subDistrict', 'district'], label: 'Address Line 2' },
+  { key: 'email', label: 'Email' },
+  { key: 'province', label: 'Address Line 3' },
+  { key: 'phone', label: 'Phone' },
+  { key: 'postalCode', label: 'Postal Code' }
+];
+
+export default function AdminUserDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  
-  // Fallback to 1008 if not found to demonstrate the UI
-  const user = mockUserDetails[id] || mockUserDetails['1008'];
+
+  const user = useMemo(() => INITIAL_DATA.User.find(u => u.id === id), [id]);
+  const bookings = MOCK_BOOKINGS[id] ?? [];
+
+  const [page, setPage]       = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const totalPages = Math.ceil(bookings.length / perPage) || 1;
+  const paginated  = bookings.slice((page - 1) * perPage, page * perPage);
+
+  if (!user) {
+    return (
+      <div className="admin-table">
+        <p>ไม่พบข้อมูล User ID: {id}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="admin-user-details-page">
+    <div className="admin-table">
+
       <div className="breadcrumbs">
-        <Link to="/admin/tables" className="breadcrumb-link">Tables</Link>
-        <span className="breadcrumb-separator">&gt;</span>
-        <span className="breadcrumb-link" onClick={() => navigate('/admin/tables')}>Users</span>
-        <span className="breadcrumb-separator">&gt;</span>
-        <span className="breadcrumb-current">Users Details</span>
+        <Link to="/tables" className="breadcrumb-link">Tables</Link>
+        <span className="breadcrumb-separator"> {'>'} </span>
+        <span className="breadcrumb-link"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate(-1)}>
+          User
+        </span>
+        <span className="breadcrumb-separator"> {'>'} </span>
+        <span className="breadcrumb-current">{user.name}</span>
       </div>
 
-      <div className="table-card info-card">
-        <div className="info-grid">
-          <div className="info-section">
-            <h3 className="section-title">Basic Information</h3>
-            
-            <div className="info-field">
-              <span className="info-label">ID</span>
-              <span className="info-value">{user.id}</span>
-            </div>
-            
-            <div className="info-field">
-              <span className="info-label">Name</span>
-              <span className="info-value">{user.name}</span>
-            </div>
-            
-            <div className="info-field">
-              <span className="info-label">Email</span>
-              <span className="info-value">{user.email}</span>
-            </div>
-            
-            <div className="info-field">
-              <span className="info-label">Phone</span>
-              <span className="info-value">{user.phone}</span>
-            </div>
-          </div>
-          
-          <div className="info-section">
-            <h3 className="section-title">Address</h3>
-            
-            <div className="info-field">
-              <span className="info-label">Address Line 1</span>
-              <span className="info-value">{user.address.line1}</span>
-            </div>
-            
-            <div className="info-field">
-              <span className="info-label">Address Line 2</span>
-              <span className="info-value">{user.address.line2}</span>
-            </div>
-            
-            <div className="info-field">
-              <span className="info-label">Address Line 3</span>
-              <span className="info-value">{user.address.line3}</span>
-            </div>
-            
-            <div className="info-field">
-              <span className="info-label">Country</span>
-              <span className="info-value">{user.address.country}</span>
-            </div>
-          </div>
+      <div className="user-table-card">
+
+        <dl className="fieldGrid">
+          <span style={{fontSize: '26px', fontWeight: 'bold'}}>Basic Information</span>
+          <span style={{fontSize: '26px', fontWeight: 'bold'}}>Address</span>
+          {USER_FIELDS.map(({ key, label }) => {
+            let displayValue;
+
+            if (Array.isArray(key)) {
+              const values = key.map(k => user[k]).filter(Boolean);
+              displayValue = values.length > 0 ? values.join(' ') : '—';
+            } else {
+              displayValue = user[key] || '—';
+            }
+
+            const reactKey = Array.isArray(key) ? key.join('-') : key;
+
+            return (
+              <div key={reactKey} className="fieldItem">
+                <dt className="fieldLabel">{label}</dt>
+                <dd className="fieldValue">{displayValue}</dd>
+              </div>
+            );
+          })}
+        </dl>
+      </div>
+
+      <div className="user-table-card" style={{ marginTop: '24px' }}>
+        <div className="card-header" style={{ marginBottom: '4px' }}>
+          <h2 className="card-title" style={{ margin: 0 }}>Booking History</h2>
         </div>
-      </div>
 
-      <div className="table-card history-card mt-6">
-        <h3 className="section-title">History</h3>
-        
         <table className="admin-table">
           <thead>
             <tr>
@@ -140,45 +98,62 @@ const AdminUserDetailsPage = () => {
               <th>Venue</th>
               <th>Seat</th>
               <th>Price</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
-            {user.history.map((row) => (
-              <tr key={row.id}>
-                <td>{row.date}</td>
-                <td>{row.ticket}</td>
-                <td>{row.title}</td>
-                <td>{row.artist}</td>
-                <td>{row.venue}</td>
-                <td>{row.seat}</td>
-                <td>{row.price}</td>
+            {paginated.length > 0 ? paginated.map(b => (
+              <tr key={b.id}>
+                <td>{b.date}</td>
+                <td>{b.ticket}</td>
+                <td>{b.title}</td>
+                <td>{b.artist}</td>
+                <td>{b.venue}</td>
+                <td>{b.seat}</td>
+                <td>{b.price}</td>
+                {/* Payment Status (optional) เผื่อไว้ก่อน
+                <td>
+                  <span style={{ ...styles.badge, ...STATUS_STYLE[b.status] }}>
+                    {b.status}
+                  </span>
+                </td> */}
+                <td>{b.amount}</td>
               </tr>
-            ))}
+            )) : (
+              <tr>
+                <td colSpan="5" style={{ textAlign: 'center', padding: '28px', color: '#737373' }}>
+                  No booking records found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
 
         <div className="card-footer">
           <div className="pagination-controls">
             <span className="pagination-text">Records per page</span>
-            <select className="records-dropdown" defaultValue="2">
-              <option value="2">2</option>
+            <select
+              className="records-dropdown"
+              value={perPage}
+              onChange={(e) => { setPerPage(Number(e.target.value)); setPage(1); }}
+            >
               <option value="5">5</option>
+              <option value="8">8</option>
               <option value="10">10</option>
             </select>
-            
-            <span className="pagination-text page-info">Page 1 of 1</span>
-            
+            <span className="pagination-text page-info">
+              Page {page} of {totalPages}
+            </span>
             <div className="pagination-buttons">
-              <button className="page-btn"><ChevronsLeft size={16} /></button>
-              <button className="page-btn"><ChevronLeft size={16} /></button>
-              <button className="page-btn"><ChevronRight size={16} /></button>
-              <button className="page-btn"><ChevronsRight size={16} /></button>
+              <button className="page-btn" onClick={() => setPage(1)}                                    disabled={page === 1}>          <ChevronsLeft  size={16} /></button>
+              <button className="page-btn" onClick={() => setPage(p => Math.max(1, p - 1))}             disabled={page === 1}>          <ChevronLeft   size={16} /></button>
+              <button className="page-btn" onClick={() => setPage(p => Math.min(totalPages, p + 1))}    disabled={page === totalPages}><ChevronRight  size={16} /></button>
+              <button className="page-btn" onClick={() => setPage(totalPages)}                           disabled={page === totalPages}><ChevronsRight size={16} /></button>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
-};
-
-export default AdminUserDetailsPage;
+}

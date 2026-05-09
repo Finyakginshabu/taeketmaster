@@ -1,20 +1,40 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GreenLogo } from '../../components/Icons';
+import { signIn } from '../../api/auth.api.js';
 
 export default function LoginPage(){
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState('');
 
-  function handleSubmit(){
+  const navigate = useNavigate();
+
+  async function handleSubmit(){
     const newErrors = {};
     if(!username) newErrors.username = true;
     if(!password) newErrors.password = true;
 
     setErrors(newErrors);
+    setLoginError('');
+
     if(Object.keys(newErrors).length > 0) return;
+
+    try {
+      const data = await signIn({ usorem: username, password });
+
+      if (data && data.token) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      navigate('/home');
+
+    } catch (error) {
+      setLoginError(error.message);
+    }
   }
 
   return (
@@ -24,8 +44,15 @@ export default function LoginPage(){
       <div className="auth-box">
         <h2 className="auth-title">Sign In</h2>
 
+        {/* --- ส่วนแสดงข้อความ Error จาก Backend --- */}
+        {loginError && (
+          <div style={{ color: '#FF0000', fontSize: '14px', marginBottom: '15px', textAlign: 'center', backgroundColor: '#ffe6e6', padding: '10px', borderRadius: '5px' }}>
+            {loginError}
+          </div>
+        )}
+
         <div className="auth-field">
-          <label className="auth-label">Username <span className="required">*</span></label>
+          <label className="auth-label">Username / Email <span className="required">*</span></label>
           <input type="text" className="auth-input" placeholder="" value={username}
               onChange={(e) => setUsername(e.target.value)}
               style={errors.username ? { border: '1.5px solid #FF0000' } : {}}/>

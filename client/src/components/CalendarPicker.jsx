@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {days, months} from '../utils.js';
 
-export default function CalendarPicker({ value, onChange, onClose }){
+export default function CalendarPicker({ value, onChange, onClose }) {
   const today = new Date();
   const [viewDate, setViewDate] = useState(value || today);
   const [view, setView] = useState('day');
@@ -26,7 +26,7 @@ export default function CalendarPicker({ value, onChange, onClose }){
   const yearBase = year - 6;
   const yearRange = Array.from({ length: 18 }, (_, i) => yearBase + i);
 
-  if(view === 'month') return (
+  if (view === 'month') return (
     <div style={styles.calendarBox}>
       <div style={styles.calHeader}>
         <button style={styles.navBtn} onClick={() => setViewDate(new Date(year - 1, month, 1))}>‹</button>
@@ -44,7 +44,7 @@ export default function CalendarPicker({ value, onChange, onClose }){
     </div>
   );
 
-  if(view === 'year') return (
+  if (view === 'year') return (
     <div style={styles.calendarBox}>
       <div style={styles.calHeader}>
         <button style={styles.navBtn} onClick={() => setViewDate(new Date(year - 18, month, 1))}>‹</button>

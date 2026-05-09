@@ -1,4 +1,4 @@
-import { query } from "../config/db.js";
+import pool from "../config/db.js";
 
 // Tickets Sold Report
 export const getTicketsSold = async (startDate, endDate, groupBy) => {

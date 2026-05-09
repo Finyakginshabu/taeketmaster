@@ -1,0 +1,57 @@
+/* ================================================
+   Comparison — #E3E8D8 cards, #6B7E54 accent
+   ================================================ */
+.cp-page { display: flex; flex-direction: column; gap: 18px; }
+
+/* Filter */
+.cp-filter {
+  background: #E3E8D8;
+  border-radius: 10px;
+  padding: 18px 22px 16px;
+}
+.cp-filter-top { margin-bottom: 12px; }
+.cp-range { display: flex; flex-direction: column; gap: 6px; }
+.cp-range-label { font-size: 12px; font-weight: 600; color: #1E1E1E; }
+.cp-range-inputs { display: flex; align-items: center; gap: 10px; }
+.cp-date {
+  padding: 7px 10px; border: 1px solid #c0c0b5; border-radius: 5px;
+  font-size: 13px; background: #fff; color: #1E1E1E; min-width: 150px; font-family: inherit;
+}
+.cp-date:focus { outline: 2px solid #6B7E54; outline-offset: -1px; }
+.cp-to { font-size: 13px; color: #555; }
+.cp-filter-btns { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* Buttons */
+.cp-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 16px; border-radius: 5px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1px solid transparent; font-family: inherit;
+  transition: background 0.15s;
+}
+.cp-btn:active { transform: scale(0.97); }
+.cp-btn--reset { background: #fff; color: #1E1E1E; border-color: #c0c0b5; }
+.cp-btn--reset:hover { background: #f5f5f0; }
+.cp-btn--apply { background: #6B7E54; color: #fff; border-color: #6B7E54; }
+.cp-btn--apply:hover { background: #5a6d45; }
+
+/* Empty */
+.cp-empty {
+  background: #E3E8D8; border-radius: 10px;
+  padding: 54px 24px 48px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.cp-empty-icon { color: #8a9a6b; opacity: 0.55; margin-bottom: 14px; }
+.cp-empty-h { font-size: 16px; font-weight: 700; color: #1E1E1E; margin: 0 0 6px; }
+.cp-empty-p { font-size: 12px; color: #555; max-width: 300px; line-height: 1.55; margin: 0; }
+
+/* Results */
+.cp-results { display: flex; flex-direction: column; gap: 18px; }
+.cp-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.cp-card { background: #E3E8D8; border-radius: 10px; padding: 16px 18px; }
+.cp-card-h { font-size: 13px; font-weight: 700; color: #1E1E1E; margin: 0 0 12px; }
+.cp-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.cp-date-card {
+  background: #E3E8D8; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; padding: 32px 20px;
+}
+.cp-date-big { font-size: 40px; font-weight: 800; color: #1E1E1E; letter-spacing: 1px; }

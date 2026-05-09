@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { GreenLogo } from '../../components/Icons';
+import { API_BASE } from '../../api/http.js';
 
 // 1. สร้าง Zod Schema กำหนดกฎของข้อมูล
 const forgotPasswordSchema = z.object({
@@ -10,7 +11,7 @@ const forgotPasswordSchema = z.object({
                     .email({ message: "Please enter your correct email" }),
 });
 
-export default function ForgotPasswordPage(){
+export default function ForgotPasswordPage() {
   const navigate = useNavigate();
 
   // 2. เรียกใช้ React Hook Form คู่กับ Zod
@@ -23,12 +24,20 @@ export default function ForgotPasswordPage(){
   });
 
   // 3. ฟังก์ชันที่จะทำงานเมื่อกดปุ่ม "ส่ง OTP"
-  const onSubmit = (data) => {
-    console.log("ส่งข้อมูลไปขอ OTP:", data);
-    // TODO: ตรงนี้เดี๋ยวให้เพื่อนมาเขียนโค้ดเรียก API ส่งอีเมลจริงๆ
-
-    // จำลองว่าส่งสำเร็จ แล้วสั่งเปลี่ยนหน้าไปที่หน้า OTP
-    navigate('/otp'); 
+  const onSubmit = async (data) => {
+    // try {
+    //   const response = await fetch(`${API_BASE}/api/forgot-password`, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ email: data.email })
+    //   });
+      
+    //   if (!response.ok) throw new Error("ส่งอีเมลไม่สำเร็จ");
+      
+      navigate('/otp', { state: { email: data.email } }); 
+    // } catch (err) {
+    //   alert(err.message);
+    // }
   };
 
   return (

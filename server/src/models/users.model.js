@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 export const updateUser = async (id, userData) => {
-    const { first_name, last_name, username, phone } = userData;
+    const { first_name, last_name, username, phone, date_of_birth, gender } = userData;
     
     if(username){
         const existingUsername = await pool.query(

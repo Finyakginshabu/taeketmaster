@@ -10,7 +10,7 @@ const handleResponse = (res, status, message, data = null) => {
 
 export const reserveTicket = async (req, res) => {
   try{
-    const userId = req.user.user_id; // From JWT token middleware
+    const userId = req.user.id; // From JWT token middleware
     const { showtimeId, seatId } = req.body;
 
     if(!showtimeId || !seatId){
@@ -61,17 +61,25 @@ export const reserveTicket = async (req, res) => {
 
 export const createPayment = async (req, res) => {
   try{
-    const userId = req.user.user_id;
+    const userId = req.user.id;
     const { bookingId, paymentMethod } = req.body;
 
     if(!bookingId || !paymentMethod){
       return handleResponse(res, 400, "bookingId and paymentMethod are required");
     }
 
-    // Validate payment method (promptpay, mobile_banking, credit_card)
     const validMethods = ['promptpay', 'mobile_banking', 'credit_card'];
     if(!validMethods.includes(paymentMethod)){
       return handleResponse(res, 400, "Invalid payment method. Must be: promptpay, mobile_banking, or credit_card");
+    }
+
+    const booking = await model.getBookingByIdService(bookingId);
+    if(!booking){
+      return handleResponse(res, 404, "Booking not found");
+    }
+
+    if(booking.user_id !== userId){
+      return handleResponse(res, 403, "Unauthorized: this booking does not belong to you");
     }
 
     const payment = await model.createPaymentService(bookingId, paymentMethod);
