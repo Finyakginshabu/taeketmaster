@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { mockEvents } from "../../api/mockData.js";
+import { HomeGreen } from '../../components/Icons.jsx';
 import { useCart } from '../../context/CartContext';
 import './ConcertPlan.css';
 
-export default function ConcertPlan({ whiteLogoUrl, homeUrl, cartUrl, userUrl, mapUrl, calendarUrl, searchUrl, downUrl }) {
+export default function ConcertPlan() {
   const { id, zoneId } = useParams();
   const navigate = useNavigate();
-  const { addItem } = useCart();
+  const addItem = useCart();
   const ref = useRef(null);
 
   // States สำหรับ Event และ Showtime (จากโค้ดแรก)
@@ -35,6 +36,21 @@ export default function ConcertPlan({ whiteLogoUrl, homeUrl, cartUrl, userUrl, m
     });
     return initial;
   });
+
+  if (!zoneId) {
+     return (
+        <div className="plan-container">
+            <h2>Please Select a Zone</h2>
+            {/* ใส่รูปแผนผังคอนเสิร์ตใหญ่ๆ ตรงนี้ */}
+            <HomeGreen alt="Concert Map" />
+            
+            {/* สมมติว่ามีปุ่มให้กดเลือกโซน A1 */}
+            <button onClick={() => navigate(`/event-booking/${id}/zone/A1`)}>
+               Select Zone A1
+            </button>
+        </div>
+     );
+  }
 
   // จัดการการคลิกนอก Dropdown
   useEffect(() => {
