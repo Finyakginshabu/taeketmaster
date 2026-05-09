@@ -78,12 +78,9 @@ export const getSeatPriceService = async (seatId, showtimeId) => {
   }
 };
 
-export const isSeadBookedService = async (seatId, showtimeId) => {
+export const isSeatBookedService = async (seatId, showtimeId) => {
   try{
-    const query = `
-      select ticket_id from tickets
-      where showtime_id = $1 and seat_id = $2
-    `;
+    const query = `select ticket_id from tickets where showtime_id = $1 and seat_id = $2`;
     const result = await pool.query(query, [showtimeId, seatId]);
     return result.rows.length > 0;
   }catch(error){
@@ -93,11 +90,23 @@ export const isSeadBookedService = async (seatId, showtimeId) => {
 
 export const getBookingTotalPriceService = async (bookingId) => {
   try{
-    const query = `
-      select sum(price) as total from tickets where booking_id = $1
-    `;
+    const query = `select sum(price) as total from tickets where booking_id = $1`;
     const result = await pool.query(query, [bookingId]);
     return parseFloat(result.rows[0].total) || 0;
+  }catch(error){
+    throw error;
+  }
+};
+
+export const createPaymentService = async (bookingId, paymentMethod) => {
+  try{
+    const query = `
+      insert into payments (booking_id, payment_method, paid_at)
+      values ($1, $2, now())
+      returning payment_id, booking_id, payment_method, paid_at
+    `;
+    const result = await pool.query(query, [bookingId, paymentMethod]);
+    return result.rows[0];
   }catch(error){
     throw error;
   }

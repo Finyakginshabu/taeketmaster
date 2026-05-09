@@ -13,3 +13,12 @@ export async function reserveTicket(data, token){
   }));
   return res.data;
 }
+
+export async function createPayment(data, token){
+  const res = unwrap(await http("/api/payment", {
+    method: "POST",
+    headers: { "Authorization": `Bearer ${token}` },
+    body: JSON.stringify(data)
+  }));
+  return res.data;
+}

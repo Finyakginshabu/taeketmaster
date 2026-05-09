@@ -25,7 +25,7 @@ export const reserveTicket = async (req, res) => {
 
     const ticketPrice = parseFloat(seatData.price);
 
-    const isBooked = await model.isSeadBookedService(seatId, showtimeId);
+    const isBooked = await model.isSeatBookedService(seatId, showtimeId);
     
     if(isBooked){
       return handleResponse(res, 409, "Seat is already booked");
@@ -56,6 +56,31 @@ export const reserveTicket = async (req, res) => {
   }catch(error){
     console.error("Error reserving ticket:", error);
     return handleResponse(res, 500, "Error reserving ticket: " + error.message);
+  }
+};
+
+export const createPayment = async (req, res) => {
+  try{
+    const userId = req.user.user_id;
+    const { bookingId, paymentMethod } = req.body;
+
+    if(!bookingId || !paymentMethod){
+      return handleResponse(res, 400, "bookingId and paymentMethod are required");
+    }
+
+    // Validate payment method (promptpay, mobile_banking, credit_card)
+    const validMethods = ['promptpay', 'mobile_banking', 'credit_card'];
+    if(!validMethods.includes(paymentMethod)){
+      return handleResponse(res, 400, "Invalid payment method. Must be: promptpay, mobile_banking, or credit_card");
+    }
+
+    const payment = await model.createPaymentService(bookingId, paymentMethod);
+
+    return handleResponse(res, 201, "Payment created successfully", payment);
+
+  }catch(error){
+    console.error("Error creating payment:", error);
+    return handleResponse(res, 500, "Error creating payment: " + error.message);
   }
 };
 
