@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useCart } from '../../context/CartContext.jsx';
+import { useCart } from '../Cart/CartContext.jsx';
 import { Selected, Available, NotAvailable } from '../../components/Icons.jsx';
 import { formatDateTime } from '../../utils.js';
 import { mockEvents, getBookedSeatsFromMock } from "../../api/mockData.js";
@@ -145,6 +145,7 @@ export default function SeatBooking() {
   const handleReserve = () => {
     selectedSeats.forEach(seatId => {
       addItem({
+        event_id: event_id,
         showtime_id: 1,
         event_title: event?.title || "Concert",
         venue_name: event?.venue_name || "Impact Arena",

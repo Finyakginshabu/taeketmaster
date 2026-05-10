@@ -36,6 +36,7 @@ export default function ConcertPlan() {
 
   if (!event) return null;
   const showDatesList = event.showDate || event.showdate || [selectedShowtime];
+  const formattedDatesList = showDatesList.map(date => formatDateTime(date, true));
 
   const handleSelectShowtime = (option) => {
     setSelectedShowtime(option);
@@ -96,7 +97,7 @@ export default function ConcertPlan() {
 
             {isOpen && (
               <div className="showtime-dropdown-menu">
-                {showDatesList.map(option => (
+                {formattedDatesList.map(option => (
                   <button key={option} className="showtime-dropdown-item" onClick={() => handleSelectShowtime(option)}>
                     {option}
                   </button>

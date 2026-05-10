@@ -1,214 +1,197 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../Cart/CartContext.jsx';
+import './Payment.css';
 
 export default function PaymentPage() {
   const navigate = useNavigate();
+  const { items, totalPrice } = useCart();
 
-  // 15 minutes countdown
-  const [timeLeft, setTimeLeft] = useState(900);
+  const [user, setUser] = useState({ firstName: '', lastName: '' });
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
-    const timerId = setInterval(() => {
-      setTimeLeft(prev => prev - 1);
-    }, 1000);
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
+    const savedUser = localStorage.getItem('userData');
+    if (savedUser) {
+      try {
+        const parsedData = JSON.parse(savedUser);
+        setUser(parsedData);
+      } catch (error) {
+        console.error("Failed to parse user data", error);
+      }
+    }
+  }, []);
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  const customerFullName = user.firstName 
+    ? `${user.firstName} ${user.lastName || ''}`.trim() 
+    : '';
+
+  const groupedItems = Object.values(
+    items.reduce((acc, item) => {
+      const key = `${item.event_title}-${item.show_at}-${item.zone_name}`;
+      
+      if (!acc[key]) {
+        acc[key] = {
+          event_title: item.event_title,
+          show_at: item.show_at,
+          zone_name: item.zone_name,
+          price: item.price,
+          amount: 0,
+          seats: []
+        };
+      }
+      
+      acc[key].amount += 1;
+      acc[key].seats.push(item.seat_number);
+      return acc;
+    }, {})
+  );
+
+  const formatShowtime = (dateString) => {
+    if (!dateString || dateString === "N/A") return "N/A";
+    const date = new Date(dateString);
+    if (isNaN(date)) return dateString;
+    
+    const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return date.toLocaleDateString('en-GB', options).replace(',', '');
+  };
+
+  const currentBookingDate = formatShowtime(new Date().toISOString());
+  const generateBookingId = () => {
+    const now = new Date();
+    return `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+  };
+
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState('Promptpay');
+
+  const paymentOptions = [
+    { value: 'promptpay', label: 'Promptpay' },
+    { value: 'credit_debit', label: 'Credit/Debit' },
+    { value: 'mobile_banking', label: 'Mobile Banking' }
+  ];
+
+  const handleSelectPayment = (label) => {
+    setSelectedPayment(label);
+    setIsPaymentOpen(false);
+  };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      gap: '32px',
-      minHeight: '100vh',
-      padding: '40px 20px',
-      backgroundColor: '#F4F5F0',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
-    }}>
-      
-      {/* Left Column (Payment Details) */}
-      <div style={{
-        width: '100%',
-        maxWidth: '800px',
-        backgroundColor: '#EAEBDB',
-        borderRadius: '16px',
-        padding: '32px',
-        boxSizing: 'border-box'
-      }}>
-        <h2 style={{ marginTop: 0, marginBottom: '8px', fontSize: '28px', color: '#1E1E1E' }}>Confirm Booking</h2>
-        <div style={{ fontSize: '14px', color: '#EF4444', fontWeight: 'bold', marginBottom: '24px' }}>
-          Please complete payment within {timeString}
-        </div>
+    <div className="payment-page-container">
+      <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
+        <h2 className="payment-title" style={{ marginBottom: '24px', textAlign: 'left' }}>Confirm Booking</h2>
         
-        {/* Grid Details */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: '32px',
-          color: '#1E1E1E',
-          lineHeight: '1.6'
-        }}>
-          <div>
-            <div><strong>Customer Name:</strong> TaeInwZa</div>
-            <div><strong>Event:</strong> Bodyslim The experience 1st Tour</div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <div><strong>Booking Date:</strong> Fri 1 May 2067 23:32</div>
-            <div><strong>Booking ID:</strong> 206705012332</div>
-          </div>
-        </div>
-
-        <hr style={{ border: 'none', borderTop: '1px solid #D1D5DB', marginBottom: '24px' }} />
-
-        {/* Ticket Details Flex Row */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontWeight: '500',
-          marginBottom: '24px',
-          color: '#1E1E1E',
-          fontSize: '15px'
-        }}>
-          <div>Sat 27 Jun 2067 18:00</div>
-          <div>Zone A2</div>
-          <div>5,900</div>
-          <div>Amount 1</div>
-          <div>Seat no. C03</div>
-        </div>
-
-        <hr style={{ border: 'none', borderTop: '1px solid #D1D5DB', marginBottom: '32px' }} />
-
-        {/* Bottom Section */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          color: '#1E1E1E'
-        }}>
-          {/* Left: Payment Method & QR Placeholder */}
-          <div>
-            <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Payment Method</div>
-            <select style={{
-              padding: '10px 16px',
-              borderRadius: '8px',
-              border: '1px solid #D1D5DB',
-              width: '240px',
-              fontSize: '14px',
-              backgroundColor: 'white',
-              outline: 'none',
-              marginBottom: '16px'
-            }}>
-              <option value="pingpay">Pingpay</option>
-              <option value="finza">Finza</option>
-              <option value="mobile_banking">Mobile Banking</option>
-            </select>
-
-            <div style={{
-              width: '180px',
-              height: '180px',
-              border: '2px dashed #9CA3AF',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'white',
-              color: '#6B7280',
-              fontWeight: '500'
-            }}>
-              Mock QR Code
+        <div className="payment-card">
+          <div className="payment-details-grid">
+            <div>
+              <div style={{ marginBottom: '20px' }}><strong>Customer Name:</strong> {customerFullName}</div> 
+              <div>
+                <strong>Event: </strong> 
+                {items.length > 0 ? items[0].event_title : ''}
+              </div>
+            </div>
+            <div className="payment-details-right">
+              <div style={{ marginBottom: '20px' }}><strong>Booking Date:</strong> {currentBookingDate}</div>
+              <div><strong>Booking ID:</strong> {generateBookingId()}</div>
             </div>
           </div>
 
-          {/* Right: Total Price & Buttons */}
-          <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%' }}>
-            <div style={{ fontSize: '18px', marginBottom: '32px', marginTop: 'auto' }}>
-              <strong>Total Price: 5,900</strong>
+          <div className="payment-table-container">
+            <table className="payment-table">
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Showtime</th>
+                  <th>Zone</th>
+                  <th>Net Price</th>
+                  <th>Amount</th>
+                  <th>Seat no.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupedItems.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: 'center', padding: '20px 0', color: '#888' }}>
+                      No tickets in cart.
+                    </td>
+                  </tr>
+                ) : (
+                  groupedItems.map((group, index) => (
+                    <tr key={index}>
+                      <td>{group.event_title}</td>
+                      <td>{formatShowtime(group.show_at)}</td>
+                      <td>{group.zone_name}</td>
+                      <td>{group.price.toLocaleString()}</td>
+                      <td>{group.amount}</td>
+                      <td>{group.seats.join(', ')}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
+            <div>
+              <div className="payment-method-label">Payment Method</div>
+              <div className="payment-dropdown-container">
+                <button 
+                  type="button"
+                  className="payment-dropdown-btn" 
+                  onClick={() => setIsPaymentOpen(!isPaymentOpen)}
+                >
+                  <span>{selectedPayment}</span>
+                  <svg className={`dropdown-icon ${isPaymentOpen ? 'open' : ''}`} width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L7 7L13 1" stroke="var(--text-main)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+
+                {isPaymentOpen && (
+                  <div className="payment-dropdown-menu">
+                    {paymentOptions.map(option => (
+                      <button 
+                        key={option.value} 
+                        type="button"
+                        className="payment-dropdown-item" 
+                        onClick={() => handleSelectPayment(option.label)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Action Buttons */}
-            <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end', marginTop: '100px' }}>
-              <button 
-                onClick={() => navigate('/cart')}
-                style={{
-                  backgroundColor: 'white',
-                  color: '#1E1E1E',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '30px',
-                  padding: '10px 24px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  fontSize: '15px'
-                }}
-              >
-                Back to Cart
-              </button>
-              <button 
-                onClick={() => navigate('/success')}
-                style={{
-                  backgroundColor: '#6B7E54',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '30px',
-                  padding: '10px 32px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  fontSize: '15px'
-                }}
-              >
-                Confirm Payment
-              </button>
+            <div className="payment-summary-container">
+              <div className="payment-total-price">
+                <strong>Total Price: {totalPrice.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })} THB</strong>
+                <p style={{ fontSize: 16, marginTop: '8px' }}>Thank you for your purchase.</p>
+                <p style={{ color: 'red', fontSize: 16 }}>Please pay within 15 minutes</p>
+              </div>
+
+              <div className="payment-actions">
+                <button 
+                  onClick={() => navigate(-1)}
+                  className="payment-btn payment-btn-back"
+                >
+                  Back
+                </button>
+                <button 
+                  onClick={() => navigate('/payment')}
+                  className="payment-btn payment-btn-confirm"
+                  disabled={items.length === 0}
+                  style={{ cursor: items.length === 0 ? 'not-allowed' : 'pointer', opacity: items.length === 0 ? 0.5 : 1 }}
+                >
+                  Pay
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Right Column (Invoice Preview Card) */}
-      <div style={{
-        width: '300px',
-        backgroundColor: '#FFFFFF',
-        padding: '24px',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-        fontSize: '0.8rem',
-        borderRadius: '8px',
-        color: '#1E1E1E',
-        boxSizing: 'border-box'
-      }}>
-        <h3 style={{ color: '#2563EB', marginTop: 0, marginBottom: '16px', fontSize: '16px' }}>
-          InvoiceDoc v2
-        </h3>
-        
-        <div style={{ marginBottom: '24px', lineHeight: '1.5' }}>
-          <strong>Customer:</strong> TaeInwZa<br/>
-          <strong>Address:</strong> 123 Mock Street, BKK 10110<br/>
-          <strong>Order Date:</strong> 01 May 2067
-        </div>
-
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '24px' }}>
-          <thead>
-            <tr>
-              <th style={{ textAlign: 'left', borderBottom: '1px solid #E5E7EB', paddingBottom: '8px' }}>Product</th>
-              <th style={{ textAlign: 'center', borderBottom: '1px solid #E5E7EB', paddingBottom: '8px' }}>Qty</th>
-              <th style={{ textAlign: 'right', borderBottom: '1px solid #E5E7EB', paddingBottom: '8px' }}>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ paddingTop: '8px', paddingBottom: '8px' }}>Bodyslim The experience 1st Tour</td>
-              <td style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px' }}>1x</td>
-              <td style={{ textAlign: 'right', paddingTop: '8px', paddingBottom: '8px' }}>5,900</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style={{ borderTop: '2px dashed #D1D5DB', paddingTop: '16px', textAlign: 'right' }}>
-          <strong>Total Amount: 5,900 THB</strong>
-        </div>
-      </div>
-      
     </div>
   );
 }
