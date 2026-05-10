@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TableCard from "./TableCard.jsx";
 import { Search } from '../../components/Icons.jsx'
-import { mockTables } from "../../api/mockData.js"
 
 export default function AllTablePage(){
 

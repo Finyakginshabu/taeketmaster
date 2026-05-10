@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext.jsx';
 import { GreenLogo } from '../../components/Icons';
 import { signIn } from '../../api/auth.api.js';
 
 export default function LoginPage(){
+  const login = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +30,8 @@ export default function LoginPage(){
       if (data && data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        
+        login(data.user);
       }
 
       navigate('/home');

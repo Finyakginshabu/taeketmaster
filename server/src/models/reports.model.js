@@ -19,7 +19,7 @@ export const getTicketsSold = async (startDate, endDate, groupBy) => {
         whereClause = "";
     }
     
-    const result = await query(
+    const result = await pool.query(
         `select ${dateFormatSelect}, count(t.ticket_id) as tickets_sold, round(coalesce(sum(t.price), 0), 2) as revenue
          from tickets t
          ${whereClause}
@@ -32,7 +32,7 @@ export const getTicketsSold = async (startDate, endDate, groupBy) => {
 
 // Selling Artists Report
 export const getSellingArtists = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select a.artist_id, a.artist_name, count(t.ticket_id) as tickets_sold
          from artists a
          left join events e on a.artist_id = e.artist_id
@@ -48,7 +48,7 @@ export const getSellingArtists = async () => {
 export const getTicketSpenders = async (startDate, endDate, sortBy) => {
     const orderClause = sortBy === 'total_spent' ? 'total_spent desc' : 'total_tickets desc';
     const whereClause = startDate && endDate ? 'where date(t.created_at) >= $1 and date(t.created_at) <= $2' : '';
-    const result = await query(
+    const result = await pool.query(
         `select concat(u.first_name, ' ', u.last_name) as name,  count(t.ticket_id) as total_tickets, round(coalesce(sum(t.price), 0), 2) as total_spent
          from users u
          left join bookings b on u.user_id = b.user_id
@@ -84,7 +84,7 @@ export const getRevenue = async (startDate, endDate, groupBy) => {
         whereClause = "";
     }
     
-    const result = await query(
+    const result = await pool.query(
         `select ${dateFormatSelect}, round(coalesce(sum(t.price), 0), 2) as revenue
          from tickets t
          ${whereClause}
@@ -97,7 +97,7 @@ export const getRevenue = async (startDate, endDate, groupBy) => {
 
 // Popular Events Report
 export const getPopularEvents = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select e.event_id, e.title as event_name,
                 coalesce((select count(*) from seats s join zones z on s.zone_id = z.zone_id 
                          where z.venue_id = sh.venue_id) - count(t.ticket_id), 0) as remaining_tickets

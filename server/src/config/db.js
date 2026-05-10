@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 const { Pool } = pg;
 dotenv.config();
 
-console.log(process.env.DB_USER);
+console.log(process.env.POSTGRES_USER);
 console.log(process.env.DB_HOST);
 const pool = new Pool({
     user: process.env.POSTGRES_USER,

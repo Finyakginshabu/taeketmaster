@@ -6,12 +6,12 @@ function unwrap(res){
 }
 
 export async function getEventDetail(eventId){
-  const res = unwrap(await http(`/api/event?eventId=${encodeURIComponent(eventId)}`));
+  const res = unwrap(await http(`/api/event?id=${encodeURIComponent(eventId)}`));
   return res.data;
 }
 
 export async function getEventDetailTwo(eventId){
-  const res = unwrap(await http(`/api/event2?eventId=${encodeURIComponent(eventId)}`));
+  const res = unwrap(await http(`/api/event2?id=${encodeURIComponent(eventId)}`));
   return res.data;
 }
 

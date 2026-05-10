@@ -2,7 +2,7 @@ import * as model from "../models/eventDetails.model.js";
 
 const handleResponse = (res, status, message, data = null) => {
     res.status(status).json({
-        status,
+        success: status < 400,
         message,
         data,
     });

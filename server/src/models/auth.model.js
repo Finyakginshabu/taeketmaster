@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 export const getAuthUser = async (usorem) => {
-    const result = await pool.query(`select user_id, password, role from users where username = $1 OR email ilike $1`, [usorem]);
+    const result = await pool.query(`select user_id, first_name, last_name, email, username, password, role from users where username = $1 OR email ilike $1`, [usorem]);
     return result.rows[0];
 };
 

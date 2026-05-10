@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 export const getTodayTicketSold = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select count(t.ticket_id) as total_tickets_sold, coalesce(sum(t.price), 0) as total_revenue
          from tickets t where date(t.created_at) = current_date`
     );
@@ -9,7 +9,7 @@ export const getTodayTicketSold = async () => {
 };
 
 export const getAverageTicketSold7Days = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select round(avg(daily_count)) as average_tickets_sold, round(avg(daily_revenue), 2) as average_revenue
          from (select date(t.created_at) as sale_date, count(t.ticket_id) as daily_count, coalesce(sum(t.price), 0) as daily_revenue from tickets t
                where date(t.created_at) >= current_date - interval '7 days' group by date(t.created_at)) as daily_stats`
@@ -18,7 +18,7 @@ export const getAverageTicketSold7Days = async () => {
 };
 
 export const getTopSellingArtists = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select a.artist_id, a.artist_name, count(t.ticket_id) as tickets_sold from artists a
          left join events e on a.artist_id = e.artist_id
          left join showtimes sh on e.event_id = sh.event_id
@@ -30,7 +30,7 @@ export const getTopSellingArtists = async () => {
 
 // Only in this quater
 export const getTopTicketSpenders = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select u.user_id, row_number() over (order by count(t.ticket_id) desc) as rank, 
                 concat(u.first_name, ' ', u.last_name) as name, count(t.ticket_id) as total_tickets
          from users u
@@ -44,7 +44,7 @@ export const getTopTicketSpenders = async () => {
 };
 
 export const getMonthlyRevenue = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select extract(month from t.created_at) as month, 
                 to_char(t.created_at, 'Mon') as month_name,
                 round(coalesce(sum(t.price), 0), 2) as revenue
@@ -56,7 +56,7 @@ export const getMonthlyRevenue = async () => {
 };
 
 export const getQuaterRevenue = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select extract(year from t.created_at) as year,
                 extract(quarter from t.created_at) as quarter,
                 round(coalesce(sum(t.price), 0), 2) as revenue
@@ -69,7 +69,7 @@ export const getQuaterRevenue = async () => {
 };
 
 export const getPopularEvent = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select e.event_id, e.title as event_name,
                 coalesce((select count(*) from seats s join zones z on s.zone_id = z.zone_id 
                          where z.venue_id = sh.venue_id) - count(t.ticket_id), 0) as remaining_tickets
@@ -85,7 +85,7 @@ export const getPopularEvent = async () => {
 };
 
 export const getTopSpenders = async () => {
-    const result = await query(
+    const result = await pool.query(
         `select concat(u.first_name, ' ', u.last_name) as name, round(coalesce(sum(t.price), 0), 2) as money_spent
          from users u
          left join bookings b on u.user_id = b.user_id

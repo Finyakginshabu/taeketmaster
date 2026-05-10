@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import EventCard from './EventCard.jsx';
 import NavBar from '../../components/NavBar.jsx';
 import { getEventFeed } from '../../api/home.api.js';
-
 import { mockEvents } from "../../api/mockData.js";
 
 export default function HomePage() {
@@ -56,5 +55,6 @@ export default function HomePage() {
                     ))}
                 </div>
             </div>
+
     );
 }

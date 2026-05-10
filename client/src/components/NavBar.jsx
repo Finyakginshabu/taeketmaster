@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar.jsx';
+import { useAuth } from '../pages/Login/AuthContext.jsx';
 import { Link } from 'react-router-dom';
 import { WhiteLogo, HomeWhite, Cart, User, MapPin, Calendar, Search } from './Icons.jsx';
 import { useCart } from '../pages/Cart/CartContext.jsx'; // 1. ดึง useCart มาใช้
 
-export default function NavBar({ user, children }) { // เอา cartStartTime ออกเพราะเราจะจัดการในนี้เลย
-    const { items } = useCart(); // 2. ดึง items จาก Context
+export default function NavBar({ children }) { // เอา cartStartTime ออกเพราะเราจะจัดการในนี้เลย
+    const user = useAuth();
+    const items = useCart(); // 2. ดึง items จาก Context
     const [timeLeft, setTimeLeft] = useState(null);
 
     useEffect(() => {
@@ -68,7 +70,7 @@ export default function NavBar({ user, children }) { // เอา cartStartTime 
                         <div className="user-log-in">
                             <User className="nav-bar-icon" />
                             {user ? ( <Link to="/account-setting" className="sign-in">{user.username}</Link>) 
-                            : (<Link to="/signin" className="sign-in">Sign In</Link>)}
+                                    : (<Link to="/signin" className="sign-in">Sign In</Link>)}
                         </div>
                     </div>
                     
