@@ -1,6 +1,7 @@
 import React, { StrictMode } from 'react';
 import ReactDOM, { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useParams, NavLink } from 'react-router-dom';
+import { CartProvider } from './pages/Cart/CartContext.jsx';
 
 // UserPage
 import LoginPage from './pages/Login/LoginPage.jsx'; 
@@ -11,6 +12,8 @@ import ResetPasswordPage from './pages/Login/ResetPasswordPage.jsx';
 import HomePage from './pages/Home/HomePage.jsx';
 import EventPage from './pages/Event/EventPage.jsx';
 import ConcertPlan from './pages/Booking/ConcertPlan.jsx';
+import SeatBooking from './pages/Booking/SeatBooking.jsx';
+import CartPage from './pages/Cart/CartPage.jsx';
 import NavBar from './components/NavBar.jsx';
 
 // AdminPage
@@ -149,29 +152,32 @@ function Layout({ children }) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/signin" replace />} />
-        <Route path="/signin" element={<LoginPage />} />
-        <Route path="/signup" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/otp" element={<OtpPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/account-setting" element={<NavBar><AccountPage /></NavBar>} />
-        <Route path="/home" element={<NavBar><HomePage /></NavBar>} />
-        <Route path="/event/:id" element={<NavBar><EventPage /></NavBar>} />
-        <Route path="/event-booking/:id" element={<NavBar><ConcertPlan /></NavBar>} />
-        <Route path="/event-booking/:id/zone/:zoneId" element={<NavBar><ConcertPlan /></NavBar>} />
-        
-        <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
-        <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
-        <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
-        <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
-        <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
-        <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
-        <Route path="/account" element={<Layout><AccountPage /></Layout>} />
-        <Route path="/comparison" element={<Layout><ComparisonPage /></Layout>} />
-      </Routes>
-    </BrowserRouter>
+    <CartProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/signin" replace />} />
+          <Route path="/signin" element={<LoginPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/otp" element={<OtpPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/account-setting" element={<NavBar><AccountPage /></NavBar>} />
+          <Route path="/home" element={<NavBar><HomePage /></NavBar>} />
+          <Route path="/event/:id" element={<NavBar><EventPage /></NavBar>} />
+          <Route path="/event-booking/:id" element={<NavBar><ConcertPlan /></NavBar>} />
+          <Route path="/event-booking/:id/zone/:zoneId" element={<NavBar><SeatBooking /></NavBar>} />
+          <Route path="/cart/:id" element={<NavBar><CartPage /></NavBar>} />
+          
+          <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
+          <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
+          <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
+          <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
+          <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
+          <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
+          <Route path="/account" element={<Layout><AccountPage /></Layout>} />
+          <Route path="/comparison" element={<Layout><ComparisonPage /></Layout>} />
+        </Routes>
+      </BrowserRouter>
+    </CartProvider>
   </React.StrictMode>
 );

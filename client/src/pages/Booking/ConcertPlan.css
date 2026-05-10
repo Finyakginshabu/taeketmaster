@@ -1,223 +1,548 @@
-.sbp-root {
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+  --green-on-white: #3b4b1b;
+  --green-on-green: #1a2700;
+  --light-green: #d6e7b6;
+  --user-core-green: #596b37;
+  --red: #FF0000;
+  --cream: #F2EFDB;
+
+  --bg-body: #f7f9ef;
+  --bg-surface: #ffffff;
+  --bg-sidebar: #1e293b;
+
+  --text-main: #0f172a;
+  --text-muted: #999999;
+  --text-focus: #596b37;
+
+  --border: #3b4b1b;
+  --border-lightgreen: #a2b380;
+  --border-focus: #596b37;
+  --border-muted: #999999;
+
+  --font-sans: 'Noto Sans', system-ui, -apple-system, sans-serif;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body{
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+.zone-selection-root {
   min-height: 100vh;
-  background-color: #F9F9F4;
-  font-family: 'Inter', sans-serif;
-  padding-bottom: 64px;
-}
-
-.sbp-title-container {
-  max-width: 1152px;
-  margin: 0 auto;
-  padding: 32px 0 24px;
-  text-align: center;
-}
-.sbp-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 8px;
-}
-
-.sbp-content {
-  max-width: 1152px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.zone-main-title {
+  font-size: 44px;
+  font-weight: bold;
+  color: var(--green-on-white);
+  margin-bottom: 40px;
+}
+
+.zone-content-wrapper {
+  display: flex;
+  gap: 80px;
   align-items: flex-start;
-  gap: 48px;
-  padding: 0 16px;
-}
-@media (min-width: 1024px) {
-  .sbp-content { flex-direction: row; }
+  justify-content: center;
+  max-width: 1100px;
+  width: 100%;
 }
 
-/* Left: Seat Grid */
-.sbp-grid-container {
-  background-color: #EAEBDB;
-  border-radius: 24px;
-  padding: 32px;
+/* --- ฝั่งซ้าย: แผนผังคอนเสิร์ต --- */
+.zone-map-container {
+  width: 632px;
+  height: 632px;
+  background-color: #EBEBEB;
+  border-radius: 12px;
+  padding: 60px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
-  overflow-x: auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
+.stage-area {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.stage-main {
+  background-color: #000;
+  color: #FFF;
+  font-size: 36px;
+  font-weight: bold;
+  width: 250px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* ติ่งเวทีซ้าย-ขวา */
+.stage-main::before, .stage-main::after {
+  content: '';
+  position: absolute;
+  background-color: #000;
+  width: 50px;
+  height: 60px;
+  bottom: 20;
+}
+.stage-main::before { left: -50px; }
+.stage-main::after { right: -50px; }
+
+.screen-left, .screen-right {
+  position: absolute;
+  bottom: 0;
+  background-color: #000;
+  color: #FFF;
+  font-size: 10px;
+  padding: 4px 8px;
+  letter-spacing: 1px;
+}
+.screen-left { left: 70px; }
+.screen-right { right: 70px; }
+
+/* โซนที่นั่ง */
+.zones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.zone-btn {
+  border: none;
+  color: #FFF;
+  font-size: 48px;
+  font-weight: bold;
+  height: 140px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.zone-btn:hover { opacity: 0.9; transform: scale(0.98); }
+
+/* ใช้ clip-path เพื่อทำมุมตัดแหว่งตามดีไซน์ */
+.zone-a1 { 
+  background-color: #D99B6A; 
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%, 0 35%); 
+}
+.zone-a2 { 
+  background-color: #D99B6A; 
+  clip-path: polygon(0 0, 75% 0, 100% 35%, 100% 100%, 0 100%); 
+}
+.zone-b1 { 
+  background-color: #A65330; 
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 25% 100%, 0 65%); 
+}
+.zone-b2 { 
+  background-color: #A65330; 
+  clip-path: polygon(0 0, 100% 0, 100% 65%, 75% 100%, 0 100%); 
+}
+
+/* FOH */
+.foh-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: -70px; /* ดึงขึ้นไปทับช่องว่างระหว่าง B1, B2 */
+  z-index: 2;
+}
+
+.foh-box {
+  background-color: #BDBDBD;
+  color: #000;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 40px;
+}
+
+/* --- ฝั่งขวา: Sidebar --- */
+.zone-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+}
+
+.sidebar-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Dropdown */
+.showtime-dropdown-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.showtime-dropdown-btn {
+  width: 100%;
+  background-color: var(--user-core-green);
+  color: #FFF;
+  border: none;
+  border-radius: 28px;
+  padding: 20px 25px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.dropdown-icon { transition: transform 0.3s ease; }
+.dropdown-icon.open { transform: rotate(180deg); }
+
+.showtime-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--user-core-green);
+  border-radius: 28px;
+  margin-top: 5px;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.showtime-dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--bg-surface);
+  padding: 20px 25px;
+  font-size: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+.showtime-dropdown-item:hover { background-color: var(--green-on-white); }
+
+/* Seat Available Button */
+.seat-available-btn {
+  background-color: transparent;
+  border: 3px solid var(--user-core-green);
+  color: var(--border-focus);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: all 0.2s;
+}
+.seat-available-btn:hover {
+  background-color: var(--user-core-green);
+  color: #FFF;
+}
+
+/* Pricing Card */
+.pricing-card {
+  background-color: var(--light-green);
+  border-radius: 18px;
+  padding: 20px 10px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pricing-image-placeholder {
+  background-color: #F4F5F0;
+  width: 180px;
+  height: 234px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.pricing-legend {
+  width: 100%;
+}
+
+.legend-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.color-box {
+  width: 40px;
+  height: 20px;
+  margin-left: 30px;
+  margin-right: 10px;
+}
+.color-a { background-color: #D99B6A; }
+.color-b { background-color: #A65330; }
+
+/* คอนเทนเนอร์หลักของหน้าเลือกที่นั่ง */
+.sbp-title-container {
+  margin-top: 30px;
+  text-align: center;
+  color: #333;
+}
+
+.concert-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #000;
+}
+
+.sbp-title {
+  font-size: 20px;
+  color: #5C6B40;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.sbp-grid-container {
+  background-color: #FFF;
+  border-radius: 16px;
+  padding: 30px 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* สัญลักษณ์อธิบายที่นั่ง (Legend) */
 .sbp-legend {
   display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EBEBEB;
+  width: 100%;
   justify-content: center;
-  gap: 32px;
-  margin-bottom: 32px;
 }
+
 .sbp-legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
 }
-.sbp-legend-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sbp-legend-dot.selected { background-color: #6B7E54; }
-.sbp-legend-dot.available { background-color: #A3B18A; }
-.sbp-legend-dot.soldout { background-color: #d1d5db; }
-.sbp-legend-x { color: #9ca3af; font-size: 12px; font-weight: bold; }
-.sbp-legend-text { font-size: 14px; font-weight: 600; color: #374151; }
 
+/* พื้นที่ผังที่นั่งหลัก */
 .sbp-grid {
   display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
 
+/* แถวตัวอักษรแนวตั้ง (A, B, C...) */
 .sbp-row-labels {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-right: 16px;
-  margin-top: 24px;
-}
-.sbp-row-label {
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: #4b5563;
+  margin-top: 28px; /* ดันลงมาให้ตรงกับแถวที่นั่ง (ข้ามแถวตัวเลข) */
+  gap: 10px;
 }
 
+.sbp-row-label {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #888;
+  font-size: 14px;
+}
+
+/* แถวตัวเลขแนวนอน (1, 2, 3...) และ ที่นั่ง */
 .sbp-seats-area {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
+
 .sbp-col-labels {
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
+
 .sbp-col-label {
-  width: 24px;
-  display: flex;
-  justify-content: center;
+  width: 28px;
+  text-align: center;
   font-size: 12px;
-  font-weight: 700;
-  color: #6b7280;
+  font-weight: bold;
+  color: #888;
 }
 
 .sbp-seats-matrix {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
+
 .sbp-seat-row {
   display: flex;
   gap: 8px;
 }
-.sbp-seat {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-  border: none;
-}
-.sbp-seat.available {
-  background-color: #A3B18A;
-  cursor: pointer;
-}
-.sbp-seat.available:hover { background-color: #8e9c75; }
-.sbp-seat.selected {
-  background-color: #6B7E54;
-  cursor: pointer;
-}
-.sbp-seat.soldout {
-  background-color: #d1d5db;
-  cursor: not-allowed;
-}
-.sbp-seat-x { color: #9ca3af; font-size: 12px; font-weight: bold; line-height: 1; }
 
-/* Right: Detail Card */
-.sbp-detail {
-  width: 100%;
-  background-color: #EAEBDB;
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
-  box-sizing: border-box;
+/* ปุ่มที่นั่ง (ใช้สำหรับครอบ SVG Icon) */
+.sbp-seat {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.1s ease-in-out;
 }
-@media (min-width: 1024px) {
-  .sbp-detail { width: 320px; flex-shrink: 0; }
+
+.sbp-seat.available:hover {
+  transform: scale(1.15);
+}
+
+.sbp-seat.selected {
+  transform: scale(1.1);
+}
+
+/* =========================================
+   ฝั่งขวา: รายละเอียดการจอง (Booking Detail)
+   ========================================= */
+
+.sbp-detail {
+  background-color: #FFF;
+  border-radius: 28px;
+  padding: 20px 30px;
+  width: 320px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .sbp-detail-title {
-  font-size: 18px;
-  font-weight: 700;
   text-align: center;
-  color: #111827;
-  margin-bottom: 24px;
-  border-bottom: 1px solid #C4C8B8;
-  padding-bottom: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding: 20px;
+  color: var(--bg-sidebar);
 }
 
 .sbp-detail-info {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: 15px;
 }
+
 .sbp-detail-row {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  align-items: flex-start;
+  font-size: 15px;
 }
-.sbp-detail-label { font-weight: 600; color: #4b5563; }
-.sbp-detail-value { font-weight: 500; color: #111827; }
-.sbp-detail-value.highlight { font-weight: 700; color: #6B7E54; max-width: 160px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sbp-detail-value.wide { max-width: 140px; text-align: right; }
 
+.sbp-detail-label {
+  color: #888;
+  font-weight: 500;
+}
+
+.sbp-detail-value {
+  color: #333;
+  font-weight: bold;
+  text-align: right;
+  max-width: 60%;
+}
+
+.sbp-detail-value.highlight {
+  color: #5C6B40;
+  line-height: 1.4;
+}
+
+/* สรุปราคา */
 .sbp-detail-total {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
-  padding-top: 16px;
-  border-top: 1px solid #C4C8B8;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px dashed #CCC;
 }
-.sbp-total-label { font-weight: 700; color: #1f2937; }
-.sbp-total-value { font-weight: 700; font-size: 20px; color: #111827; }
 
+.sbp-total-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.sbp-total-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #D99B6A; /* ใช้สีส้มเพื่อให้ราคาเด่นขึ้น */
+}
+
+/* ปุ่มกดด้านล่าง */
 .sbp-detail-actions {
   display: flex;
-  justify-content: center;
-  gap: 16px;
+  gap: 15px;
+  margin-top: 30px;
 }
+
 .sbp-btn {
-  padding: 8px 24px;
-  border-radius: 9999px;
-  font-size: 14px;
-  font-weight: 600;
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  width: 50%;
-  border: none;
-  transition: background-color 0.2s, opacity 0.2s;
+  transition: all 0.2s;
+  text-align: center;
 }
+
 .sbp-btn.back {
-  background-color: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background-color: transparent;
+  border: 1.5px solid #5C6B40;
+  color: #5C6B40;
 }
-.sbp-btn.back:hover { background-color: #f9fafb; }
+
+.sbp-btn.back:hover {
+  background-color: #F4F5F0;
+}
+
 .sbp-btn.reserve {
-  background-color: #6B7E54;
-  color: #fff;
+  background-color: #5C6B40;
+  border: 1.5px solid #5C6B40;
+  color: #FFF;
 }
-.sbp-btn.reserve:hover:not(:disabled) { background-color: #5a6d45; }
+
+.sbp-btn.reserve:hover:not(:disabled) {
+  background-color: #4A5633;
+  border-color: #4A5633;
+}
+
 .sbp-btn.reserve:disabled {
-  background-color: #9ca3af;
+  background-color: #CCC;
+  border-color: #CCC;
   cursor: not-allowed;
+  opacity: 0.7;
 }

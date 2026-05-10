@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../CartContext';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from './CartContext';
 import { X, Edit2 } from 'lucide-react';
 import './CartPage.css';
 
 export default function CartPage() {
   const navigate = useNavigate();
+  const { id: event_id } = useParams();
   const { items, removeItem, totalPrice, ticketAmount } = useCart();
   
   // สร้าง State สำหรับเก็บข้อความเวลา
@@ -105,11 +106,19 @@ export default function CartPage() {
                     <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', alignItems: 'center' }}>
                       <button 
                         className="cartpage-edit-btn"
-                        onClick={() => navigate('/seat-booking')}
+                        onClick={() => navigate(`/event-booking/${event_id}/zone/${item.zone_name}`)}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', color: '#4B5563', fontSize: '13px', padding: 0 }}
                       >
                         <Edit2 size={16} /> Edit
                       </button>
+
+                      <button 
+                        className="cartpage-btn back" 
+                        onClick={() => navigate(`/event-booking/${event_id}`)}
+                      >
+                        Back
+                      </button>
+                      
                       <button 
                         className="cartpage-remove-btn"
                         onClick={() => handleRemove(item.seat_id, item.showtime_id)}

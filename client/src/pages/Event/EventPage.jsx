@@ -85,7 +85,7 @@ export default function EventPage() {
                                 <p className="detail-label">Public Sale</p>
                                 <div className="details">
                                     <Sale style={{ width: 24 }} />
-                                    <span>{event.public_sale}</span>
+                                    <span>{formatDateTime(event.public_sale)}</span>
                                 </div>
                             </div>
 

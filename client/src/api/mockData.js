@@ -58,6 +58,48 @@ export const mockEvents = [
     },
 ];
 
+// mockTickets.js
+
+export const mockTickets = [
+    // ---------------------------------------------------------
+    // Event 1: SpongeBob Concert (มี 2 รอบการแสดง)
+    // ---------------------------------------------------------
+    // รอบที่ 1: "2026-05-30 18:00" (สมมติให้ showtime_id = 1)
+    { ticket_id: 1001, event_id: 1, showtime_id: 1, zone_name: "A1", seat_id: "A1", price: 5900, status: "booked" },
+    { ticket_id: 1002, event_id: 1, showtime_id: 1, zone_name: "A1", seat_id: "A2", price: 5900, status: "booked" },
+    { ticket_id: 1003, event_id: 1, showtime_id: 1, zone_name: "A1", seat_id: "B5", price: 5900, status: "booked" },
+    { ticket_id: 1004, event_id: 1, showtime_id: 1, zone_name: "A2", seat_id: "C12", price: 5900, status: "booked" },
+    { ticket_id: 1005, event_id: 1, showtime_id: 1, zone_name: "A2", seat_id: "C13", price: 5900, status: "booked" },
+    { ticket_id: 1006, event_id: 1, showtime_id: 1, zone_name: "B1", seat_id: "F1", price: 3500, status: "booked" },
+    { ticket_id: 1007, event_id: 1, showtime_id: 1, zone_name: "B2", seat_id: "G10", price: 3500, status: "booked" },
+
+    // รอบที่ 2: "2026-05-31 18:00" (สมมติให้ showtime_id = 2)
+    { ticket_id: 1008, event_id: 1, showtime_id: 2, zone_name: "A1", seat_id: "D8", price: 5900, status: "booked" },
+    { ticket_id: 1009, event_id: 1, showtime_id: 2, zone_name: "B2", seat_id: "H20", price: 3500, status: "booked" },
+
+    // ---------------------------------------------------------
+    // Event 2: Patrick Star Live
+    // ---------------------------------------------------------
+    // รอบเดียว: "2026-07-20" (สมมติให้ showtime_id = 3)
+    { ticket_id: 1010, event_id: 2, showtime_id: 3, zone_name: "A1", seat_id: "A10", price: 5900, status: "booked" },
+    { ticket_id: 1011, event_id: 2, showtime_id: 3, zone_name: "A1", seat_id: "A11", price: 5900, status: "booked" },
+
+    // ---------------------------------------------------------
+    // Event 4: Squidward Orchestra (isAvailable: false = Sold Out)
+    // ---------------------------------------------------------
+    // สมมติว่าขายหมดแล้วทุกที่นั่ง (สามารถเขียนลูปเพื่อเจาะจงว่าเต็มหมดได้)
+    { ticket_id: 1012, event_id: 4, showtime_id: 4, zone_name: "A1", seat_id: "ALL", price: 5900, status: "sold_out" },
+];
+
+export const getBookedSeatsFromMock = (eventId, showtimeId, zoneName) => {
+    const bookedTickets = mockTickets.filter(ticket => 
+        String(ticket.event_id) === String(eventId) &&
+        String(ticket.showtime_id) === String(showtimeId) &&
+        ticket.zone_name === zoneName
+    );
+    return bookedTickets.map(ticket => ticket.seat_id);
+};
+
 export const mockTables = [
     {
         id: 1,
