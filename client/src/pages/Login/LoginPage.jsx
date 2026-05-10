@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useAuth } from './AuthContext.jsx';
+import { useAuth } from './AuthContext.jsx';
 import { GreenLogo } from '../../components/Icons';
 import { signIn } from '../../api/auth.api.js';
 
 export default function LoginPage(){
-  // const login = useAuth();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,8 +25,7 @@ export default function LoginPage(){
     if(Object.keys(newErrors).length > 0) return;
 
     try {
-      // 💡 ข้อสังเกต: เช็กนิดนึงนะครับว่า 'usorem' พิมพ์ถูกไหม (ตั้งใจหรือพิมพ์ผิดจาก username)
-      const data = await signIn({ usorem: username, password });
+      const data = await signIn({ username, password });
 
       if (data && data.token) {
         localStorage.setItem('token', data.token);
@@ -40,11 +39,9 @@ export default function LoginPage(){
         };
         localStorage.setItem('userData', JSON.stringify(userDataToSave));
 
-        // login(data.user);
+        login(data.user);
+        navigate('/home');
       }
-
-      navigate('/home');
-
     } catch (error) {
       setLoginError(error.message);
     }

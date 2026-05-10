@@ -6,7 +6,7 @@ import { WhiteLogo, HomeWhite, Cart, User, LogOut, History } from './Icons.jsx';
 import { useCart } from '../pages/Cart/CartContext.jsx';
 
 export default function NavBar({ children }) {
-    const user = { username: "TestUser" };
+    const { user, logout } = useAuth();
     const { items } = useCart();
     const [timeLeft, setTimeLeft] = useState(null);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -74,9 +74,10 @@ export default function NavBar({ children }) {
     }, [items]);
 
     const handleLogout = () => {
-        setShowDropdown(false);
-        navigate('/signin');
-    };
+    logout();
+    setShowDropdown(false);
+    navigate('/signin');
+};
 
     return (
         <div className="layout-container">
