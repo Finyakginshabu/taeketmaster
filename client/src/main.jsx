@@ -27,6 +27,7 @@ import TablePage from './pages/Tables/AdminTablesPage.jsx';
 import UserDetailPage from './pages/Tables/AdminUserDetailsPage.jsx';
 import AdminAddPage from './pages/Tables/AdminAddPage.jsx';
 import AdminEditPage from './pages/Tables/AdminEditPage.jsx';
+import ReportsPage from './pages/Report/ReportsPage.jsx';
 import AccountPage from './pages/Account/AccountPage.jsx';
 
 import './index.css';
@@ -107,14 +108,23 @@ function Sidebar() {
             <NavLink to="/reports/todays-revenue" className={getSubLinkClass}>
               Today's Revenue
             </NavLink>
-            <NavLink to="/reports/customer-sales" className={getSubLinkClass}>
-              Customer Buying
+            <NavLink to="/reports/top-artist" className={getSubLinkClass}>
+              Top Selling Artists
             </NavLink>
-            <NavLink to="/reports/receipt-list" className={getSubLinkClass}>
-              Receipt List
+            <NavLink to="/reports/top-spender" className={getSubLinkClass}>
+              Top Ticket Spenders (Quarterly)
             </NavLink>
-            <NavLink to="/reports/invoice-receipt" className={getSubLinkClass}>
-              Invoice &amp; Receipt
+            <NavLink to="/reports/monthly-revenue" className={getSubLinkClass}>
+              Monthly Revenue
+            </NavLink>
+            <NavLink to="/reports/quarterly-revenue" className={getSubLinkClass}>
+              Quarterly Revenue
+            </NavLink>
+            <NavLink to="/reports/popular-event" className={getSubLinkClass}>
+              Most Popular Event
+            </NavLink>
+            <NavLink to="/reports/alltime-topspender" className={getSubLinkClass}>
+              Top Spender (All-time)
             </NavLink>
           </SubMenu>
           <hr className="nav-separator" />
@@ -182,6 +192,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
             <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
             <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
+            <Route path="/reports" element={<Navigate to="/reports/todays-booking" replace />} />
+            <Route path="/reports/todays-booking" element={<Layout><ReportsPage type="todays-booking" /></Layout>} />
+            <Route path="/reports/todays-revenue" element={<Layout><ReportsPage type="todays-revenue" /></Layout>} />
+            <Route path="/reports/top-artist" element={<Layout><ReportsPage type="top-artist" /></Layout>} />
+            <Route path="/reports/top-spender" element={<Layout><ReportsPage type="top-spender" /></Layout>} />
+            <Route path="/reports/monthly-revenue" element={<Layout><ReportsPage type="monthly-revenue" /></Layout>} />
+            <Route path="/reports/quarterly-revenue" element={<Layout><ReportsPage type="quarterly-revenue" /></Layout>} />
+            <Route path="/reports/popular-event" element={<Layout><ReportsPage type="popular-event" /></Layout>} />
+            <Route path="/reports/alltime-topspender" element={<Layout><ReportsPage type="alltime-topspender" /></Layout>} />
             <Route path="/account" element={<Layout><AccountPage /></Layout>} />
           </Routes>
         </BrowserRouter>

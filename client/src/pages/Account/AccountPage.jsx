@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Calendar } from '../../components/Icons.jsx';
 import CalendarPicker from '../../components/CalendarPicker.jsx';
-import { INITIAL_DATA } from '../../utils.js';
 
 // สมมติว่า User ที่ทำการ Login อยู่คือ ID: '1008' 
 // (ตอนใช้งานจริง ให้ดึงจาก Context, Redux หรือ localStorage)

@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from '../../components/Icons.jsx';
-import { INITIAL_DATA, MOCK_BOOKINGS } from '../../utils.js';
 
 // ── Status badge style ───────────────────────────────────────────────────────
 // const STATUS_STYLE = {

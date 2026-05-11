@@ -67,3 +67,42 @@ export async function getTopSpender(){
   }));
   return res.data;
 }
+
+export async function getReportData(type, params) {
+  let data = [];
+
+  switch (type) {
+    case "popular-event":
+      data = await getPopularEvent();
+      break;
+    case "monthly-revenue":
+      data = await getMonthlyRevenue();
+      break;
+    case "top-spender":
+      data = await getTopTicketSpenders();
+      break;
+    case "todays-booking": 
+      data = await getTodayTicketSold(); 
+      break;
+    case "top-artist":
+      data = await getTopSellingArtists();
+      break;
+    case "todays-revenue":
+      data = await getTodayTicketSold();
+      break;
+    case "alltime-topspender":
+      data = await getTopSpender();
+      break;
+    case "quarterly-revenue":
+      data = await getQuaterRevenue();
+      break;
+    default:
+      throw new Error(`Report type "${type}" is not supported yet.`);
+  }
+
+  return {
+    data: data,
+    total: Array.isArray(data) ? data.length : Object.keys(data || {}).length,
+    totalPages: 1
+  };
+}

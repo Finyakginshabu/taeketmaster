@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import SeatAvailableModal from "./SeatAvailableModal";
 import { formatDateTime } from '../../utils.js';
 import { mockEvents } from "../../api/mockData.js";
 import './ConcertPlan.css';
@@ -12,6 +13,7 @@ export default function ConcertPlan() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedShowtime, setSelectedShowtime] = useState(null);
   const [event, setEvent] = useState(null);
+  const [showSeatModal, setShowSeatModal] = useState(false);
 
   // จัดการการคลิกนอก Dropdown
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function ConcertPlan() {
   };
 
   const handleCheckAllAvailableSeats = () => {
-    alert(`ระบบกำลังคำนวณที่นั่งว่างสำหรับรอบ: ${selectedShowtime}`);
+    setShowSeatModal(true);
   };
 
   // ฟังก์ชันสำหรับเปลี่ยนหน้าไปเลือกที่นั่ง พร้อมส่ง showtime ไปด้วย
@@ -109,6 +111,11 @@ export default function ConcertPlan() {
           <button className="seat-available-btn" onClick={handleCheckAllAvailableSeats}>
             Seat Available
           </button>
+          <SeatAvailableModal
+            isOpen={showSeatModal}
+            onClose={() => setShowSeatModal(false)}
+            showtime={selectedShowtime}
+          />
 
           <div className="pricing-card">
             <div className="pricing-image-placeholder">
