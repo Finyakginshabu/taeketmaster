@@ -1439,7 +1439,7 @@ button.nav-item {
   transition: all 0.2s;
 }
 
-.page-btn:hover:not(:disabled){
+.page-btn:hover:not(:disabled) {
   background-color: #e5e5e5;
   border-color: var(--text-main);
 }

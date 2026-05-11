@@ -241,3 +241,82 @@ export const MOCK_BOOKINGS = {
     { ticket: 'B019', date: '2025-06-08', title: 'Jazz Night Vol.4',   artist: 'Miles Quartet',      venue: 'Blue Note Bangkok',        seat: 'D03',            price: '฿1,200', status: 'Cancelled' },
   ],
 };
+
+export const REPORT_CONFIG = {
+  "todays-booking": {
+    title: "Today's Booking",
+    subtitle: "Daily booking transactions and status",
+    emptyMessage: "No bookings found for today.",
+    getColumns: () => [
+      { key: "booking_id", label: "Booking ID", sortable: true },
+      { key: "customer_name", label: "Customer", sortable: true },
+      { key: "title", label: "Event", sortable: true },
+      { key: "total_price", label: "Total Price", align: "right", render: (v) => `${Number(v || 0).toLocaleString()} THB` },
+      { key: "booked_at", label: "Booked Time", render: (v) => v ? new Date(v).toLocaleTimeString() : "-" }
+    ]
+  },
+  "todays-revenue": {
+    title: "Today's Revenue",
+    subtitle: "Summary of income generated today",
+    emptyMessage: "No revenue data found for today.",
+    getColumns: () => [
+      { key: "paid_at", label: "Time", sortable: true, render: (v) => v ? new Date(v).toLocaleTimeString() : "-" },
+      { key: "payment_id", label: "Payment ID" },
+      { key: "total_price", label: "Amount", align: "right", style: { fontWeight: "bold" }, render: (v) => `${Number(v || 0).toLocaleString()} THB` }
+    ]
+  },
+  "top-artist": {
+    title: "Top Selling Artists",
+    subtitle: "Artists ranked by total tickets sold",
+    emptyMessage: "No artist records found.",
+    getColumns: () => [
+      { key: "rank", label: "Rank", render: (_, __, ___, index) => index + 1 },
+      { key: "artist_name", label: "Artist Name", sortable: true, style: { fontWeight: "bold" } },
+      { key: "tickets_sold", label: "Tickets Sold", align: "right", sortable: true, render: (v) => Number(v || 0).toLocaleString() }
+    ]
+  },
+  "top-spender": {
+    title: "Top Ticket Spenders (Quarterly)",
+    subtitle: "Highest spending customers this quarter",
+    emptyMessage: "No records found for this quarter.",
+    getColumns: () => [
+      { key: "rank", label: "Rank", render: (_, __, ___, index) => index + 1 },
+      { key: "name", label: "Customer Name", sortable: true },
+      { key: "money_spent", label: "Total Spent", align: "right", style: { fontWeight: "bold" }, render: (v) => `${Number(v || 0).toLocaleString()} THB` }
+    ]
+  },
+  "monthly-revenue": {
+    title: "Monthly Revenue",
+    subtitle: "Monthly financial performance overview",
+    getColumns: () => [
+      { key: "month_name", label: "Month", sortable: true },
+      { key: "revenue", label: "Total Revenue", align: "right", render: (v) => `${Number(v || 0).toLocaleString()} THB` }
+    ]
+  },
+  "quarterly-revenue": {
+    title: "Quarterly Revenue",
+    subtitle: "Revenue breakdown per quarter",
+    getColumns: () => [
+      { key: "quarter_label", label: "Quarter", sortable: true, render: (_, row) => `${row.year}-Q${row.quarter}` }, 
+      { key: "revenue", label: "Total Revenue", align: "right", render: (v) => `${Number(v || 0).toLocaleString()} THB` }
+    ]
+  },
+  "popular-event": {
+    title: "Most Popular Event",
+    subtitle: "Events with the highest ticket demand",
+    getColumns: () => [
+      { key: "rank", label: "Rank", render: (_, __, ___, index) => index + 1 },
+      { key: "event_name", label: "Event Name", sortable: true },
+      { key: "remaining_tickets", label: "Remaining Tickets", align: "right", render: (v) => Number(v || 0).toLocaleString() }
+    ]
+  },
+  "alltime-topspender": {
+    title: "Top Spender (All-time)",
+    subtitle: "Lifetime highest spending customers",
+    getColumns: () => [
+      { key: "rank", label: "Rank", render: (_, __, ___, index) => index + 1 },
+      { key: "name", label: "Customer Name", sortable: true },
+      { key: "money_spent", label: "All-time Spend", align: "right", render: (v) => `${Number(v || 0).toLocaleString()} THB` }
+    ]
+  }
+};

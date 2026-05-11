@@ -28,6 +28,7 @@ import UserDetailPage from './pages/Tables/AdminUserDetailsPage.jsx';
 import AdminAddPage from './pages/Tables/AdminAddPage.jsx';
 import AdminEditPage from './pages/Tables/AdminEditPage.jsx';
 import AccountPage from './pages/Account/AccountPage.jsx';
+import ReportsPage from './pages/Report/ReportsPage.jsx';
 
 import './index.css';
 
@@ -178,6 +179,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/my-tickets" element={<NavBar><MyTickets /></NavBar>} />
             
             <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
+            <Route path="/reports/tickets-sold" element={<Layout><ReportsPage type="tickets-sold" /></Layout>} />
+            <Route path="/reports/selling-artists" element={<Layout><ReportsPage type="selling-artists" /></Layout>} />
+            <Route path="/reports/ticket-spenders" element={<Layout><ReportsPage type="ticket-spenders" /></Layout>} />
+            <Route path="/reports/revenue" element={<Layout><ReportsPage type="revenue" /></Layout>} />
+            <Route path="/reports/popular-events" element={<Layout><ReportsPage type="popular-events" /></Layout>} />
             <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
             <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
             <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />

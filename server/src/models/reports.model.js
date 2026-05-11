@@ -4,25 +4,26 @@ import pool from "../config/db.js";
 export const getTicketsSold = async (startDate, endDate, groupBy) => {
     let dateFormatSelect, dateGroupBy, orderClause, whereClause;
     if(groupBy === 'monthly'){
-        dateFormatSelect = "to_char(b.booked_at, 'Mon yyyy') as date";
-        dateGroupBy = "date_trunc('month', b.booked_at)";
-        orderClause = "date_trunc('month', b.booked_at) asc";
+        dateFormatSelect = "to_char(p.paid_at, 'Mon yyyy') as date";
+        dateGroupBy = "to_char(p.paid_at, 'Mon yyyy')";
+        orderClause = "to_char(p.paid_at, 'Mon yyyy') asc";
     }else{
-        dateFormatSelect = "to_char(b.booked_at, 'fmdd Mon yyyy') as date";
-        dateGroupBy = "date(b.booked_at)";
-        orderClause = "date(b.booked_at) asc";
+        dateFormatSelect = "to_char(p.paid_at, 'fmdd Mon yyyy') as date";
+        dateGroupBy = "to_char(p.paid_at, 'fmdd Mon yyyy')";
+        orderClause = "to_char(p.paid_at, 'fmdd Mon yyyy') asc";
     }
     
     if(startDate && endDate){
-        whereClause = "where date(b.booked_at) >= $1 and date(b.booked_at) <= $2";
+        whereClause = "where p.paid_at is not null and date(p.paid_at) >= $1 and date(p.paid_at) <= $2";
     }else{
-        whereClause = "";
+        whereClause = "where p.paid_at is not null";
     }
     
     const result = await pool.query(
         `select ${dateFormatSelect}, count(t.ticket_id) as tickets_sold, round(coalesce(sum(t.price), 0), 2) as total_revenue
          from tickets t
          join bookings b on t.booking_id = b.booking_id
+         join payments p on b.booking_id = p.booking_id
          ${whereClause}
          group by ${dateGroupBy}
          order by ${orderClause}`,
@@ -40,6 +41,9 @@ export const getSellingArtists = async () => {
          left join events e on ea.event_id = e.event_id
          left join showtimes sh on e.event_id = sh.event_id
          left join tickets t on sh.showtime_id = t.showtime_id
+         left join bookings b on t.booking_id = b.booking_id
+         left join payments p on b.booking_id = p.booking_id
+         where p.payment_id is not null
          group by a.artist_id, a.artist_name
          order by tickets_sold desc`
     );
@@ -49,12 +53,13 @@ export const getSellingArtists = async () => {
 // Ticket Spenders Report
 export const getTicketSpenders = async (startDate, endDate, sortBy) => {
     const orderClause = sortBy === 'total_spent' ? 'total_spent desc' : 'total_tickets desc';
-    const whereClause = startDate && endDate ? 'where date(b.booked_at) >= $1 and date(b.booked_at) <= $2' : '';
+    const whereClause = startDate && endDate ? 'where p.paid_at is not null and date(p.paid_at) >= $1 and date(p.paid_at) <= $2' : 'where p.paid_at is not null';
     const result = await pool.query(
         `select concat(u.first_name, ' ', u.last_name) as customer_name, count(t.ticket_id) as total_tickets, round(coalesce(sum(t.price), 0), 2) as total_spent
          from users u
          left join bookings b on u.user_id = b.user_id
          left join tickets t on b.booking_id = t.booking_id
+         left join payments p on b.booking_id = p.booking_id
          ${whereClause}
          group by u.user_id, u.first_name, u.last_name
          order by ${orderClause}`,
@@ -67,29 +72,30 @@ export const getTicketSpenders = async (startDate, endDate, sortBy) => {
 export const getRevenue = async (startDate, endDate, groupBy) => {
     let dateFormatSelect, dateGroupBy, orderClause, whereClause;
     if(groupBy === 'monthly'){
-        dateFormatSelect = "to_char(b.booked_at, 'Mon yyyy') as date";
-        dateGroupBy = "date_trunc('month', b.booked_at)";
-        orderClause = "date_trunc('month', b.booked_at) asc";
+        dateFormatSelect = "to_char(p.paid_at, 'Mon yyyy') as date";
+        dateGroupBy = "to_char(p.paid_at, 'Mon yyyy')";
+        orderClause = "to_char(p.paid_at, 'Mon yyyy') asc";
     }else if(groupBy === 'quarterly'){
-        dateFormatSelect = "to_char(date_trunc('quarter', b.booked_at), 'YYYY') || '-Q' || to_char(date_trunc('quarter', b.booked_at), 'Q') as date";
-        dateGroupBy = "date_trunc('quarter', b.booked_at)";
-        orderClause = "date_trunc('quarter', b.booked_at) asc";
+        dateFormatSelect = "to_char(date_trunc('quarter', p.paid_at), 'YYYY') || '-Q' || to_char(date_trunc('quarter', p.paid_at), 'Q') as date";
+        dateGroupBy = "to_char(date_trunc('quarter', p.paid_at), 'YYYY') || '-Q' || to_char(date_trunc('quarter', p.paid_at), 'Q')";
+        orderClause = "to_char(date_trunc('quarter', p.paid_at), 'YYYY') || '-Q' || to_char(date_trunc('quarter', p.paid_at), 'Q') asc";
     }else{
-        dateFormatSelect = "to_char(b.booked_at, 'fmdd Mon yyyy') as date";
-        dateGroupBy = "date(b.booked_at)";
-        orderClause = "date(b.booked_at) asc";
+        dateFormatSelect = "to_char(p.paid_at, 'fmdd Mon yyyy') as date";
+        dateGroupBy = "to_char(p.paid_at, 'fmdd Mon yyyy')";
+        orderClause = "to_char(p.paid_at, 'fmdd Mon yyyy') asc";
     }
     
     if(startDate && endDate){
-        whereClause = "where date(b.booked_at) >= $1 and date(b.booked_at) <= $2";
+        whereClause = "where p.paid_at is not null and date(p.paid_at) >= $1 and date(p.paid_at) <= $2";
     }else{
-        whereClause = "";
+        whereClause = "where p.paid_at is not null";
     }
     
     const result = await pool.query(
         `select ${dateFormatSelect}, round(coalesce(sum(t.price), 0), 2) as revenue
          from tickets t
          join bookings b on t.booking_id = b.booking_id
+         join payments p on b.booking_id = p.booking_id
          ${whereClause}
          group by ${dateGroupBy}
          order by ${orderClause}`,
@@ -105,8 +111,10 @@ export const getPopularEvents = async (startDate, endDate) => {
     const params = [];
     
     if(startDate && endDate){
-        whereClause = 'where date(b.booked_at) >= $1 and date(b.booked_at) <= $2';
+        whereClause = 'where p.paid_at is not null and date(p.paid_at) >= $1 and date(p.paid_at) <= $2';
         params.push(startDate, endDate);
+    }else{
+        whereClause = 'where p.paid_at is not null';
     }
     
     const result = await pool.query(
@@ -115,6 +123,7 @@ export const getPopularEvents = async (startDate, endDate) => {
          left join showtimes sh on e.event_id = sh.event_id
          left join tickets t on sh.showtime_id = t.showtime_id
          left join bookings b on t.booking_id = b.booking_id
+         left join payments p on b.booking_id = p.booking_id
          ${whereClause}
          group by e.event_id, e.title
          having count(t.ticket_id) > 0

@@ -23,7 +23,7 @@ export default function EventCard({ id, title, date, statusCode, image }){
             <button 
                 onClick={() => navigate(`/event/${id}`)} 
                 className={statusInfo.label}
-                disabled={statusCode === 2} /* ป้องกันการกดปุ่มถ้า Sold Out (Optional) */
+                disabled={statusCode === 2}
             >
                 {statusInfo.status}
             </button>

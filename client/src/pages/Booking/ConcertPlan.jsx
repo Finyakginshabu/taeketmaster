@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { formatDateTime } from '../../utils.js';
-import { getEventDetailTwo, getZoneLayout } from '../../api/eventDetails.api.js';
+import { getEventDetailTwo, getZoneLayout, getAvailableSeat } from '../../api/eventDetails.api.js';
 import { getImageUrl } from '../../api/http.js';
 import './ConcertPlan.css';
 
@@ -58,6 +58,10 @@ export default function ConcertPlan(){
   const [zones, setZones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showSeatModal, setShowSeatModal] = useState(false);
+  const [seats, setSeats] = useState([]);
+  const [seatsLoading, setSeatsLoading] = useState(false);
+  const [seatsError, setSeatsError] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -104,17 +108,40 @@ export default function ConcertPlan(){
     setIsOpen(false);
   };
 
-  const handleCheckAllAvailableSeats = () => {
-    if(selectedShowtime){
-      alert(`Fetching available seats for: ${selectedShowtime.show_at}`);
-    }
-  };
-
   const handleZoneClick = (zoneId) => {
     const showtimeId = selectedShowtime?.showtime_id;
     navigate(`/event-booking/${event_id}/zone/${zoneId}${showtimeId ? `?showtime=${showtimeId}` : ''}`, { 
       state: { selectedShowtime, zones } 
     });
+  };
+
+  const handleCheckAllAvailableSeats = async () => {
+    setShowSeatModal(true);
+    setSeatsLoading(true);
+    setSeatsError(null);
+    try {
+      const data = await getAvailableSeat({ id: event_id });
+      setSeats(data || []);
+    } catch (err) {
+      setSeatsError(err.message || "Failed to fetch available seats");
+      console.error("Error fetching available seats:", err);
+    } finally {
+      setSeatsLoading(false);
+    }
+  };
+
+  const handleRefreshSeats = async () => {
+    setSeatsLoading(true);
+    setSeatsError(null);
+    try {
+      const data = await getAvailableSeat({ id: event_id });
+      setSeats(data || []);
+    } catch (err) {
+      setSeatsError(err.message || "Failed to fetch available seats");
+      console.error("Error fetching available seats:", err);
+    } finally {
+      setSeatsLoading(false);
+    }
   };
 
   return (
@@ -164,6 +191,58 @@ export default function ConcertPlan(){
           <button className="seat-available-btn" onClick={handleCheckAllAvailableSeats}>
             Seat Available
           </button>
+
+          {/* Inline Seat Available Modal */}
+          {showSeatModal && (
+            <div className="modal-overlay" onClick={() => setShowSeatModal(false)}>
+              <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                <button className="modal-close-btn" onClick={() => setShowSeatModal(false)} aria-label="ปิด">
+                  ✕
+                </button>
+
+                <h2 className="modal-title">Seat Available</h2>
+
+                {seatsError && <div className="error-message">{seatsError}</div>}
+
+                <table className="seat-table">
+                  <thead>
+                    <tr>
+                      <th>Zone</th>
+                      <th>Available</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {seatsLoading ? (
+                      <tr>
+                        <td colSpan="2" className="loading-message">Loading...</td>
+                      </tr>
+                    ) : seats.length === 0 ? (
+                      <tr>
+                        <td colSpan="2" className="no-data-message">No available seats</td>
+                      </tr>
+                    ) : (
+                      seats.map((row) => (
+                        <tr key={row.zone_name}>
+                          <td>{row.zone_name}</td>
+                          <td className="seat-count">{row.available_seats}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+
+                <div className="reload-btn-wrapper">
+                  <button
+                    className="reload-btn"
+                    onClick={handleRefreshSeats}
+                    disabled={seatsLoading}
+                  >
+                    {seatsLoading ? "Loading..." : "Refresh"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="pricing-card">
             <div className="pricing-image-placeholder">
