@@ -5,9 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { GreenLogo } from '../../components/Icons';
 
-// 1. สร้าง Zod Schema: บังคับรหัส 8 ตัว และเช็คว่า 2 ช่องพิมพ์ตรงกันไหม
 const resetPasswordSchema = z.object({
-  password: z.string().min(8, { message: "At least 8 characters required" }),
+  password: z.string(),
   confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Please make sure your passwords match",

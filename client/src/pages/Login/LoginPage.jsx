@@ -7,7 +7,7 @@ import { signIn } from '../../api/auth.api.js';
 export default function LoginPage(){
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
+  const [usorem, setusorem] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [loginError, setLoginError] = useState('');
@@ -16,7 +16,7 @@ export default function LoginPage(){
 
   async function handleSubmit(){
     const newErrors = {};
-    if(!username) newErrors.username = true;
+    if(!usorem) newErrors.usorem = true;
     if(!password) newErrors.password = true;
 
     setErrors(newErrors);
@@ -25,7 +25,7 @@ export default function LoginPage(){
     if(Object.keys(newErrors).length > 0) return;
 
     try {
-      const data = await signIn({ username: username, password });
+      const data = await signIn({ usorem: usorem, password });
 
       if(data && data.token){
         localStorage.setItem('token', data.token);
@@ -34,7 +34,7 @@ export default function LoginPage(){
         
         // ⚠️ อย่าลืมเปลี่ยน data.user.firstName ให้ตรงกับชื่อ Field จริงๆ ที่ Backend ส่งมานะครับ
         const userDataToSave = {
-          firstName: data.user.firstName || data.user.fname || username, // ถ้าไม่มีชื่อจริง ให้ใช้ username แทนไปก่อน
+          firstName: data.user.firstName || data.user.fname || usorem, // ถ้าไม่มีชื่อจริง ให้ใช้ usorem แทนไปก่อน
           lastName: data.user.lastName || data.user.lname || ''
         };
         localStorage.setItem('userData', JSON.stringify(userDataToSave));
@@ -62,10 +62,10 @@ export default function LoginPage(){
         )}
 
         <div className="auth-field">
-          <label className="auth-label">Username / Email <span className="required">*</span></label>
-          <input type="text" className="auth-input" placeholder="" value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={errors.username ? { border: '1.5px solid #FF0000' } : {}}/>
+          <label className="auth-label">Username/Email <span className="required">*</span></label>
+          <input type="text" className="auth-input" placeholder="" value={usorem}
+              onChange={(e) => setusorem(e.target.value)}
+              style={errors.usorem ? { border: '1.5px solid #FF0000' } : {}}/>
         </div>
 
         <div className="auth-field">
