@@ -43,6 +43,7 @@ export const getEventFeedService = async (filters) => {
             end as showdate,
             case
                 when now() < e.sales_started_at then 0
+                when now() > e.sales_ended_at then 2
                 when (
                     select count(t.ticket_id) 
                     from tickets t 
@@ -63,7 +64,7 @@ export const getEventFeedService = async (filters) => {
         left join artists art on ea.artist_id = art.artist_id
         ${whereClause}
         group by e.event_id, e.title, e.img_path, e.sales_started_at
-        order by first_show asc;
+        order by first_show desc;
     `, queryParams);
     return result.rows;
 };

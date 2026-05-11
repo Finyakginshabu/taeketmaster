@@ -24,9 +24,17 @@ import Comparison from '../assets/Comparison.svg?react';
 import Add from '../assets/Add.svg?react';
 import Edit from '../assets/Edit.svg?react';
 import Delete from '../assets/Delete.svg?react';
+import Selected from '../assets/Selected.svg?react';
+import Available from '../assets/Available.svg?react';
+import NotAvailable from '../assets/NotAvailable.svg?react';
+import EditCart from '../assets/EditCart.svg?react';
+import DeleteCart from '../assets/DeleteCart.svg?react';
+import QR from '../assets/QR.svg?react';
+import History from '../assets/History.svg?react';
 
 export { GreenLogo, WhiteLogo, HomeGreen, Cart, User, MapPin, Calendar, 
         Search, Price, Sale, ChevronDown, Table, Report, LogOut, 
         Filter, Comparison, ChevronLeft, ChevronRight, ChevronsLeft,
         ChevronsRight, HomeWhite, TableGreen, UserGreen,
-        Add, Edit, Delete };
+        Add, Edit, Delete, Selected, Available, NotAvailable,
+        EditCart, DeleteCart, QR, History };

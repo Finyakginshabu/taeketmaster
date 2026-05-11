@@ -5,7 +5,7 @@ import { GreenLogo } from '../../components/Icons';
 import { signIn } from '../../api/auth.api.js';
 
 export default function LoginPage(){
-  const login = useAuth();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -27,16 +27,22 @@ export default function LoginPage(){
     try {
       const data = await signIn({ usorem: username, password });
 
-      if (data && data.token) {
+      if(data && data.token){
         localStorage.setItem('token', data.token);
+        
         localStorage.setItem('user', JSON.stringify(data.user));
         
+        // ⚠️ อย่าลืมเปลี่ยน data.user.firstName ให้ตรงกับชื่อ Field จริงๆ ที่ Backend ส่งมานะครับ
+        const userDataToSave = {
+          firstName: data.user.firstName || data.user.fname || username, // ถ้าไม่มีชื่อจริง ให้ใช้ username แทนไปก่อน
+          lastName: data.user.lastName || data.user.lname || ''
+        };
+        localStorage.setItem('userData', JSON.stringify(userDataToSave));
+
         login(data.user);
+        navigate('/home');
       }
-
-      navigate('/home');
-
-    } catch (error) {
+    } catch (error){
       setLoginError(error.message);
     }
   }

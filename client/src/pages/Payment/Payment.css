@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  /* --- สีดั้งเดิม --- */
+  --green-on-white: #3b4b1b;
+  --green-on-green: #1a2700;
+  --light-green: #d6e7b6;
+  --user-core-green: #596b37;
+  --red: #FF0000;
+  --cream: #F2EFDB;
+
+  --bg-body: #f7f9ef;
+  --bg-surface: #ffffff;
+  --bg-sidebar: #1e293b;
+
+  --text-main: #0f172a;
+  --text-muted: #999999;
+  --text-focus: #596b37;
+
+  --border: #3b4b1b;
+  --border-lightgreen: #a2b380;
+  --border-focus: #596b37;
+  --border-muted: #999999;
+
+  /* --- ตัวแปรสีที่เพิ่มเข้ามาใหม่สำหรับหน้า Payment --- */
+  --bg-payment: #F4F5F0;
+  --bg-card: #EAEBDB;
+  --text-dark: #1E1E1E;
+  --text-alert: #EF4444;
+  --border-divider: #D1D5DB;
+  --white: #ffffff;
+
+  /* --- ฟอนต์และเอฟเฟกต์ --- */
+  --font-sans: 'Noto Sans', system-ui, -apple-system, sans-serif;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+.payment-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background-color: var(--bg-payment);
+  font-family: var(--font-sans);
+}
+
+.payment-card {
+  width: 100%;
+  max-width: 1400px;
+  background-color: var(--cream);
+  border-radius: 28px;
+  padding: 40px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.payment-title {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 36px;
+  color: var(--text-dark);
+}
+
+.payment-timer {
+  font-size: 14px;
+  color: var(--text-alert);
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.payment-details-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+  color: var(--text-dark);
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+.payment-details-right {
+  text-align: right;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-main);
+  font-size: 18px;
+  margin-bottom: 80px;;
+}
+
+.payment-table th {
+  text-align: left;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0px 24px;
+}
+
+.payment-table td {
+  padding: 16px;
+  vertical-align: middle;
+}
+
+/* จัดกึ่งกลางให้คอลัมน์ Zone, Price, Amount ดูสวยขึ้น */
+.payment-table th:nth-child(3),
+.payment-table td:nth-child(3),
+.payment-table th:nth-child(4),
+.payment-table td:nth-child(4),
+.payment-table th:nth-child(5),
+.payment-table td:nth-child(5){
+  text-align: center;
+}
+
+/* จัด Seat no. ให้ชิดขวา */
+.payment-table th:last-child,
+.payment-table td:last-child {
+  text-align: right;
+}
+
+.payment-method-label {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.payment-dropdown-container {
+  position: relative; /* สำคัญมาก เพื่อให้เมนูลอยอยู่ใต้ปุ่มนี้พอดี */
+  width: 240px;
+}
+
+.payment-dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--border-divider); /* หรือ #D1D5DB */
+  background-color: var(--white);
+  font-size: 16px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-family: inherit; /* ให้ฟอนต์เหมือนกับตัวเว็บ */
+}
+
+/* แอนิเมชันลูกศรหมุน */
+.payment-dropdown-btn .dropdown-icon {
+  transition: transform 0.2s ease;
+}
+.payment-dropdown-btn .dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+.payment-dropdown-menu {
+  position: absolute;
+  top: 100%; /* ดันให้ไปอยู่ใต้ปุ่มเป๊ะๆ */
+  left: 0;
+  width: 100%;
+  margin-top: 4px; /* เว้นระยะห่างจากปุ่มนิดนึง */
+  background-color: var(--white);
+  border: 1px solid var(--border-divider);
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* ใส่เงาให้ดูมีมิติลอยขึ้นมา */
+  z-index: 10; /* ให้ลอยทับเนื้อหาด้านล่าง */
+  overflow: hidden; /* ไม่ให้ขอบมนๆ แหว่งตอนเอาเมาส์ชี้ */
+}
+
+.payment-dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 20px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.payment-dropdown-item:hover {
+  background-color: var(--light-green); /* สีพื้นหลังตอนเอาเมาส์ชี้ทับ */
+}
+
+.payment-summary-container {
+  text-align: right;
+}
+
+.payment-total-price {
+  font-size: 20px;
+  margin-bottom: 32px;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+/* Base style สำหรับปุ่มทั้ง 2 แบบ */
+.payment-btn {
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: var(--transition);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.payment-btn:hover {
+  opacity: 0.8;
+}
+
+.payment-btn-back {
+  background-color: var(--bg-surface);
+  color: var(--user-core-green);
+  border: 1px solid var(--user-core-green);
+  padding: 10px 30px;
+}
+
+.payment-btn-confirm {
+  background-color: var(--user-core-green);
+  color: var(--white);
+  border: none;
+  padding: 10px 35px;
+}
+
+.payment-qr-container {
+  display: flex;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background-color: var(--bg-body);
+  font-family: var(--font-sans);
+}
+
+.payment-qr-card {
+  width: 100%;
+  max-width: 1400px;
+  background-color: var(--cream);
+  border-radius: 16px;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  color: var(--text-main);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* เพิ่มเงาให้กล่องดูลอยขึ้นมานิดนึง */
+}
+
+.payment-qr-title {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 36px;
+}
+
+.payment-qr-box {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed var(--border-muted);
+  margin: 0 auto 24px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-surface);
+  color: var(--text-muted);
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.payment-qr-instruction {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #C70000;
+}
+
+.payment-qr-price {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.payment-qr-timer {
+  font-size: 28px;
+  color: var(--text-dark);
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
+.payment-qr-btn {
+  background-color: var(--user-core-green);
+  color: var(--bg-surface);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 48px;
+  cursor: pointer;
+  font-size: 22px;
+  transition: var(--transition);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.payment-qr-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px); /* เอฟเฟกต์ยกปุ่มขึ้นนิดนึงตอนเมาส์ชี้ */
+}

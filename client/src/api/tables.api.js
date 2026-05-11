@@ -31,7 +31,10 @@ export async function createArtist(artistName){
   const res = unwrap(await http("/api/admin/artists", { 
     method: "POST", 
     body: JSON.stringify({ artist_name: artistName }),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -40,7 +43,10 @@ export async function updateArtist(artistId, artistName){
   const res = unwrap(await http(`/api/admin/artists/${artistId}`, { 
     method: "PUT", 
     body: JSON.stringify({ artist_name: artistName }),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -72,7 +78,10 @@ export async function createGenre(genreName){
   const res = unwrap(await http("/api/admin/genres", { 
     method: "POST", 
     body: JSON.stringify({ genre_name: genreName }),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -81,7 +90,10 @@ export async function updateGenre(genreId, genreName){
   const res = unwrap(await http(`/api/admin/genres/${genreId}`, { 
     method: "PUT", 
     body: JSON.stringify({ genre_name: genreName }),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -113,7 +125,10 @@ export async function createAgent(agentData){
   const res = unwrap(await http("/api/admin/agents", { 
     method: "POST", 
     body: JSON.stringify(agentData),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -122,7 +137,10 @@ export async function updateAgent(agentId, agentData){
   const res = unwrap(await http(`/api/admin/agents/${agentId}`, { 
     method: "PUT", 
     body: JSON.stringify(agentData),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -154,7 +172,10 @@ export async function createVenue(venueData){
   const res = unwrap(await http("/api/admin/venues", { 
     method: "POST", 
     body: JSON.stringify(venueData),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
@@ -163,95 +184,16 @@ export async function updateVenue(venueId, venueData){
   const res = unwrap(await http(`/api/admin/venues/${venueId}`, { 
     method: "PUT", 
     body: JSON.stringify(venueData),
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: { 
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
   }));
   return res.data;
 }
 
 export async function deleteVenue(venueId){
   const res = unwrap(await http(`/api/admin/venues/${venueId}`, { 
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-// Zones
-export async function getZonesByVenue(venueId){
-  const res = unwrap(await http(`/api/admin/venues/${venueId}/zones`, { 
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function getZoneById(zoneId){
-  const res = unwrap(await http(`/api/admin/zones/${zoneId}`, { 
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function createZone(zoneData){
-  const res = unwrap(await http("/api/admin/zones", { 
-    method: "POST", 
-    body: JSON.stringify(zoneData),
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function updateZone(zoneId, zoneData){
-  const res = unwrap(await http(`/api/admin/zones/${zoneId}`, { 
-    method: "PUT", 
-    body: JSON.stringify(zoneData),
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function deleteZone(zoneId){
-  const res = unwrap(await http(`/api/admin/zones/${zoneId}`, { 
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-// Seats
-export async function getSeatsByZone(zoneId){
-  const res = unwrap(await http(`/api/admin/zones/${zoneId}/seats`, { 
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function getSeatById(seatId){
-  const res = unwrap(await http(`/api/admin/seats/${seatId}`, { 
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function createSeat(seatData){
-  const res = unwrap(await http("/api/admin/seats", { 
-    method: "POST", 
-    body: JSON.stringify(seatData),
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function updateSeat(seatId, seatData){
-  const res = unwrap(await http(`/api/admin/seats/${seatId}`, { 
-    method: "PUT", 
-    body: JSON.stringify(seatData),
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }));
-  return res.data;
-}
-
-export async function deleteSeat(seatId){
-  const res = unwrap(await http(`/api/admin/seats/${seatId}`, { 
     method: "DELETE",
     headers: { Authorization: `Bearer ${getToken()}` }
   }));
@@ -324,3 +266,19 @@ export async function getTicketById(ticketId){
   }));
   return res.data;
 }
+
+// API Create Map for Admin Add Pages
+export const API_CREATE_MAP = {
+  Artists: createArtist,
+  Genres: createGenre,
+  Agents: createAgent,
+  Venues: createVenue
+};
+
+// API Map for Admin Edit/Delete Pages
+export const API_MAP = {
+  Artists: { getById: getArtistById, update: updateArtist, del: deleteArtist, idKey: 'artist_id' },
+  Genres: { getById: getGenreById, update: updateGenre, del: deleteGenre, idKey: 'genre_id' },
+  Agents: { getById: getAgentById, update: updateAgent, del: deleteAgent, idKey: 'agent_id' },
+  Venues: { getById: getVenueById, update: updateVenue, del: deleteVenue, idKey: 'venue_id' }
+};

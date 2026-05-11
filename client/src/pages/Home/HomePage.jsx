@@ -1,60 +1,79 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import EventCard from './EventCard.jsx';
-import NavBar from '../../components/NavBar.jsx';
-import { getEventFeed } from '../../api/home.api.js';
-import { mockEvents } from "../../api/mockData.js";
 
-export default function HomePage() {
+export default function HomePage(){
     const [events, setEvents] = useState([]);
-    const [hideSoldOut, setHideSoldOut] = useState(false);
+    const [hideSoldOut, setHideSoldOut] = useState(true);
     const [hideComingSoon, setHideComingSoon] = useState(false);
-    
-    const [date, setDate] = useState(null);
-    const [search, setSearch] = useState("");
-    const [province, setProvince] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [searchParams] = useSearchParams();
 
-    // useEffect(() => {
-    //     getEventFeed()
-    //         .then(result => {
-    //             setEvents(result.data || []);
-    //         })
-    //         .catch(error => console.error("Error fetching events:", error));
-    // }, []);
-
+    // useEffect เดียว อ่านจาก URL ที่ NavBar อัปเดตให้
     useEffect(() => {
-            setEvents(mockEvents);
-    }, []);
+        const fetchEvents = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch(`http://localhost:6700/api/home?${searchParams.toString()}`);
+                if(response.ok){
+                    const data = await response.json();
+                    setEvents(data.data || []);
+                }
+            } catch (error){
+                console.error("Failed to fetch events:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    // กรองข้อมูลตามปุ่ม Hide Sold out / Hide Coming Soon
+        fetchEvents();
+    }, [searchParams]);
+
     const filteredEvents = events.filter((event) => {
-        // Backend status: 0 = Coming Soon, 1 = Buy Now, 2 = Sold Out
-        if (hideSoldOut && event.status === 2) return false;
-        if (hideComingSoon && event.status === 0) return false;
+        if(hideSoldOut && event.status === 2) return false;
+        if(hideComingSoon && event.status === 0) return false;
         return true;
     });
 
-    return (<div className="wrapper">
-                <div className="filter">
-                    <button className={hideSoldOut ? "hide-sold-out" : "filter-btn"}
-                        onClick={() => setHideSoldOut((v) => !v)}>
-                        Hide Sold out</button>
-                    <button className={hideComingSoon ? "hide-coming-soon" : "filter-btn"}
-                        onClick={() => setHideComingSoon((v) => !v)}>
-                        Hide Coming Soon</button>
-                </div>
-                <div className="event-card">
-                    {filteredEvents.map(event => (
-                        <EventCard
-                            key={event.event_id}
-                            id={event.event_id}          
-                            title={event.title}
-                            date={event.showdate}        
-                            statusCode={event.status}    /* ส่งเลข 0,1,2 ไปให้การ์ด */
-                            image={event.img_path}       
-                        />
-                    ))}
-                </div>
+    return (
+        <div className="wrapper">
+            <div className="filter">
+                <button
+                    className={hideSoldOut ? "hide-sold-out" : "filter-btn"}
+                    onClick={() => setHideSoldOut((v) => !v)}
+                >
+                    Hide Sold out
+                </button>
+                <button
+                    className={hideComingSoon ? "hide-coming-soon" : "filter-btn"}
+                    onClick={() => setHideComingSoon((v) => !v)}
+                >
+                    Hide Coming Soon
+                </button>
             </div>
 
+            <div className="event-card">
+                {isLoading ? (
+                    <div style={{ width: '100%', textAlign: 'center', padding: '40px', color: '#888' }}>
+                        Loading events...
+                    </div>
+                ) : filteredEvents.length > 0 ? (
+                    filteredEvents.map(event => (
+                        <EventCard
+                            key={event.event_id}
+                            id={event.event_id}
+                            title={event.title}
+                            date={event.showdate}
+                            statusCode={event.status}
+                            image={event.img_path}
+                        />
+                    ))
+                ) : (
+                    <div style={{ width: '100%', textAlign: 'center', padding: '40px', color: '#888' }}>
+                        ไม่พบงานแสดงที่ตรงกับเงื่อนไขการค้นหา
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }

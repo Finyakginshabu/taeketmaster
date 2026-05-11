@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Add, Edit, Delete } from '../../components/Icons.jsx';
-import { mockTables } from "../../api/mockData.js";
-import { TABLE_CONFIGS } from '../../utils.js';
+import { TABLE_CONFIGS, mockTables } from '../../utils.js';
 import {
   getArtists, deleteArtist,
   getGenres, deleteGenre,
@@ -14,7 +13,7 @@ import {
   getTickets,
 } from '../../api/tables.api.js';
 
-// Map table title -> { fetch, delete, idKey }
+// Map table title -> { fetch, del, idKey }
 const API_MAP = {
   Artists:  { fetch: getArtists,  del: deleteArtist,  idKey: 'artist_id'  },
   Genres:   { fetch: getGenres,   del: deleteGenre,   idKey: 'genre_id'   },
@@ -26,7 +25,7 @@ const API_MAP = {
   Tickets:  { fetch: getTickets,  del: null,           idKey: 'ticket_id'  },
 };
 
-function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
+function GenericTable({ title, config, onRowClick, onEditClick, onAddClick, idKey }){
   const [rows, setRows]     = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -36,7 +35,7 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
   useEffect(() => {
     setSearch(''); setPage(1);
     const apiEntry = API_MAP[title];
-    if (apiEntry) {
+    if(apiEntry){
       setLoading(true);
       apiEntry.fetch()
         .then(data => setRows(data || []))
@@ -55,14 +54,14 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
   const paginated  = filtered.slice((page - 1) * perPage, page * perPage);
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this record?')) return;
+    if(!window.confirm('Are you sure you want to delete this record?')) return;
     const apiEntry = API_MAP[title];
-    if (!apiEntry?.del) return;
+    if(!apiEntry?.del) return;
     try {
       await apiEntry.del(id);
       const idKey = apiEntry.idKey;
       setRows(rows.filter(r => r[idKey] !== id));
-    } catch (err) {
+    } catch (err){
       console.error('Delete failed:', err);
       alert('Delete failed: ' + err.message);
     }
@@ -96,7 +95,6 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
           {loading ? (
             <tr><td colSpan={config.columns.length + (config.editable ? 1 : 0)} style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
           ) : paginated.length > 0 ? paginated.map(row => {
-            const idKey = API_MAP[title]?.idKey || 'id';
             const rowId = row[idKey] ?? row.id;
             return (
             <tr
@@ -142,7 +140,9 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
           <select className="records-dropdown" value={perPage}
             onChange={(e) => { setPerPage(Number(e.target.value)); setPage(1); }}>
             <option value="5">5</option>
-            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="500">All</option>
           </select>
           <span className="pagination-text page-info">
             Page {page} of {totalPages}
@@ -159,28 +159,29 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick }) {
   );
 }
 
-export default function AdminTablesPage() {
+export default function AdminTablesPage(){
   const { id }   = useParams();
   const navigate = useNavigate();
   const [tables, setTables] = useState(null);
 
   useEffect(() => {
-    if (id) {
+    if(id){
       const found = mockTables.find(t => t.id === Number(id));
-      if (found) setTables(found);
+      if(found) setTables(found);
     }
   }, [id]);
 
-  if (!tables) return <div>Loading...</div>;
+  if(!tables) return <div>Loading...</div>;
 
   const config = TABLE_CONFIGS[tables.title];
-  if (!config)  return <div>ไม่รองรับตาราง "{tables.title}"</div>;
+  if(!config)  return <div>ไม่รองรับตาราง "{tables.title}"</div>;
 
   const resolvedConfig = !config.clickable
     ? { ...config, editable: true }
     : config;
 
   const titleLower = tables.title.toLowerCase();
+  const isManageable = tables.isManageable;
 
   return (
     <div className="admin-tables-page">
@@ -193,19 +194,20 @@ export default function AdminTablesPage() {
       <GenericTable
         key={tables.title}
         title={tables.title}
-        config={resolvedConfig}
+        config={{ ...resolvedConfig, editable: resolvedConfig.editable && isManageable }}
+        idKey={config?.idKey || API_MAP[tables.title]?.idKey || 'id'}
         onRowClick={
           config.clickable
-            ? (row) => navigate(`/tables/${titleLower}/${row.id}`)
+            ? (row) => navigate(`/tables/${titleLower}/${row[config?.idKey || 'id']}`)
             : undefined
         }
         onEditClick={
-          resolvedConfig.editable
-            ? (row) => navigate(`/tables/${titleLower}/edit/${row.id}`)
+          isManageable
+            ? (row) => navigate(`/tables/${titleLower}/edit/${row[config?.idKey || 'id']}`)
             : undefined
         }
         onAddClick={
-          resolvedConfig.editable
+          isManageable
             ? () => navigate(`/tables/${titleLower}/add`)
             : undefined
         }

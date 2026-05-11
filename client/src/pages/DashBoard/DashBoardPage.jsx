@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Label } from 'recharts';
-import { Comparison } from '../../components/Icons';
+import { useAuth } from '../Login/AuthContext';
 import { monthNamesFull } from '../../utils.js';
 import { getTodayTicketSold, getTopSellingArtists, getTopTicketSpenders,
         getMonthlyRevenue, getQuaterRevenue, getPopularEvent, getTopSpender, } from '../../api/dashboard.api.js';
 
-export default function Dashboard() {
+export default function Dashboard(){
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
+
   const [stats,           setStats]           = useState(null);
   const [topArtists,      setTopArtists]      = useState([]);
   const [topSpenders,     setTopSpenders]     = useState([]);
@@ -16,6 +19,13 @@ export default function Dashboard() {
   const [allTimeSpenders, setAllTimeSpenders] = useState([]);
   const [isLoading,       setIsLoading]       = useState(true);
   const [error,           setError]           = useState(null);
+
+  useEffect(() => {
+    if (!isAdmin()) {
+      navigate('/');
+      return;
+    }
+  }, [isAdmin, navigate]);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -80,8 +90,9 @@ export default function Dashboard() {
           totalSpent: Number(spent)
         }));
         setAllTimeSpenders(formattedAllTime);
+        setError(null);
 
-      } catch (err) {
+      } catch (err){
         console.error('Error fetching dashboard data:', err);
         setError(err.message);
       } finally {
@@ -89,11 +100,13 @@ export default function Dashboard() {
       }
     };
 
-    fetchAll();
-  }, []);
+    if (isAdmin()) {
+      fetchAll();
+    }
+  }, [isAdmin]);
 
-  if (isLoading) return <div className="dashboard-loading">Loading Dashboard...</div>;
-  if (error)     return <div className="dashboard-loading">เกิดข้อผิดพลาด: {error}</div>;
+  if(isLoading) return <div className="dashboard-loading">Loading Dashboard...</div>;
+  if(error)     return <div className="dashboard-loading">err: {error}</div>;
 
   const peakMonth   = monthlyRevenue.reduce((max, cur) => cur.revenue > max.revenue ? cur : max, monthlyRevenue[0] ?? {});
   const lowestMonth = monthlyRevenue.reduce((min, cur) => cur.revenue < min.revenue ? cur : min, monthlyRevenue[0] ?? {});
@@ -102,9 +115,6 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h2>Dashboard</h2>
-        <Link to="/comparison" className="comparison-btn">
-          <Comparison width={24} /> Comparison
-        </Link>
       </div>
 
       <div className="dashboard-grid">
@@ -113,9 +123,14 @@ export default function Dashboard() {
           <div className="dash-card" style={{ flex: 1 }}>
             <h3 className="card-title">Today's Tickets Sold</h3>
             <div className="stat-content">
-              {/* ดึงจำนวนตั๋ว */}
-              <span className="stat-number">{stats?.today?.total_tickets_sold || 0}</span>
-              {/* ดึง % ticket_percent */}
+              <span className="stat-number">
+                {(() => {
+                  const num = stats?.today?.total_tickets_sold || 0;
+                  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'm';
+                  if (num >= 1000) return (num / 1000).toFixed(0) + 'k';
+                  return num;
+                })()}
+              </span>
               <div className="stat-growth green">
                 {stats?.difference_percent?.ticket_percent > 0 ? '+' : ''}
                 {stats?.difference_percent?.ticket_percent || 0}%
@@ -129,7 +144,12 @@ export default function Dashboard() {
             <div className="stat-content">
               {/* ดึงรายได้ */}
               <span className="stat-number">
-                ฿{(stats?.today?.total_revenue || 0).toLocaleString()}
+                ฿{(() => {
+                  const num = stats?.today?.total_revenue || 0;
+                  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'm';
+                  if (num >= 1000) return (num / 1000).toFixed(0) + 'k';
+                  return num.toLocaleString();
+                })()}
               </span>
               {/* ดึง % revenue_percent */}
               <div className="stat-growth green">

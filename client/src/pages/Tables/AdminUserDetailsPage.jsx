@@ -21,7 +21,7 @@ const USER_FIELDS = [
   { key: 'postalCode', label: 'Postal Code' }
 ];
 
-export default function AdminUserDetailPage() {
+export default function AdminUserDetailPage(){
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ export default function AdminUserDetailPage() {
   const totalPages = Math.ceil(bookings.length / perPage) || 1;
   const paginated  = bookings.slice((page - 1) * perPage, page * perPage);
 
-  if (!user) {
+  if(!user){
     return (
       <div className="admin-table">
         <p>ไม่พบข้อมูล User ID: {id}</p>
@@ -64,7 +64,7 @@ export default function AdminUserDetailPage() {
           {USER_FIELDS.map(({ key, label }) => {
             let displayValue;
 
-            if (Array.isArray(key)) {
+            if(Array.isArray(key)){
               const values = key.map(k => user[k]).filter(Boolean);
               displayValue = values.length > 0 ? values.join(' ') : '—';
             } else {

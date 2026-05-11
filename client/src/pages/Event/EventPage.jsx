@@ -4,31 +4,20 @@ import NavBar from '../../components/NavBar.jsx';
 import { getEventDetail } from '../../api/eventDetails.api.js';
 import { Calendar, MapPin, Price, Sale } from '../../components/Icons.jsx';
 import { formatDateTime } from '../../utils.js';
-import { mockEvents } from "../../api/mockData.js";
 
-const USE_MOCK = true;
-
-function getButton(status) {
-    if (status === 2) return { label: "sold-out-btn",    text: "Sold Out"    };
-    if (status === 0) return { label: "coming-soon-btn", text: "Coming Soon" };
+function getButton(status){
+    if(status === 2) return { label: "sold-out-btn",    text: "Sold Out"    };
+    if(status === 0) return { label: "coming-soon-btn", text: "Coming Soon" };
     return                   { label: "buy-now-btn",     text: "Buy Now"     };
 }
 
-function getSale(status) {
-    if (status === 2) return { label: "sold-out-sale",    text: "SOLD OUT"    };
-    if (status === 0) return { label: "coming-soon-sale", text: "COMING SOON" };
+function getSale(status){
+    if(status === 2) return { label: "sold-out-sale",    text: "SOLD OUT"    };
+    if(status === 0) return { label: "coming-soon-sale", text: "COMING SOON" };
     return                   { label: "buy-now-sale",     text: "ON SALE NOW" };
 }
 
-// คำนวณ status จาก mockData (ไม่มี field status ตรงๆ)
-function calcStatus(event) {
-    if (!event.isAvailable) return 2;
-    const today = new Date();
-    if (today < new Date(event.startDate)) return 0;
-    return 1;
-}
-
-export default function EventPage() {
+export default function EventPage(){
     const { id: event_id } = useParams();
     const navigate = useNavigate();
     const [event, setEvent] = useState(null);
@@ -36,30 +25,15 @@ export default function EventPage() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (USE_MOCK) {
-            const found = mockEvents.find(e => e.event_id === Number(event_id));
-            if (found) {
-                // ปรับ field ให้ตรงกับที่ page ใช้
-                setEvent({
-                    ...found,
-                    status: calcStatus(found),
-                    venue_name: found.province,
-                    public_sale: found.startDate,
-                    ticket_prices: "Zone A 6,000 / Zone B 2,500 / Zone C 1,000 / Zone D 500",
-                });
-            }
-            setLoading(false);
-            return;
-        }
         getEventDetail(event_id)
             .then(data => setEvent(data))
             .catch(err => setError(err.message))
             .finally(() => setLoading(false));
     }, [event_id]);
 
-    if (loading) return <><NavBar /><div style={{ padding: '2rem' }}>Loading...</div></>;
-    if (error)   return <><NavBar /><div style={{ padding: '2rem', color: 'red' }}>{error}</div></>;
-    if (!event)  return <><NavBar /><div style={{ padding: '2rem' }}>Event not found.</div></>;
+    if(loading) return <><NavBar /><div style={{ padding: '2rem' }}>Loading...</div></>;
+    if(error)   return <><NavBar /><div style={{ padding: '2rem', color: 'red' }}>{error}</div></>;
+    if(!event)  return <><NavBar /><div style={{ padding: '2rem' }}>Event not found.</div></>;
 
     const btn  = getButton(event.status);
     const sale = getSale(event.status);
@@ -85,7 +59,7 @@ export default function EventPage() {
                                 <p className="detail-label">Public Sale</p>
                                 <div className="details">
                                     <Sale style={{ width: 24 }} />
-                                    <span>{event.public_sale}</span>
+                                    <span>{formatDateTime(event.public_sale)}</span>
                                 </div>
                             </div>
 

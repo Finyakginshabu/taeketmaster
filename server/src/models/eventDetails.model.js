@@ -39,14 +39,33 @@ export const getEventDetailService = async (id) => {
 // Click buy now and show available tickets
 export const getEventDetailTwoService = async (id) => {
     const result = await pool.query(`
-        select  e.title, e.img_path, json_agg(distinct to_char(s.show_at, 'Dy fmdd Mon yyyy hh24:mi')) as showtimes, json_object_agg(z.zone_name, ez.price) as ticket_prices
+        select  e.title, e.img_path, 
+        json_agg(json_build_object('showtime_id', s.showtime_id, 'show_at', to_char(s.show_at, 'Dy fmdd Mon yyyy hh24:mi')) order by s.show_at) as showtimes, 
+        json_object_agg(z.zone_name, ez.price) as ticket_prices
         from events e
         join showtimes s on e.event_id = s.event_id
         join venues v on s.venue_id = v.venue_id
         join event_zones ez on e.event_id = ez.event_id
         join zones z on ez.zone_id = z.zone_id
         where e.event_id = $1
-        group by e.event_id, e.title, e.img_path;`, [id]);
+        group by e.event_id, e.title, e.img_path, s.showtime_id, s.show_at
+        order by s.show_at;`, [id]);
+    
+    if(result.rows.length > 0){
+        const showtimes = [];
+        const seenIds = new Set();
+        result.rows.forEach(row => {
+            if(row.showtimes){
+                row.showtimes.forEach(st => {
+                    if(!seenIds.has(st.showtime_id)){
+                        seenIds.add(st.showtime_id);
+                        showtimes.push(st);
+                    }
+                });
+            }
+        });
+        result.rows[0].showtimes = showtimes;
+    }
     return result.rows[0];
 };
 
@@ -68,7 +87,7 @@ export const getAvailableSeatService = async (id) => {
 
 export const getZoneLayoutService = async (id) => {
     const result = await pool.query(`
-        select z.zone_name, z.img_path, z.color, z.x_pos, z.y_pos,
+        select z.zone_id, z.zone_name, '/zones/' || z.img_path as img_path, z.color, z.x_pos, z.y_pos,
         (count(se.seat_id) > 0) as is_zone
         from zones z
         join venues v on z.venue_id = v.venue_id

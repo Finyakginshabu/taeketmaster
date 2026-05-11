@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import TableCard from "./TableCard.jsx";
 import { Search } from '../../components/Icons.jsx'
+import { mockTables } from '../../utils.js'
 
 export default function AllTablePage(){
 
     const [tables, setTables] = useState([]); 
     const [showManageable, setShowManageable] = useState(false);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
             // fetch("/api/tables.api.js")
@@ -15,11 +17,12 @@ export default function AllTablePage(){
     }, []);
 
     const filteredTables = tables.filter((table) => {
-        if (showManageable) {
-            return table.isManageable === true;
+        const matchesSearch = table.title.toLowerCase().includes(search.toLowerCase());
+        if(showManageable){
+            return table.isManageable === true && matchesSearch;
         }
         
-        return true; 
+        return matchesSearch; 
     });
 
     return( <>
@@ -33,8 +36,9 @@ export default function AllTablePage(){
                     
                     <div className="search-pill">
                         <Search style={{width:20}} />
-                        <input type="text" placeholder="Search users, events..."
-                            onChange={(e) => onSearch(e.target.value)}
+                        <input type="text" placeholder="Search tables..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                             className="search-input" />
                     </div>
                 </div>

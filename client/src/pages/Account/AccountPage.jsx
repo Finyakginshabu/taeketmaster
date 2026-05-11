@@ -7,7 +7,7 @@ import { INITIAL_DATA } from '../../utils.js';
 // (ตอนใช้งานจริง ให้ดึงจาก Context, Redux หรือ localStorage)
 const LOGGED_IN_USER_ID = '1008';
 
-export default function AccountSettingsPage() {
+export default function AccountSettingsPage(){
   // สร้าง State สำหรับเก็บค่าเดิมจาก DB เพื่อไว้ใช้ตอนกด Reset
   const [saved, setSaved] = useState({});
 
@@ -31,7 +31,7 @@ export default function AccountSettingsPage() {
 
   const [saving, setSaving] = useState(false);
 
-  function formatDateTH(d) {
+  function formatDateTH(d){
     const dd = String(d.getDate()).padStart(2, "0");
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     return `${dd}/${mm}/${d.getFullYear()}`;
@@ -40,7 +40,7 @@ export default function AccountSettingsPage() {
   // ดึงข้อมูล User ตอนเปิดหน้าเว็บ
   useEffect(() => {
     const user = INITIAL_DATA.User.find(u => u.id === LOGGED_IN_USER_ID);
-    if (user) {
+    if(user){
       // ใน Mock data เก่า ชื่อ-นามสกุล รวมกันใน "name" ต้องทำการแยกก่อน
       const [fname, ...lnameArr] = (user.name || '').split(' ');
       const lname = lnameArr.join(' ');
@@ -86,12 +86,12 @@ export default function AccountSettingsPage() {
   };
 
   // Reset กลับไปเป็นค่าล่าสุดที่ดึงมาจาก DB
-  function handleReset() {
+  function handleReset(){
     loadProfileToForm(saved);
   }
 
   // Save ทับข้อมูลของ User คนเดิม
-  async function handleSave() {
+  async function handleSave(){
     setSaving(true);
     try {
       await new Promise(r => setTimeout(r, 800)); // จำลองดีเลย์ตอนส่ง API
@@ -104,7 +104,7 @@ export default function AccountSettingsPage() {
       // หาตำแหน่งของ User คนนี้ใน Array
       const userIndex = INITIAL_DATA.User.findIndex(u => u.id === LOGGED_IN_USER_ID);
       
-      if (userIndex !== -1) {
+      if(userIndex !== -1){
         // อัปเดตข้อมูลกลับไปที่ Mock Data
         // แปลง firstname + lastname กลับไปเป็น key "name" เพื่อให้รองรับตาราง User แบบเดิม
         INITIAL_DATA.User[userIndex] = { 
@@ -115,7 +115,7 @@ export default function AccountSettingsPage() {
       }
 
       setSaved(newSaved); // อัปเดตค่าตั้งต้นเผื่อกดยกเลิก
-    } catch (error) {
+    } catch (error){
       console.error('เกิดข้อผิดพลาดในการบันทึกข้อมูล:', error);
     } finally {
       setSaving(false);

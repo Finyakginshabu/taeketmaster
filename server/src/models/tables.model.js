@@ -2,7 +2,7 @@ import pool from "../config/db.js";
 
 // Artists
 export const getAllArtists = async () => {
-    const result = await pool.query("select * from artists order by artist_id desc");
+    const result = await pool.query("select * from artists order by artist_id asc");
     return result.rows;
 };
 
@@ -37,7 +37,7 @@ export const deleteArtist = async (artistId) => {
 
 // Genres
 export const getAllGenres = async () => {
-    const result = await pool.query("select * from genres order by genre_id desc");
+    const result = await pool.query("select * from genres order by genre_id asc");
     return result.rows;
 };
 
@@ -72,7 +72,7 @@ export const deleteGenre = async (genreId) => {
 
 // Agents
 export const getAllAgents = async () => {
-    const result = await pool.query("select * from agents order by agent_id desc");
+    const result = await pool.query("select * from agents order by agent_id asc");
     return result.rows;
 };
 
@@ -109,7 +109,7 @@ export const deleteAgent = async (agentId) => {
 
 // Venues
 export const getAllVenues = async () => {
-    const result = await pool.query("select * from venues order by venue_id desc");
+    const result = await pool.query("select * from venues order by venue_id asc");
     return result.rows;
 };
 
@@ -147,7 +147,7 @@ export const deleteVenue = async (venueId) => {
 // Zones
 export const getZonesByVenueId = async (venueId) => {
     const result = await pool.query(
-        "select * from zones where venue_id = $1 order by zone_id desc",
+        "select * from zones where venue_id = $1 order by zone_id asc",
         [venueId]
     );
     return result.rows;
@@ -187,7 +187,7 @@ export const deleteZone = async (zoneId) => {
 // Seats
 export const getSeatsByZoneId = async (zoneId) => {
     const result = await pool.query(
-        "select * from seats where zone_id = $1 order by seat_id desc",
+        "select * from seats where zone_id = $1 order by seat_id asc",
         [zoneId]
     );
     return result.rows;
@@ -227,7 +227,7 @@ export const deleteSeat = async (seatId) => {
 // Users
 export const viewUsers = async () => {
     const result = await pool.query(
-        "select user_id, first_name, last_name, email, phone, username, role, registered_at from users order by user_id desc"
+        "select user_id, first_name, last_name, email, phone, username, role, registered_at from users order by user_id asc"
     );
     return result.rows;
 };
@@ -246,7 +246,7 @@ export const viewBookings = async () => {
         `select b.booking_id, b.user_id, u.first_name, u.last_name, u.email, b.booked_at, b.total_price 
          from bookings b 
          join users u on b.user_id = u.user_id 
-         order by b.booking_id desc`
+         order by b.booking_id asc`
     );
     return result.rows;
 };
@@ -284,7 +284,7 @@ export const viewPayments = async () => {
          from payments p
          join bookings b on p.booking_id = b.booking_id
          join users u on b.user_id = u.user_id
-         order by p.payment_id desc`
+         order by p.payment_id asc`
     );
     return result.rows;
 };
@@ -312,7 +312,7 @@ export const viewTickets = async () => {
          join events e on sh.event_id = e.event_id
          join venues v on sh.venue_id = v.venue_id
          join zones z on s.zone_id = z.zone_id
-         order by t.ticket_id desc`
+         order by t.ticket_id asc`
     );
     return result.rows;
 };

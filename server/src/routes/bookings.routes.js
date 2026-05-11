@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post("/reserve", verifyToken, controller.reserveTicket);
 router.post("/payment", verifyToken, controller.createPayment);
+router.delete("/booking", verifyToken, controller.removeBooking);
 
 export default router;

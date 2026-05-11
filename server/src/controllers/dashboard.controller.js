@@ -105,7 +105,7 @@ export const getPopularEvent = async (req, res, next) => {
 
 export const getTopSpenders = async (req, res, next) => {
     try{
-        const spenders = await model.getTopSpender();
+        const spenders = await model.getTopSpenders();
         
         // Build spender object
         const topSpenders = {};

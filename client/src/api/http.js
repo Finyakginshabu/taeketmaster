@@ -9,9 +9,10 @@ export const API_BASE = import.meta.env.VITE_API_BASE !== undefined ? import.met
  */
 export async function http(path, options = {}){
   const baseUrl = API_BASE.endsWith("/") ? API_BASE.slice(0, -1) : API_BASE;
+  const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
   const res = await fetch(`${baseUrl}${path}`, {
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     ...options,
+    headers,
   });
   const ct = res.headers.get("content-type") || "";
   const isJson = ct.includes("application/json");

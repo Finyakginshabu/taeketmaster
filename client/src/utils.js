@@ -1,3 +1,14 @@
+export const mockTables = [
+  { id: 1, title: 'Artists',  isManageable: true,  apiPath: 'artists'  },
+  { id: 2, title: 'Genres',   isManageable: true,  apiPath: 'genres'   },
+  { id: 3, title: 'Agents',   isManageable: true,  apiPath: 'agents'   },
+  { id: 4, title: 'Venues',   isManageable: true,  apiPath: 'venues'   },
+  { id: 5, title: 'Users',    isManageable: false, apiPath: 'users'    },
+  { id: 6, title: 'Bookings', isManageable: false, apiPath: 'bookings' },
+  { id: 7, title: 'Payments', isManageable: false, apiPath: 'payments' },
+  { id: 8, title: 'Tickets',  isManageable: false, apiPath: 'tickets'  },
+];
+
 export const provinces = [
 "Bangkok", "Krabi", "Kanchanaburi", "Kalasin", "Kamphaeng Phet",
 "Khon Kaen", "Chanthaburi", "Chachoengsao", "Chon Buri", "Chai Nat",
@@ -33,47 +44,111 @@ export const monthNamesFull = {
 };
 
 export const TABLE_CONFIGS = {
-  User: {
+  Artists: {
     columns: [
-      { key: 'id',    label: 'ID'    },
-      { key: 'name',  label: 'Name'  },
-      { key: 'email', label: 'Email' },
-      { key: 'phone', label: 'Phone' },
+      { key: 'artist_id',   label: 'ID'   },
+      { key: 'artist_name', label: 'Name' },
     ],
-    searchKeys: ['id', 'name', 'email'],
+    searchKeys: ['artist_id', 'artist_name'],
+    idKey: 'artist_id',
+    clickable:  false,
+    editable:   true,
+  },
+  Genres: {
+    columns: [
+      { key: 'genre_id',   label: 'ID'   },
+      { key: 'genre_name', label: 'Name' },
+    ],
+    searchKeys: ['genre_id', 'genre_name'],
+    idKey: 'genre_id',
+    clickable:  false,
+    editable:   true,
+  },
+  Agents: {
+    columns: [
+      { key: 'agent_id',    label: 'ID'    },
+      { key: 'agent_name',  label: 'Name'  },
+      { key: 'email',       label: 'Email' },
+      { key: 'phone',       label: 'Phone' },
+    ],
+    searchKeys: ['agent_id', 'agent_name', 'email'],
+    idKey: 'agent_id',
+    clickable:  false,
+    editable:   true,
+  },
+  Venues: {
+    columns: [
+      { key: 'venue_id',      label: 'ID'       },
+      { key: 'name',          label: 'Name'     },
+      { key: 'province',      label: 'Province' },
+      { key: 'seat_capacity', label: 'Capacity' },
+    ],
+    searchKeys: ['venue_id', 'name', 'province'],
+    idKey: 'venue_id',
+    clickable:  false,
+    editable:   true,
+  },
+  Users: {
+    columns: [
+      { key: 'user_id',      label: 'ID'       },
+      { key: 'first_name',   label: 'First Name'  },
+      { key: 'last_name',    label: 'Last Name'   },
+      { key: 'email',        label: 'Email'    },
+      { key: 'phone',        label: 'Phone'    },
+    ],
+    searchKeys: ['user_id', 'first_name', 'last_name', 'email'],
+    idKey: 'user_id',
     clickable:  true,
     editable:   false,
   },
-  Event: {
+  Bookings: {
     columns: [
-      { key: 'id',         label: 'ID'          },
-      { key: 'title',      label: 'Title'       },
-      { key: 'artist',     label: 'Artist'      },
-      { key: 'agentEmail', label: 'Agent Email' },
+      { key: 'booking_id',  label: 'ID'         },
+      { key: 'user_id',     label: 'User ID'    },
+      { key: 'first_name',  label: 'First Name' },
+      { key: 'last_name',   label: 'Last Name'  },
+      { key: 'booked_at',   label: 'Booked At'  },
+      { key: 'total_price', label: 'Total'      },
     ],
-    searchKeys: ['id', 'title', 'artist'],
+    searchKeys: ['booking_id', 'user_id', 'first_name', 'last_name'],
+    idKey: 'booking_id',
     clickable:  false,
-    editable:   true,
-    newRowTemplate: { title: '', artist: '', agentEmail: '' },
+    editable:   false,
   },
-  Venue: {
+  Payments: {
     columns: [
-      { key: 'id',       label: 'ID'       },
-      { key: 'name',     label: 'Name'     },
-      { key: 'location', label: 'Location' },
-      { key: 'capacity', label: 'Capacity' },
+      { key: 'payment_id',      label: 'ID'            },
+      { key: 'booking_id',      label: 'Booking ID'    },
+      { key: 'payment_method',  label: 'Method'        },
+      { key: 'first_name',      label: 'First Name'    },
+      { key: 'last_name',       label: 'Last Name'     },
+      { key: 'total_price',     label: 'Amount'        },
     ],
-    searchKeys: ['id', 'name', 'location'],
+    searchKeys: ['payment_id', 'booking_id', 'first_name', 'last_name'],
+    idKey: 'payment_id',
     clickable:  false,
-    editable:   true,
-    newRowTemplate: { name: '', location: '', capacity: '' },
+    editable:   false,
+  },
+  Tickets: {
+    columns: [
+      { key: 'ticket_id',   label: 'ID'          },
+      { key: 'booking_id',  label: 'Booking ID'  },
+      { key: 'seat_number', label: 'Seat'        },
+      { key: 'event_title', label: 'Event'       },
+      { key: 'venue_name',  label: 'Venue'       },
+      { key: 'price',       label: 'Price'       },
+    ],
+    searchKeys: ['ticket_id', 'booking_id', 'seat_number', 'event_title'],
+    idKey: 'ticket_id',
+    clickable:  false,
+    editable:   false,
   },
 };
 
-export function formatDateTime(dateString, showTime) {
-    if (!dateString) return "";
+export function formatDateTime(dateString, showTime){
+    if(!dateString) return "";
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
+    if(isNaN(date.getTime())) return dateString;
 
     const day = date.getDate();
     const month = date.toLocaleString('en-US', { month: 'short' }); 
@@ -81,7 +156,7 @@ export function formatDateTime(dateString, showTime) {
 
     let formattedDate = `${day} ${month} ${year}`;
 
-    if (showTime) {
+    if(showTime){
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
         formattedDate += ` ${hours}:${minutes}`;

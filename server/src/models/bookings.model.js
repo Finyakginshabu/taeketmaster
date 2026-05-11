@@ -64,7 +64,7 @@ export const updateBookingTotalPriceService = async (bookingId, totalPrice) => {
 export const getSeatPriceService = async (seatId, showtimeId) => {
   try{
     const query = `
-      select s.seat_id, s.zone_id, z.zone_id, e.event_id, ez.price
+      select s.seat_id, s.zone_id, ez.event_id, ez.price
       from seats s
       join zones z on s.zone_id = z.zone_id
       join event_zones ez on z.zone_id = ez.zone_id
@@ -121,6 +121,33 @@ export const getBookingByIdService = async (bookingId) => {
     `;
     const result = await pool.query(query, [bookingId]);
     return result.rows[0] || null;
+  }catch(error){
+    throw error;
+  }
+};
+
+export const removeTicketService = async (seatId, showtimeId) => {
+  try{
+    const query = `
+      delete from tickets 
+      where seat_id = $1 and showtime_id = $2
+      returning ticket_id, booking_id, seat_id, showtime_id, price
+    `;
+    const result = await pool.query(query, [seatId, showtimeId]);
+    return result.rows[0] || null;
+  }catch(error){
+    throw error;
+  }
+};
+
+export const removeBookingService = async (bookingId) => {
+  try{
+    const checkQuery = `select ticket_id from tickets where booking_id = $1`;
+    const checkResult = await pool.query(checkQuery, [bookingId]);
+    if (checkResult.rows.length === 0) {
+      const deleteQuery = `delete from bookings where booking_id = $1 returning booking_id`;
+      await pool.query(deleteQuery, [bookingId]);
+    }
   }catch(error){
     throw error;
   }

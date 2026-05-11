@@ -1,6 +1,8 @@
 import React, { StrictMode } from 'react';
 import ReactDOM, { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useParams, NavLink } from 'react-router-dom';
+import { CartProvider } from './pages/Cart/CartContext.jsx';
+import { AuthProvider } from './pages/Login/AuthContext.jsx';
 
 // UserPage
 import LoginPage from './pages/Login/LoginPage.jsx'; 
@@ -11,7 +13,12 @@ import ResetPasswordPage from './pages/Login/ResetPasswordPage.jsx';
 import HomePage from './pages/Home/HomePage.jsx';
 import EventPage from './pages/Event/EventPage.jsx';
 import ConcertPlan from './pages/Booking/ConcertPlan.jsx';
+import SeatBooking from './pages/Booking/SeatBooking.jsx';
+import CartPage from './pages/Cart/CartPage.jsx';
+import PaymentPage from './pages/Payment/PaymentPage.jsx';
+import PaymentQRPage from './pages/Payment/PaymentQRPage.jsx';
 import NavBar from './components/NavBar.jsx';
+import MyTickets from './pages/History/MyTickets.jsx';
 
 // AdminPage
 import DashBoardPage from './pages/DashBoard/DashBoardPage.jsx';
@@ -21,14 +28,13 @@ import UserDetailPage from './pages/Tables/AdminUserDetailsPage.jsx';
 import AdminAddPage from './pages/Tables/AdminAddPage.jsx';
 import AdminEditPage from './pages/Tables/AdminEditPage.jsx';
 import AccountPage from './pages/Account/AccountPage.jsx';
-import ComparisonPage from './pages/Comparison/ComparisonPage.jsx';
 
 import './index.css';
 
 // image URL
 import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison, ChevronDown } from './components/Icons.jsx';
 
-function SubMenu({ icon, label, children, basePath }) {
+function SubMenu({ icon, label, children, basePath }){
   const location = window.location.pathname;
   const isActive = location.startsWith(basePath);
   const [isOpen, setIsOpen] = React.useState(isActive);
@@ -57,7 +63,7 @@ function SubMenu({ icon, label, children, basePath }) {
   );
 }
 
-function Sidebar() {
+function Sidebar(){
 
   const getNavClass = ({ isActive }) => isActive ? "nav-item active" : "nav-item";
   const getSubLinkClass = ({ isActive }) => isActive ? "nav-subitem active" : "nav-subitem";
@@ -136,7 +142,7 @@ function Sidebar() {
   );
 }
 
-function Layout({ children }) {
+function Layout({ children }){
   return( 
       <div className="app-layout">
         <Sidebar />
@@ -149,29 +155,38 @@ function Layout({ children }) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/signin" replace />} />
-        <Route path="/signin" element={<LoginPage />} />
-        <Route path="/signup" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/otp" element={<OtpPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/account-setting" element={<NavBar><AccountPage /></NavBar>} />
-        <Route path="/home" element={<NavBar><HomePage /></NavBar>} />
-        <Route path="/event/:id" element={<NavBar><EventPage /></NavBar>} />
-        <Route path="/event-booking/:id" element={<NavBar><ConcertPlan /></NavBar>} />
-        <Route path="/event-booking/:id/zone/:zoneId" element={<NavBar><ConcertPlan /></NavBar>} />
-        
-        <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
-        <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
-        <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
-        <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
-        <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
-        <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
-        <Route path="/account" element={<Layout><AccountPage /></Layout>} />
-        <Route path="/comparison" element={<Layout><ComparisonPage /></Layout>} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/signin" element={<LoginPage />} />
+            <Route path="/signup" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/otp" element={<OtpPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/account-setting" element={<NavBar><AccountPage /></NavBar>} />
+            <Route path="/home" element={<NavBar><HomePage /></NavBar>} />
+            <Route path="/event/:id" element={<NavBar><EventPage /></NavBar>} />
+            <Route path="/event-booking/:id/zone/:zoneId" element={<NavBar><SeatBooking /></NavBar>} />
+            <Route path="/event-booking/:id/zone" element={<NavBar><ConcertPlan /></NavBar>} />
+            <Route path="/event-booking/:id" element={<NavBar><ConcertPlan /></NavBar>} />
+            <Route path="/cart" element={<NavBar><CartPage /></NavBar>} />
+            <Route path="/cart/:id" element={<NavBar><CartPage /></NavBar>} />
+            <Route path="/confirm-booking" element={<NavBar><PaymentPage /></NavBar>} />
+            <Route path="/payment" element={<NavBar><PaymentQRPage /></NavBar>} />
+            <Route path="/my-tickets" element={<NavBar><MyTickets /></NavBar>} />
+            
+            <Route path="/dashboard" element={<Layout><DashBoardPage /></Layout>} />
+            <Route path="/tables" element={<Layout><AllTablePage /></Layout>} />
+            <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
+            <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
+            <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
+            <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
+            <Route path="/account" element={<Layout><AccountPage /></Layout>} />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
