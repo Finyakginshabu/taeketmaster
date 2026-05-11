@@ -27,9 +27,7 @@ export default function ResetPasswordPage(){
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  // 3. ฟังก์ชันทำงานเมื่อกดปุ่ม "บันทึกรหัสผ่านใหม่"
   const onSubmit = (data) => {
-    console.log("ส่งรหัสผ่านใหม่ไปอัปเดตที่ Backend:", data);
     alert("Change password complete! please sign in with your new password");
     navigate('/signin');
   };
