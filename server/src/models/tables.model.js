@@ -262,6 +262,18 @@ export const viewBookingById = async (bookingId) => {
     return result.rows[0];
 };
 
+export const viewBookingsByUserId = async (userId) => {
+    const result = await pool.query(
+        `select b.booking_id, b.user_id, u.first_name, u.last_name, u.email, b.booked_at, b.total_price 
+         from bookings b 
+         join users u on b.user_id = u.user_id 
+         where b.user_id = $1
+         order by b.booked_at desc`,
+        [userId]
+    );
+    return result.rows;
+};
+
 export const viewTicketsByBooking = async (bookingId) => {
     const result = await pool.query(
         `select t.ticket_id, t.showtime_id, t.seat_id, s.number as seat_number, t.price, t.is_used,

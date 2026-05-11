@@ -215,6 +215,13 @@ export async function getUserById(userId){
   return res.data;
 }
 
+export async function getUserBookings(userId){
+  const res = unwrap(await http(`/api/admin/users/${userId}/bookings`, { 
+    headers: { Authorization: `Bearer ${getToken()}` }
+  }));
+  return res.data;
+}
+
 // Bookings (view only)
 export async function getBookings(){
   const res = unwrap(await http("/api/admin/bookings", { 

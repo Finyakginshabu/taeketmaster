@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from '../../components/Icons.jsx';
-import { INITIAL_DATA, MOCK_BOOKINGS } from '../../utils.js';
+import { getUserById, getUserBookings } from '../../api/tables.api.js';
 
 // ── Status badge style ───────────────────────────────────────────────────────
 // const STATUS_STYLE = {
@@ -11,27 +11,74 @@ import { INITIAL_DATA, MOCK_BOOKINGS } from '../../utils.js';
 // };
 
 const USER_FIELDS = [
-  { key: 'id',    label: 'ID' },
-  { key: ['houseNo', 'streetName'], label: 'Address Line 1' },
-  { key: 'name',  label: 'Name' },
-  { key: ['subDistrict', 'district'], label: 'Address Line 2' },
+  { key: 'user_id',    label: 'ID' },
+  { key: 'first_name',  label: 'First Name' },
+  { key: 'last_name',  label: 'Last Name' },
   { key: 'email', label: 'Email' },
-  { key: 'province', label: 'Address Line 3' },
   { key: 'phone', label: 'Phone' },
-  { key: 'postalCode', label: 'Postal Code' }
+  { key: 'username', label: 'Username' },
+  { key: 'role', label: 'Role' },
+  { key: 'registered_at', label: 'Registered Date' }
 ];
 
 export default function AdminUserDetailPage(){
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const user = useMemo(() => INITIAL_DATA.User.find(u => u.id === id), [id]);
-  const bookings = MOCK_BOOKINGS[id] ?? [];
+  const [user, setUser] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [page, setPage]       = useState(1);
   const [perPage, setPerPage] = useState(5);
   const totalPages = Math.ceil(bookings.length / perPage) || 1;
   const paginated  = bookings.slice((page - 1) * perPage, page * perPage);
+
+  useEffect(() => {
+    async function fetchUserData(){
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const userData = await getUserById(id);
+        setUser(userData);
+        
+        try {
+          const bookingsData = await getUserBookings(id);
+          setBookings(bookingsData);
+        } catch (err) {
+          console.log('No bookings found for user:', err.message);
+          setBookings([]);
+        }
+      } catch (err) {
+        setError(err.message || 'Failed to load user data');
+        console.error('Error fetching user:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if(id){
+      fetchUserData();
+    }
+  }, [id]);
+
+  if(loading){
+    return (
+      <div className="admin-table">
+        <p>Loading user data...</p>
+      </div>
+    );
+  }
+
+  if(error){
+    return (
+      <div className="admin-table">
+        <p style={{ color: 'red' }}>Error: {error}</p>
+      </div>
+    );
+  }
 
   if(!user){
     return (
@@ -39,6 +86,12 @@ export default function AdminUserDetailPage(){
         <p>ไม่พบข้อมูล User ID: {id}</p>
       </div>
     );
+  }
+
+  function formatDate(dateString){
+    if(!dateString) return '—';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('th-TH', { year: 'numeric', month: '2-digit', day: '2-digit' });
   }
 
   return (
@@ -53,28 +106,22 @@ export default function AdminUserDetailPage(){
           User
         </span>
         <span className="breadcrumb-separator"> {'>'} </span>
-        <span className="breadcrumb-current">{user.name}</span>
+        <span className="breadcrumb-current">{user.first_name} {user.last_name}</span>
       </div>
 
       <div className="user-table-card">
 
         <dl className="fieldGrid">
-          <span style={{fontSize: '26px', fontWeight: 'bold'}}>Basic Information</span>
-          <span style={{fontSize: '26px', fontWeight: 'bold'}}>Address</span>
+          <span style={{fontSize: '26px', fontWeight: 'bold', gridColumn: '1'}}>User Information</span>
           {USER_FIELDS.map(({ key, label }) => {
-            let displayValue;
-
-            if(Array.isArray(key)){
-              const values = key.map(k => user[k]).filter(Boolean);
-              displayValue = values.length > 0 ? values.join(' ') : '—';
-            } else {
-              displayValue = user[key] || '—';
+            let displayValue = user[key] || '—';
+            
+            if(key === 'registered_at'){
+              displayValue = formatDate(user[key]);
             }
 
-            const reactKey = Array.isArray(key) ? key.join('-') : key;
-
             return (
-              <div key={reactKey} className="fieldItem">
+              <div key={key} className="fieldItem">
                 <dt className="fieldLabel">{label}</dt>
                 <dd className="fieldValue">{displayValue}</dd>
               </div>
@@ -91,37 +138,27 @@ export default function AdminUserDetailPage(){
         <table className="admin-table">
           <thead>
             <tr>
+              <th>Booking ID</th>
               <th>Date</th>
-              <th>Ticket</th>
-              <th>Title</th>
-              <th>Artist</th>
-              <th>Venue</th>
-              <th>Seat</th>
-              <th>Price</th>
-              <th> </th>
+              <th>Total Price</th>
             </tr>
           </thead>
           <tbody>
             {paginated.length > 0 ? paginated.map(b => (
-              <tr key={b.id}>
-                <td>{b.date}</td>
-                <td>{b.ticket}</td>
-                <td>{b.title}</td>
-                <td>{b.artist}</td>
-                <td>{b.venue}</td>
-                <td>{b.seat}</td>
-                <td>{b.price}</td>
+              <tr key={b.booking_id}>
+                <td>{b.booking_id}</td>
+                <td>{formatDate(b.booked_at)}</td>
+                <td>{b.total_price}</td>
                 {/* Payment Status (optional) เผื่อไว้ก่อน
                 <td>
                   <span style={{ ...styles.badge, ...STATUS_STYLE[b.status] }}>
                     {b.status}
                   </span>
                 </td> */}
-                <td>{b.amount}</td>
               </tr>
             )) : (
               <tr>
-                <td colSpan="5" style={{ textAlign: 'center', padding: '28px', color: '#737373' }}>
+                <td colSpan="3" style={{ textAlign: 'center', padding: '28px', color: '#737373' }}>
                   No booking records found.
                 </td>
               </tr>

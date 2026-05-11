@@ -428,6 +428,16 @@ export const viewUserById = async (req, res, next) => {
     }
 };
 
+export const viewUserBookings = async (req, res, next) => {
+    try{
+        const { userId } = req.params;
+        const bookings = await model.viewBookingsByUserId(userId);
+        handleResponse(res, 200, "User bookings fetched successfully (view only)", bookings);
+    }catch(err){
+        next(err);
+    }
+};
+
 // Bookings
 export const viewBookings = async (req, res, next) => {
     try{

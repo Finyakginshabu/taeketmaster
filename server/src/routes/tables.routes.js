@@ -49,6 +49,7 @@ router.delete("/seats/:seatId", verifyAdmin, controller.deleteSeat);
 // Users (View Only)
 router.get("/users", verifyAdmin, controller.viewUsers);
 router.get("/users/:userId", verifyAdmin, controller.viewUserById);
+router.get("/users/:userId/bookings", verifyAdmin, controller.viewUserBookings);
 
 // Bookings (View Only)
 router.get("/bookings", verifyAdmin, controller.viewBookings);

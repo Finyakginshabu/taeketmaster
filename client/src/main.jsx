@@ -182,7 +182,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/tables/:tableTitle/add" element={<Layout><AdminAddPage /></Layout>} />
             <Route path="/tables/:tableTitle/edit/:id" element={<Layout><AdminEditPage /></Layout>} />
             <Route path="/tables/:id" element={<Layout><TablePage /></Layout>} />
-            <Route path="/tables/user/:id" element={<Layout><UserDetailPage /></Layout>} />
+            <Route path="/tables/users/:id" element={<Layout><UserDetailPage /></Layout>} />
             <Route path="/account" element={<Layout><AccountPage /></Layout>} />
           </Routes>
         </BrowserRouter>
