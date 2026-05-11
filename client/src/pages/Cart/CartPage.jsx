@@ -37,7 +37,7 @@ export default function CartPage(){
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [items]);
+  }, [items.length]);
 
   const fmtDate = (iso) =>
     new Date(iso)

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Calendar } from '../../components/Icons.jsx';
 import CalendarPicker from '../../components/CalendarPicker.jsx';
 import { INITIAL_DATA } from '../../utils.js';
-
-// สมมติว่า User ที่ทำการ Login อยู่คือ ID: '1008' 
-// (ตอนใช้งานจริง ให้ดึงจาก Context, Redux หรือ localStorage)
-const LOGGED_IN_USER_ID = '1008';
+import { useAuth } from '../Login/AuthContext.jsx';
 
 export default function AccountSettingsPage(){
+  const auth = useAuth();
+  const userId = auth?.user?.id;
+  
   // สร้าง State สำหรับเก็บค่าเดิมจาก DB เพื่อไว้ใช้ตอนกด Reset
   const [saved, setSaved] = useState({});
 

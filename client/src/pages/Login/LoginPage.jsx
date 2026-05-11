@@ -25,7 +25,7 @@ export default function LoginPage(){
     if(Object.keys(newErrors).length > 0) return;
 
     try {
-      const data = await signIn({ usorem: username, password });
+      const data = await signIn({ username: username, password });
 
       if(data && data.token){
         localStorage.setItem('token', data.token);

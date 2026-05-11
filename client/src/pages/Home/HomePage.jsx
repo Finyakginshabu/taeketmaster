@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import EventCard from './EventCard.jsx';
-import { getImageUrl } from '../../api/http';
+import { getImageUrl, http } from '../../api/http';
 
 export default function HomePage(){
     const [events, setEvents] = useState([]);
@@ -14,11 +14,8 @@ export default function HomePage(){
         const fetchEvents = async () => {
             setIsLoading(true);
             try {
-                const response = await fetch(`http://localhost:6700/api/home?${searchParams.toString()}`);
-                if(response.ok){
-                    const data = await response.json();
-                    setEvents(data.data || []);
-                }
+                const data = await http(`/api/home?${searchParams.toString()}`);
+                setEvents(data?.data || []);
             } catch (error){
                 console.error("Failed to fetch events:", error);
             } finally {
@@ -55,7 +52,7 @@ export default function HomePage(){
             <div className="event-card">
                 {isLoading ? (
                     <div style={{ width: '100%', textAlign: 'center', padding: '40px', color: '#888' }}>
-                        Eh
+                        Loading events...
                     </div>
                 ) : filteredEvents.length > 0 ? (
                     filteredEvents.map(event => (
