@@ -153,3 +153,37 @@ export const removeBookingService = async (bookingId) => {
   }
 };
 
+export const getMyTicketsService = async (userId) => {
+  try{
+    const query = `
+      select 
+        t.ticket_id,
+        t.price,
+        t.is_used,
+        e.title as event_title,
+        st.show_at as showdate,
+        v.name as venue,
+        z.zone_name as seat_zone,
+        s.number as seat_number,
+        b.total_price,
+        a.artist_name as artist,
+        case when t.is_used = true then 'used' else 'confirmed' end as status
+      from tickets t
+      join bookings b on t.booking_id = b.booking_id
+      join showtimes st on t.showtime_id = st.showtime_id
+      join events e on st.event_id = e.event_id
+      join venues v on st.venue_id = v.venue_id
+      join seats s on t.seat_id = s.seat_id
+      join zones z on s.zone_id = z.zone_id
+      left join event_artists ea on e.event_id = ea.event_id
+      left join artists a on ea.artist_id = a.artist_id
+      where b.user_id = $1
+      order by st.show_at desc
+    `;
+    const result = await pool.query(query, [userId]);
+    return result.rows || [];
+  }catch(error){
+    throw error;
+  }
+};
+

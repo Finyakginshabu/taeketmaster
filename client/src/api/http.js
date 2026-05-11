@@ -24,3 +24,16 @@ export async function http(path, options = {}){
   }
   return body;
 }
+
+/**
+ * Constructs the full image URL from a relative path
+ * @param {string} imagePath - The image path (e.g., 'events/cooktail_2025.jpg')
+ * @returns {string} Full image URL
+ */
+export function getImageUrl(imagePath) {
+  if (!imagePath) return '';
+  const baseUrl = API_BASE.endsWith("/") ? API_BASE.slice(0, -1) : API_BASE;
+  // Ensure path starts with / for proper concatenation
+  const path = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+  return `${baseUrl}/api${path}`;
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar.jsx';
 import { getEventDetail } from '../../api/eventDetails.api.js';
+import { getImageUrl } from '../../api/http.js';
 import { Calendar, MapPin, Price, Sale } from '../../components/Icons.jsx';
 import { formatDateTime } from '../../utils.js';
 
@@ -40,7 +41,7 @@ export default function EventPage(){
 
     return (<div className="event-wrapper">
                 <div className="event-container">
-                    <img className="poster" src={event.img_path} alt={event.title} />
+                    <img className="poster" src={getImageUrl(event.img_path)} alt={event.title} />
                     <div className="event-info">
                         <h2 style={{ fontSize: "42px", margin: "5px" }}>{event.title}</h2>
 

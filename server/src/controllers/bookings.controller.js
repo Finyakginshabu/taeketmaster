@@ -99,6 +99,20 @@ export const createPayment = async (req, res) => {
   }
 };
 
+export const getMyTickets = async (req, res) => {
+  try{
+    const userId = req.user.id;
+
+    const tickets = await model.getMyTicketsService(userId);
+
+    return handleResponse(res, 200, "Tickets retrieved successfully", tickets);
+
+  }catch(error){
+    console.error("Error retrieving tickets:", error);
+    return handleResponse(res, 500, "Error retrieving tickets: " + error.message);
+  }
+};
+
 export const removeBooking = async (req, res) => {
   try{
     const userId = req.user.id;

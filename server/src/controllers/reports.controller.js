@@ -122,7 +122,20 @@ export const getRevenue = async (req, res, next) => {
 // Popular Events Report
 export const getPopularEvents = async (req, res, next) => {
     try{
-        const reportData = await model.getPopularEvents();
+        const { start_date, end_date } = req.query;
+        
+        // Validate date format if provided
+        if(start_date || end_date){
+            if(!start_date || !end_date){
+                return handleResponse(res, 400, "both start_date and end_date required or leave both null for all time");
+            }
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            if(!dateRegex.test(start_date) || !dateRegex.test(end_date)){
+                return handleResponse(res, 400, "date format");
+            }
+        }
+        
+        const reportData = await model.getPopularEvents(start_date || null, end_date || null);
         const data = { report: reportData };
         
         handleResponse(res, 200, "Popular events report generated successfully", data);

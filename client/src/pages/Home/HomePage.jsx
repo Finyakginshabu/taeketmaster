@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import EventCard from './EventCard.jsx';
+import { getImageUrl } from '../../api/http';
 
 export default function HomePage(){
     const [events, setEvents] = useState([]);
@@ -9,7 +10,6 @@ export default function HomePage(){
     const [isLoading, setIsLoading] = useState(false);
     const [searchParams] = useSearchParams();
 
-    // useEffect เดียว อ่านจาก URL ที่ NavBar อัปเดตให้
     useEffect(() => {
         const fetchEvents = async () => {
             setIsLoading(true);
@@ -55,7 +55,7 @@ export default function HomePage(){
             <div className="event-card">
                 {isLoading ? (
                     <div style={{ width: '100%', textAlign: 'center', padding: '40px', color: '#888' }}>
-                        Loading events...
+                        Eh
                     </div>
                 ) : filteredEvents.length > 0 ? (
                     filteredEvents.map(event => (
@@ -65,12 +65,12 @@ export default function HomePage(){
                             title={event.title}
                             date={event.showdate}
                             statusCode={event.status}
-                            image={event.img_path}
+                            image={getImageUrl(event.img_path)}
                         />
                     ))
                 ) : (
                     <div style={{ width: '100%', textAlign: 'center', padding: '40px', color: '#888' }}>
-                        ไม่พบงานแสดงที่ตรงกับเงื่อนไขการค้นหา
+                        Not found lol
                     </div>
                 )}
             </div>

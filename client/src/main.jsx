@@ -101,20 +101,20 @@ function Sidebar(){
             basePath="/reports"
             icon={<Report width={24} />}
             label="Reports">
-            <NavLink to="/reports/todays-booking" className={getSubLinkClass}>
-              Today's Booking
+            <NavLink to="/reports/tickets-sold" className={getSubLinkClass}>
+              Tickets Sold
             </NavLink>
-            <NavLink to="/reports/todays-revenue" className={getSubLinkClass}>
-              Today's Revenue
+            <NavLink to="/reports/revenue" className={getSubLinkClass}>
+              Revenue
             </NavLink>
-            <NavLink to="/reports/customer-sales" className={getSubLinkClass}>
-              Customer Buying
+            <NavLink to="/reports/selling-artists" className={getSubLinkClass}>
+              Top Selling Artists
             </NavLink>
-            <NavLink to="/reports/receipt-list" className={getSubLinkClass}>
-              Receipt List
+            <NavLink to="/reports/ticket-spenders" className={getSubLinkClass}>
+              Top Ticket Spenders
             </NavLink>
-            <NavLink to="/reports/invoice-receipt" className={getSubLinkClass}>
-              Invoice &amp; Receipt
+            <NavLink to="/reports/popular-events" className={getSubLinkClass}>
+              Popular Events
             </NavLink>
           </SubMenu>
           <hr className="nav-separator" />

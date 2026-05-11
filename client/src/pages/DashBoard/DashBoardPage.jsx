@@ -211,7 +211,7 @@ export default function Dashboard(){
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} dy={10} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9ca3af' }} tickFormatter={(v) => `${v / 1000}k`} dx={-5} />
                 <Tooltip formatter={(v) => [`฿${v.toLocaleString()}`, 'Revenue']} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                <Line type="linear" dataKey="revenue" stroke="#6366f1" strokeWidth={2.5} dot={{ r: 4, fill: '#6366f1', strokeWidth: 0 }} activeDot={{ r: 6 }} />
+                <Line type="linear" dataKey="revenue" stroke="#D6E7B6" strokeWidth={2.5} dot={{ r: 4, fill: '#D6E7B6', strokeWidth: 0 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -229,7 +229,7 @@ export default function Dashboard(){
                   <Label value="Revenue" angle={-90} position="insideLeft" style={{ fontSize: 13, fill: '#333', textAnchor: 'middle' }} />
                 </YAxis>
                 <Tooltip formatter={(v) => [`฿${v.toLocaleString()}`, 'Revenue']} cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                <Bar dataKey="revenue" fill="#6366f1" barSize={45} />
+                <Bar dataKey="revenue" fill="#D6E7B6" barSize={45} />
               </BarChart>
             </ResponsiveContainer>
           </div>

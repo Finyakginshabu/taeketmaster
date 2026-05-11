@@ -80,17 +80,17 @@ insert into events (event_id, title, img_path, sales_started_at, sales_ended_at,
 (27, 'F.SUPERHERO 2026', 'events/f_superhero.jpg', '2026-05-07', '2026-05-31', 'active'),
 (28, 'Blinkpack 2026', 'events/blinkpack.jpg', '2026-05-04', '2026-06-01', 'active'),
 (29, 'OldJeans 2026', 'events/oldjeans.jpg', '2026-05-05', '2026-06-02', 'active'),
-(30, 'Cooktail 2026', 'events/cooktail_2025.jpg', '2026-05-10', '2026-06-03', 'active'),
-(31, 'Tomato 2026', 'events/tomato_2025.jpg', '2026-05-01', '2026-05-25', 'active'),
-(32, 'NONT TANINT 2026', 'events/nont_tanint_2025.jpg', '2026-05-02', '2026-05-26', 'active'),
-(33, 'Bodyslim 2026', 'events/bodyslim_2026.jpg', '2026-05-03', '2026-05-27', 'active'),
-(34, 'Slot Machine888 2026', 'events/slot_machine888_2026.jpg', '2026-05-04', '2026-05-28', 'active'),
-(35, 'PigXY 2026', 'events/pigxy_2026.jpg', '2026-05-01', '2026-05-29', 'active'),
-(36, 'Monodog 2026', 'events/monodog_2026.jpg', '2026-05-02', '2026-05-30', 'active'),
-(37, 'Small Ass 2026', 'events/small_ass_2026.jpg', '2026-05-17', '2026-05-24', 'active'),
-(38, 'The CarToys 2026', 'events/the_cartoys_2026.jpg', '2026-06-05', '2026-06-10', 'active'),
-(39, 'BowkyTiger 2026', 'events/bowkytiger_2026.jpg', '2026-06-24', '2026-07-01', 'active'),
-(40, '67hours 2026', 'events/67hours_2026.jpg', '2026-07-24', '2026-07-31', 'active');
+(30, 'Cooktail 2026', 'events/cooktail.jpg', '2026-05-10', '2026-06-03', 'active'),
+(31, 'Tomato 2026', 'events/tomato.jpg', '2026-05-01', '2026-05-25', 'active'),
+(32, 'NONT TANINT 2026', 'events/nont_tanint.jpg', '2026-05-02', '2026-05-26', 'active'),
+(33, 'Bodyslim 2026', 'events/bodyslim.jpg', '2026-05-03', '2026-05-27', 'active'),
+(34, 'Slot Machine888 2026', 'events/slot_machine888.jpg', '2026-05-04', '2026-05-28', 'active'),
+(35, 'PigXY 2026', 'events/pigxy.jpg', '2026-05-01', '2026-05-29', 'active'),
+(36, 'Monodog 2026', 'events/monodog.jpg', '2026-05-02', '2026-05-30', 'active'),
+(37, 'Small Ass 2026', 'events/small_ass.jpg', '2026-05-17', '2026-05-24', 'active'),
+(38, 'The CarToys 2026', 'events/the_cartoys.jpg', '2026-06-05', '2026-06-10', 'active'),
+(39, 'BowkyTiger 2026', 'events/bowkytiger.jpg', '2026-06-24', '2026-07-01', 'active'),
+(40, '67hours 2026', 'events/67hours.jpg', '2026-07-24', '2026-07-31', 'active');
 
 update events set description = case
     when event_id = 1 then 'Experience the debut of the 67hours tour. A night filled with high-energy indie rock and mesmerizing visuals that will keep you dancing until the early morning hours. Get tickets now!'

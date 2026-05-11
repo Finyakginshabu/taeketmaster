@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { formatDateTime } from '../../utils.js';
 import { getEventDetailTwo, getZoneLayout } from '../../api/eventDetails.api.js';
+import { getImageUrl } from '../../api/http.js';
 import './ConcertPlan.css';
 
 // find color bwtween 2 super green
@@ -124,7 +125,7 @@ export default function ConcertPlan(){
           {zones.map((zone) => (
             <img
               key={zone.zone_id}
-              src={`http://localhost:6700/api${zone.img_path}`}
+              src={getImageUrl(zone.img_path)}
               alt={zone.zone_name}
               className="zone-svg"
               style={{
