@@ -83,6 +83,7 @@ export const getPopularEvent = async () => {
          join zones z on sh.venue_id = z.venue_id
          join seats s on z.zone_id = s.zone_id
          left join tickets t on sh.showtime_id = t.showtime_id and s.seat_id = t.seat_id
+         where current_date >= e.sales_started_at and current_date <= e.sales_ended_at and sh.show_at > current_timestamp
          group by e.event_id, e.title
          having count(distinct s.seat_id) - count(distinct t.ticket_id) > 0
          order by remaining_tickets asc limit 5`
