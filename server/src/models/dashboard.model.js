@@ -76,16 +76,22 @@ export const getQuaterRevenue = async () => {
 
 export const getPopularEvent = async () => {
     const result = await pool.query(
-        `select e.event_id, e.title as event_name,
-                coalesce(count(distinct s.seat_id) - count(distinct t.ticket_id), 0) as remaining_tickets
-         from events e
-         join showtimes sh on e.event_id = sh.event_id
-         join zones z on sh.venue_id = z.venue_id
-         join seats s on z.zone_id = s.zone_id
-         left join tickets t on sh.showtime_id = t.showtime_id and s.seat_id = t.seat_id
-         where current_date >= e.sales_started_at and current_date <= e.sales_ended_at and sh.show_at > current_timestamp
-         group by e.event_id, e.title
-         having count(distinct s.seat_id) - count(distinct t.ticket_id) > 0
+        `select sr.event_id, sr.event_name,
+                coalesce(sum(sr.remaining_per_showtime), 0) as remaining_tickets
+         from (
+              select e.event_id, e.title as event_name, sh.showtime_id,
+                     (select count(s.seat_id) 
+                      from zones z 
+                      join seats s on z.zone_id = s.zone_id 
+                      where z.venue_id = sh.venue_id) - count(t.ticket_id) as remaining_per_showtime
+              from events e
+              join showtimes sh on e.event_id = sh.event_id
+              left join tickets t on sh.showtime_id = t.showtime_id
+              where current_date >= e.sales_started_at and current_date <= e.sales_ended_at and sh.show_at > current_timestamp
+              group by e.event_id, e.title, sh.showtime_id, sh.venue_id
+         ) as sr
+         group by sr.event_id, sr.event_name
+         having coalesce(sum(sr.remaining_per_showtime), 0) > 0
          order by remaining_tickets asc limit 5`
     );
     return result.rows;

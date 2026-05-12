@@ -521,7 +521,6 @@ insert into tickets (booking_id, showtime_id, seat_id, price) values
 (46, 26, 93, 2000.00), (46, 26, 94, 1000.00), (46, 26, 95, 2000.00), (46, 26, 96, 1000.00),
 (47, 21, 97, 1000.00), (47, 21, 98, 1000.00), (47, 21, 99, 2000.00), (47, 21, 100, 1000.00);
 
--- Q2 2026 additional bookings: balance user tickets (user 2 top with 22 total)
 insert into bookings (booking_id, user_id, booked_at, total_price) values 
 (48, 2, '2026-05-13 10:30:00', 36000.00),
 (49, 1, '2026-05-14 14:15:00', 28000.00),
