@@ -37,34 +37,34 @@ export default function AccountSettingsPage() {
   }
 
   // ดึงข้อมูล User ตอนเปิดหน้าเว็บ
-  useEffect(() => {
-    const user = INITIAL_DATA.User.find(u => u.id === LOGGED_IN_USER_ID);
-    if (user) {
-      // ใน Mock data เก่า ชื่อ-นามสกุล รวมกันใน "name" ต้องทำการแยกก่อน
-      const [fname, ...lnameArr] = (user.name || '').split(' ');
-      const lname = lnameArr.join(' ');
+  // useEffect(() => {
+  //   const user = INITIAL_DATA.User.find(u => u.id === LOGGED_IN_USER_ID);
+  //   if (user) {
+  //     // ใน Mock data เก่า ชื่อ-นามสกุล รวมกันใน "name" ต้องทำการแยกก่อน
+  //     const [fname, ...lnameArr] = (user.name || '').split(' ');
+  //     const lname = lnameArr.join(' ');
 
-      const userData = {
-        username: user.username || '',
-        email: user.email || '',
-        firstname: fname || '',
-        lastname: lname || '',
-        phone: user.phone || '',
-        dob: user.dob || '',
-        gender: user.gender || 'other',
-        genderOther: user.genderOther || '',
-        houseNo: user.houseNo || '',
-        streetName: user.streetName || '',
-        subDistrict: user.subDistrict || '',
-        district: user.district || '',
-        province: user.province || '',
-        postalCode: user.postalCode || ''
-      };
+  //     const userData = {
+  //       username: user.username || '',
+  //       email: user.email || '',
+  //       firstname: fname || '',
+  //       lastname: lname || '',
+  //       phone: user.phone || '',
+  //       dob: user.dob || '',
+  //       gender: user.gender || 'other',
+  //       genderOther: user.genderOther || '',
+  //       houseNo: user.houseNo || '',
+  //       streetName: user.streetName || '',
+  //       subDistrict: user.subDistrict || '',
+  //       district: user.district || '',
+  //       province: user.province || '',
+  //       postalCode: user.postalCode || ''
+  //     };
 
-      setSaved(userData);
-      loadProfileToForm(userData);
-    }
-  }, []);
+  //     setSaved(userData);
+  //     loadProfileToForm(userData);
+  //   }
+  // }, []);
 
   // ฟังก์ชันนำข้อมูลเข้าฟอร์ม
   const loadProfileToForm = (data) => {
