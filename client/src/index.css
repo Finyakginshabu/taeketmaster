@@ -1149,10 +1149,9 @@ button.nav-item {
   filter: brightness(0.95);
 }
 
-/* ระบบ Grid อัจฉริยะ  */
 .dashboard-grid {
   display: grid;
-  --base-w: 300px; 
+  --base-w: 250px; 
   --base-h: 190px;
   --gap: 20px;
   

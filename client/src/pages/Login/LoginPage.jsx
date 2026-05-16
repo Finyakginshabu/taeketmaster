@@ -40,7 +40,10 @@ export default function LoginPage(){
         localStorage.setItem('userData', JSON.stringify(userDataToSave));
 
         login(data.user);
-        navigate('/home');
+        
+        // Redirect to dashboard if admin, otherwise home
+        const redirectPath = data.user.role === 'admin' ? '/dashboard' : '/home';
+        navigate(redirectPath);
       }
     } catch (error){
       setLoginError(error.message);
