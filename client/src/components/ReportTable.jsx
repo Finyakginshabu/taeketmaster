@@ -1,4 +1,4 @@
-// Table for report data: columns, sortable headers, loading state, empty message. Used by Reports.jsx.
+
 import React from "react";
 import { TableLoading } from "./Loading.jsx";
 import '../pages/Report/Reports.css';

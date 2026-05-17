@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';  // ลบ useCon ออก
+import React, { useState, useRef, useEffect } from 'react';  
 import { provinces } from "../utils.js";
-import CalendarRangePicker from "./CalendarRangePicker.jsx";  // เปลี่ยนจาก CalendarPicker
+import CalendarRangePicker from "./CalendarRangePicker.jsx";  
 import { MapPin, Calendar, Search } from '../components/Icons.jsx';
 
 export default function SearchBar({ onProvince, onDate, onSearch }){
   const [province, setProvince] = useState("");
-  const [date, setDate] = useState({ start: null, end: null });  // เปลี่ยนเป็น range
+  const [date, setDate] = useState({ start: null, end: null });  
   const [showProvince, setShowProvince] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [query, setQuery] = useState("");
@@ -26,13 +26,13 @@ export default function SearchBar({ onProvince, onDate, onSearch }){
 
   const filteredProvinces = provinces.filter((p) => p.includes(query));
 
-  // ฟอร์แมตสำหรับแสดงผล UI → "02/07/2026"
+  
   const formatDisplay = (d) => {
     if(!d) return null;
     return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
   };
 
-  // ฟอร์แมตสำหรับส่ง API → "2026-07-02"
+  
   const formatAPI = (d) => {
     if(!d) return null;
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -53,10 +53,10 @@ export default function SearchBar({ onProvince, onDate, onSearch }){
 
   const handleDate = (range) => {
     setDate(range);
-    // ส่งขึ้นไปให้ parent พร้อม format ที่ API รับ
+    
     onDate?.({
-      start: formatAPI(range.start),   // "2026-07-02"
-      end: formatAPI(range.end),        // "2026-07-05"
+      start: formatAPI(range.start),   
+      end: formatAPI(range.end),        
     });
   };
 
@@ -103,7 +103,7 @@ export default function SearchBar({ onProvince, onDate, onSearch }){
         </button>
 
         {showCalendar && (
-          <CalendarRangePicker           // ← เปลี่ยนจาก CalendarPicker
+          <CalendarRangePicker           
             value={date}
             onChange={handleDate}
             onClose={() => setShowCalendar(false)}

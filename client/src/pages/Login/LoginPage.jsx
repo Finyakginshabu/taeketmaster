@@ -32,16 +32,16 @@ export default function LoginPage(){
         
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // ⚠️ อย่าลืมเปลี่ยน data.user.firstName ให้ตรงกับชื่อ Field จริงๆ ที่ Backend ส่งมานะครับ
+        
         const userDataToSave = {
-          firstName: data.user.firstName || data.user.fname || usorem, // ถ้าไม่มีชื่อจริง ให้ใช้ usorem แทนไปก่อน
+          firstName: data.user.firstName || data.user.fname || usorem, 
           lastName: data.user.lastName || data.user.lname || ''
         };
         localStorage.setItem('userData', JSON.stringify(userDataToSave));
 
         login(data.user);
         
-        // Redirect to dashboard if admin, otherwise home
+        
         const redirectPath = data.user.role === 'admin' ? '/dashboard' : '/home';
         navigate(redirectPath);
       }
@@ -57,7 +57,7 @@ export default function LoginPage(){
       <div className="auth-box">
         <h2 className="auth-title">Sign In</h2>
 
-        {/* --- ส่วนแสดงข้อความ Error จาก Backend --- */}
+        {}
         {loginError && (
           <div style={{ color: '#FF0000', fontSize: '14px', marginBottom: '15px', textAlign: 'center', backgroundColor: '#ffe6e6', padding: '10px', borderRadius: '5px' }}>
             {loginError}

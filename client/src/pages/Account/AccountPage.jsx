@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Calendar } from '../../components/Icons.jsx';
-// CalendarPicker import removed as it's no longer used
+
 import { useAuth } from '../Login/AuthContext.jsx';
 import { getProfile, updateProfile, getAddress, upsertAddress } from '../../api/users.api.js';
 
@@ -10,7 +10,7 @@ export default function AccountSettingsPage(){
   
   const [saved, setSaved] = useState({});
 
-  // Live form state
+  
   const [username,     setUsername]     = useState('');
   const [email,         setEmail]        = useState('');
   const [firstname,    setFirstname]    = useState('');
@@ -62,7 +62,7 @@ export default function AccountSettingsPage(){
 
         let dobValue = '';
         if (profileData.date_of_birth) {
-          dobValue = profileData.date_of_birth; // Keep as string/date from DB
+          dobValue = profileData.date_of_birth; 
         }
 
         const userData = {
@@ -125,7 +125,7 @@ export default function AccountSettingsPage(){
     setSaving(true);
     setError(null);
     try {
-      // dob is now treated as read-only, so we just send back what we loaded
+      
       const dobString = dob instanceof Date ? dob.toISOString().split('T')[0] : dob;
 
       await updateProfile({

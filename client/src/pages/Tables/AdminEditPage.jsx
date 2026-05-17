@@ -16,7 +16,7 @@ export default function AdminEditPage (){
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(true);
 
-  // ดึง config ของตารางนั้นๆ เพื่อรู้ว่ามี field อะไรบ้าง
+  
   const configKey = Object.keys(TABLE_CONFIGS).find(
     k => k.toLowerCase() === tableTitle?.toLowerCase()
     );
@@ -75,18 +75,18 @@ export default function AdminEditPage (){
         return;
       }
       
-      // Call the appropriate update function with the form data
-      // Artists and Genres only need the name, others need the object
+      
+      
       if (configKey === 'Artists') {
         await apiEntry.update(id, formData.artist_name);
       } else if (configKey === 'Genres') {
         await apiEntry.update(id, formData.genre_name);
       } else {
-        // Agents, Venues need the full object
+        
         await apiEntry.update(id, formData);
       }
 
-      // Navigate to the table page using the correct ID from mockTables
+      
       const tableId = mockTables.find(t => t.title === configKey)?.id || 1;
       navigate(`/tables/${tableId}`);
     } catch (err) {

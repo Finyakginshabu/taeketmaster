@@ -4,13 +4,13 @@ import { GreenLogo } from '../../components/Icons';
 
 export default function OtpPage(){
   const navigate = useNavigate();
-  // สร้าง State สำหรับเก็บค่า OTP ทั้ง 6 ช่อง
+  
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [error, setError] = useState("");
-  // ใช้ useRef เพื่อควบคุมการโฟกัสของแต่ละกล่อง
+  
   const inputRefs = useRef([]);
 
-  // ฟังก์ชันจัดการตอนพิมพ์ตัวเลข
+  
   const handleChange = (element, index) => {
     if(isNaN(element.value)) return false;
 
@@ -45,7 +45,7 @@ export default function OtpPage(){
 
   return (
     <div className="auth-page">
-      {/* แก้โลโก้ให้ตรงกับหน้าอื่น */}
+      {}
       <GreenLogo className="sign-up-logo" />
 
       <div className="auth-box">
@@ -58,7 +58,7 @@ export default function OtpPage(){
         <form onSubmit={handleSubmit}>
           <div className="auth-field" style={{ alignItems: 'center' }}>
             
-            {/* โซนกล่อง 6 กล่องที่ปรับขนาดแล้ว */}
+            {}
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', width: '100%', marginTop: '0.5rem' }}>
               {otp.map((data, index) => {
                 return (

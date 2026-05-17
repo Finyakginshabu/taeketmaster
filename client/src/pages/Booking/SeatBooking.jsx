@@ -25,7 +25,7 @@ export default function SeatBooking(){
   const [zoneData, setZoneData] = useState(null);
   const [seatStates, setSeatStates] = useState({});
 
-  // Extract showtime_id from URL query parameter if available
+  
   const searchParams = new URLSearchParams(location.search);
   const showtimeIdFromUrl = searchParams.get('showtime');
 
@@ -35,14 +35,14 @@ export default function SeatBooking(){
         const eventData = await getEventDetailTwo(event_id);
         setEvent(eventData);
         
-        // If no selectedShowtime from state but have it from URL, find it in the response
+        
         if (!selectedShowtime && showtimeIdFromUrl && eventData?.showtimes?.length > 0) {
           const foundShowtime = eventData.showtimes.find(st => st.showtime_id === parseInt(showtimeIdFromUrl));
           if (foundShowtime) {
             setSelectedShowtime(foundShowtime);
           }
         } 
-        // If no selectedShowtime from state or URL, use the first available showtime
+        
         else if (!selectedShowtime && eventData?.showtimes?.length > 0) {
           setSelectedShowtime(eventData.showtimes[0]);
         }
@@ -55,7 +55,7 @@ export default function SeatBooking(){
     fetchEventData();
   }, [event_id]);
 
-  // Fetch zones if not provided in state (for direct URL navigation)
+  
   useEffect(() => {
     if (zones.length === 0) {
       const fetchZones = async () => {
@@ -71,7 +71,7 @@ export default function SeatBooking(){
     }
   }, [event_id]);
 
-  // Use fetched zones if not in state
+  
   if (zones.length === 0 && fetchedZones.length > 0) {
     zones = fetchedZones;
   }
@@ -82,14 +82,14 @@ export default function SeatBooking(){
     const fetchSeatStatus = async () => {
       setIsLoadingSeats(true);
       try {
-        // Match by zone_id (parseInt because URL param is string)
+        
         const zoneIdInt = parseInt(zoneId);
         const matchingZone = zones.find(z => z.zone_id === zoneIdInt);
         if(!matchingZone){
           throw new Error(`Zone ${zoneId} not found`);
         }
 
-        // Extract showtime_id from selectedShowtime object
+        
         const showtimeId = selectedShowtime?.showtime_id;
         if(!showtimeId){
           throw new Error("Showtime ID not found. Please select a valid showtime.");
@@ -100,11 +100,11 @@ export default function SeatBooking(){
           showtime_id: showtimeId
         });
 
-        // Initialize seat states
+        
         const initialStates = {};
         if(seatData && Array.isArray(seatData)){
           seatData.forEach(seat => {
-            // 0 = available, 2 = booked/sold out
+            
             initialStates[seat.seat_id] = seat.is_booked ? 2 : 0;
           });
         }
@@ -123,52 +123,52 @@ export default function SeatBooking(){
     fetchSeatStatus();
   }, [zones, zoneId, selectedShowtime])
 
-  // Get currentZone name from zoneData
+  
   const currentZone = zoneData?.zone_name || 'Unknown';
 
   const handleSeatClick = (seatId) => {
     setSeatStates(prev => {
       const current = prev[seatId] || 0;
-      if(current === 2) return prev; // Can't click booked seats
-      return { ...prev, [seatId]: current === 1 ? 0 : 1 }; // Toggle between available and selected
+      if(current === 2) return prev; 
+      return { ...prev, [seatId]: current === 1 ? 0 : 1 }; 
     });
   };
 
   const selectedSeats = Object.keys(seatStates).filter(seatId => seatStates[seatId] === 1);
   
-  // Get zone price from ticket_prices object
+  
   const zonePrice = event?.ticket_prices?.[currentZone] || 5900;
   const pricePerSeat = typeof zonePrice === 'number' ? zonePrice : 5900;
   const totalPrice = selectedSeats.length * pricePerSeat;
 
   const handleReserve = async () => {
     try {
-      // Get token from localStorage
+      
       const token = localStorage.getItem('token');
       if(!token){
         setError('Please log in to reserve tickets');
         return;
       }
 
-      // Extract showtime_id from selectedShowtime object
+      
       const showtimeId = selectedShowtime?.showtime_id;
       if(!showtimeId){
         setError('Showtime ID not found. Please select a valid showtime.');
         return;
       }
 
-      // Prepare reservation data for each selected seat
+      
       const reservationData = selectedSeats.map(seatId => ({
         showtime_id: showtimeId,
         seat_id: seatId
       }));
 
-      // Call API for each seat
+      
       for (const data of reservationData) {
         await reserveTicket(data, token);
       }
 
-      // After successful reservation, add to cart for display purposes
+      
       selectedSeats.forEach(seatId => {
         const seat = seats.find(s => s.seat_id === seatId);
         addItem({
@@ -239,7 +239,7 @@ export default function SeatBooking(){
               </div>
 
               {seats.map(seat => {
-                const state = seatStates[seat.seat_id] || 0; // 0=available, 1=selected, 2=booked
+                const state = seatStates[seat.seat_id] || 0; 
                 let IconComponent = Available;
                 let clickable = true;
 

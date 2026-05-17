@@ -5,7 +5,7 @@ import { API_CREATE_MAP } from '../../api/tables.api.js';
 
 export default function AdminAddPage(){
   const navigate    = useNavigate();
-  const { tableTitle } = useParams(); // /tables/:tableTitle/add
+  const { tableTitle } = useParams(); 
 
   const configKey = Object.keys(TABLE_CONFIGS).find(
     k => k.toLowerCase() === tableTitle?.toLowerCase()
@@ -43,7 +43,7 @@ export default function AdminAddPage(){
         await createFn(formData);
       }
 
-      // Navigate to the table page using the correct ID from mockTables
+      
       const tableId = mockTables.find(t => t.title === configKey)?.id || 1;
       navigate(`/tables/${tableId}`);
     } catch (err) {

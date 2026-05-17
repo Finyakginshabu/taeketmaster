@@ -3,12 +3,12 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from '../../components/Icons.jsx';
 import { getUserById, getUserBookings } from '../../api/tables.api.js';
 
-// ── Status badge style ───────────────────────────────────────────────────────
-// const STATUS_STYLE = {
-//   Confirmed: { background: 'rgba(89,107,55,0.12)', color: '#3d5a1e', border: '1px solid rgba(89,107,55,0.3)' },
-//   Cancelled: { background: 'rgba(220,53,69,0.1)',  color: '#b91c1c', border: '1px solid rgba(220,53,69,0.3)' },
-//   Pending:   { background: 'rgba(202,138,4,0.1)',  color: '#92400e', border: '1px solid rgba(202,138,4,0.3)' },
-// };
+
+
+
+
+
+
 
 const USER_FIELDS = [
   { key: 'user_id',    label: 'ID' },
@@ -149,12 +149,12 @@ export default function AdminUserDetailPage(){
                 <td>{b.booking_id}</td>
                 <td>{formatDate(b.booked_at)}</td>
                 <td>{b.total_price}</td>
-                {/* Payment Status (optional) เผื่อไว้ก่อน
-                <td>
-                  <span style={{ ...styles.badge, ...STATUS_STYLE[b.status] }}>
-                    {b.status}
-                  </span>
-                </td> */}
+                {
+
+
+
+
+}
               </tr>
             )) : (
               <tr>

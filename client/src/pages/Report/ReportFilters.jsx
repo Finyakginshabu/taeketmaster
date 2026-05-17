@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-// สมมติ Path ของคุณ
+
 import CalendarPicker from "../../components/CalendarPicker.jsx"; 
 import { Calendar } from "../../components/Icons.jsx"; 
 import "./Reports.css";
 
-// ── Component ย่อยสำหรับจัดการการกาง/หุบ Calendar Picker ──
+
 const DateDropdown = ({ value, onChange, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
-  // ระบบเช็คว่าคลิกพื้นที่อื่นนอกกล่องหรือไม่ (ถ้าคลิกที่อื่นให้ปิด Calendar)
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -21,15 +21,15 @@ const DateDropdown = ({ value, onChange, placeholder }) => {
   }, []);
 
   const handleDateSelect = (val) => {
-    // ส่งค่ากลับไป (สมมติว่า val ที่ส่งกลับมาคือค่าที่เราต้องการ หรือ val.target.value)
+    
     const selectedValue = val?.target?.value ?? val; 
     onChange(selectedValue);
-    setIsOpen(false); // เลือกวันที่เสร็จแล้วให้ปิดปฏิทิน
+    setIsOpen(false); 
   };
 
   return (
     <div ref={containerRef} style={{ position: "relative", width: "160px" }}>
-      {/* ── กล่อง Input หลอก (กดเพื่อเปิดปฏิทิน) ── */}
+      {}
       <div 
         onClick={() => setIsOpen(!isOpen)}
         style={{ 
@@ -49,13 +49,13 @@ const DateDropdown = ({ value, onChange, placeholder }) => {
           {value || placeholder}
         </span>
         
-        {/* ไอคอนของคุณ */}
+        {}
         <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", color: "var(--text-main)", display: "flex" }}>
           <Calendar width={18} height={18} />
         </span>
       </div>
 
-      {/* ── ตัวโมดูลปฏิทินของคุณ (จะโชว์ก็ต่อเมื่อ isOpen = true) ── */}
+      {}
       {isOpen && (
         <div style={{ 
           position: "absolute", 
@@ -83,7 +83,7 @@ export default function ReportFilters({ filters, onChange, onApply, onReset }) {
 
   return (
     <div className="report-filters">
-      {/* ── กล่องเลือกวันที่ (Date Range) ── */}
+      {}
       <div style={{ marginBottom: "20px" }}>
         <label style={{ display: "block", color: "var(--text-muted)", fontSize: "0.9rem", marginBottom: "8px" }}>
           Date Range
@@ -107,10 +107,10 @@ export default function ReportFilters({ filters, onChange, onApply, onReset }) {
         </div>
       </div>
 
-      {/* ── เส้นคั่น ── */}
+      {}
       <div style={{ height: "1px", backgroundColor: "var(--border-muted)", opacity: 0.3, marginBottom: "16px" }}></div>
 
-      {/* ── ปุ่มกด (Actions) ── */}
+      {}
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}>
         <button type="button" className="btn btn-outline" onClick={onReset}>
           Reset

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SearchBar from './SearchBar.jsx';
 import { useAuth } from '../pages/Login/AuthContext.jsx';
-import { Link, useNavigate, useLocation } from 'react-router-dom';  // เพิ่ม useLocation
+import { Link, useNavigate, useLocation } from 'react-router-dom';  
 import { WhiteLogo, HomeWhite, Cart, User, LogOut, History } from './Icons.jsx';
 import { useCart } from '../pages/Cart/CartContext.jsx';
 
@@ -12,9 +12,9 @@ export default function NavBar({ children }){
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
-    const location = useLocation();  // รู้ว่าอยู่หน้าไหน
+    const location = useLocation();  
 
-    // ---- filter state ----
+    
     const [filters, setFilters] = useState({
         province: "",
         startDate: null,
@@ -22,22 +22,22 @@ export default function NavBar({ children }){
         search: "",
     });
 
-    // ทุกครั้งที่ filter เปลี่ยน → อัปเดต URL query params
-    // หน้า Home อ่าน useSearchParams() แล้วยิง API เอง
+    
+    
     useEffect(() => {
-        // อัปเดต URL เฉพาะตอนอยู่หน้า /home
+        
         if(!location.pathname.startsWith("/home")) return;
 
         const params = new URLSearchParams();
         if(filters.province)  params.set("province",  filters.province);
-        if(filters.startDate) params.set("startDate", filters.startDate);  // "2026-07-02"
-        if(filters.endDate)   params.set("endDate",   filters.endDate);    // "2026-07-05"
+        if(filters.startDate) params.set("startDate", filters.startDate);  
+        if(filters.endDate)   params.set("endDate",   filters.endDate);    
         if(filters.search)    params.set("search",    filters.search);
 
         navigate(`/home?${params.toString()}`, { replace: true });
     }, [filters]);
 
-    // ปิด dropdown เมื่อคลิกข้างนอก
+    
     useEffect(() => {
         const handler = (e) => {
             if(dropdownRef.current && !dropdownRef.current.contains(e.target))

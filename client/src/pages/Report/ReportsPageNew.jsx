@@ -77,7 +77,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
   const [error, setError] = useState("");
   const [hasApplied, setHasApplied] = useState(false);
 
-  // Filter states
+  
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [groupBy, setGroupBy] = useState("daily");
@@ -95,18 +95,18 @@ export default function ReportsPage({ type = "tickets-sold" }) {
 
       const options = {};
 
-      // Add date range if applicable and provided
+      
       if (config.filters.includes("dateRange")) {
         if (dateFrom) options.start_date = dateFrom;
         if (dateTo) options.end_date = dateTo;
       }
 
-      // Add groupBy if applicable
+      
       if (config.filters.includes("groupBy")) {
         options.group_by = groupBy;
       }
 
-      // Add period if applicable
+      
       if (config.filters.includes("period")) {
         options.period = period;
         if (period === "custom" && dateFrom && dateTo) {
@@ -115,7 +115,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         }
       }
 
-      // Add sortBy if applicable
+      
       if (config.filters.includes("sortBy")) {
         options.sort_by = sortBy;
       }
@@ -159,7 +159,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
 
   return (
     <div style={{ padding: "20px" }}>
-      {/* Breadcrumb */}
+      {}
       <div style={{ marginBottom: "24px", fontSize: "1.05rem", color: "var(--text-muted)" }}>
         <Link to="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
           Dashboard
@@ -172,7 +172,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         <strong style={{ color: "var(--text-main)" }}>{config.title}</strong>
       </div>
 
-      {/* Error Alert */}
+      {}
       {error && (
         <div style={{
           backgroundColor: "#fef2f2",
@@ -186,7 +186,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         </div>
       )}
 
-      {/* Filters Card */}
+      {}
       <div style={{
         backgroundColor: "white",
         borderRadius: "8px",
@@ -199,7 +199,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         </h3>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px", marginBottom: "16px" }}>
-          {/* Date Range Filter */}
+          {}
           {config.filters.includes("dateRange") && (
             <>
               <div>
@@ -239,7 +239,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
             </>
           )}
 
-          {/* Group By Filter */}
+          {}
           {config.filters.includes("groupBy") && (
             <div>
               <label style={{ display: "block", marginBottom: "6px", fontSize: "0.9rem", fontWeight: 500 }}>
@@ -263,7 +263,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
             </div>
           )}
 
-          {/* Period Filter */}
+          {}
           {config.filters.includes("period") && (
             <div>
               <label style={{ display: "block", marginBottom: "6px", fontSize: "0.9rem", fontWeight: 500 }}>
@@ -291,7 +291,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
             </div>
           )}
 
-          {/* Sort By Filter */}
+          {}
           {config.filters.includes("sortBy") && (
             <div>
               <label style={{ display: "block", marginBottom: "6px", fontSize: "0.9rem", fontWeight: 500 }}>
@@ -317,7 +317,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
           )}
         </div>
 
-        {/* Buttons */}
+        {}
         <div style={{ display: "flex", gap: "12px" }}>
           <button
             onClick={handleApply}
@@ -371,7 +371,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         </div>
       </div>
 
-      {/* Results Card */}
+      {}
       <div style={{
         backgroundColor: "white",
         borderRadius: "8px",

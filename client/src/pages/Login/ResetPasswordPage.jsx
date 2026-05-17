@@ -18,7 +18,7 @@ export default function ResetPasswordPage(){
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // 2. เรียกใช้ React Hook Form
+  
   const {
     register,
     handleSubmit,

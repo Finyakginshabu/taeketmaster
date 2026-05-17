@@ -138,14 +138,14 @@ export default function ReportsPage({ type = "tickets-sold" }) {
 
   return (
     <div style={{ padding: "20px" }}>
-      {/* Breadcrumb */}
+      {}
       <div style={{ marginBottom: "24px", fontSize: "1.3rem", color: "var(--text-muted)", fontWeight: "500" }}>
         Reports
         {" > "}
         <strong style={{ color: "var(--text-main)" }}>{config.title}</strong>
       </div>
 
-      {/* Error Alert */}
+      {}
       {error && (
         <div style={{
           backgroundColor: "#fef2f2",
@@ -159,7 +159,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         </div>
       )}
 
-      {/* Filters Card */}
+      {}
       <div style={{
         backgroundColor: "#F2EFDB",
         borderRadius: "16px",
@@ -172,7 +172,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         </h3>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px", marginBottom: "16px" }}>
-          {/* Date Range Filter */}
+          {}
           {config.filters.includes("dateRange") && (
             <>
               <div>
@@ -212,7 +212,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
             </>
           )}
 
-          {/* Group By Filter */}
+          {}
           {config.filters.includes("groupBy") && (
             <div>
               <label style={{ display: "block", marginBottom: "6px", fontSize: "1rem", fontWeight: 500 }}>
@@ -236,7 +236,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
             </div>
           )}
 
-          {/* Period Filter */}
+          {}
           {config.filters.includes("period") && (
             <div>
               <label style={{ display: "block", marginBottom: "6px", fontSize: "1rem", fontWeight: 500 }}>
@@ -262,7 +262,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
             </div>
           )}
 
-          {/* Sort By Filter */}
+          {}
           {config.filters.includes("sortBy") && (
             <div>
               <label style={{ display: "block", marginBottom: "6px", fontSize: "1rem", fontWeight: 500 }}>
@@ -286,7 +286,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
           )}
         </div>
 
-        {/* Buttons */}
+        {}
         <div style={{ display: "flex", gap: "12px" }}>
           <button
             onClick={handleApply}
@@ -324,7 +324,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
         </div>
       </div>
 
-      {/* Results Card */}
+      {}
       <div style={{
         backgroundColor: "#F2EFDB",
         borderRadius: "16px",

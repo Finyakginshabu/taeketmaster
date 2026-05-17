@@ -61,7 +61,7 @@ export default function CartPage(){
 
       await removeBooking({ seat_id: seatId, showtime_id: showtimeId }, token);
       
-      // Remove from local cart
+      
       removeItem(seatId, showtimeId);
       setError(null);
     } catch (err) {
@@ -87,7 +87,7 @@ export default function CartPage(){
           )}
         </div>
       <div className="cartpage-card">
-        {/* ── Table ─────────────────────────────────────────────────────────── */}
+        {}
         <div className="cartpage-table-container">
           <table className="cartpage-table">
             <thead>
@@ -144,7 +144,7 @@ export default function CartPage(){
 
         <hr className="cartpage-divider" />
 
-        {/* ── Summary ───────────────────────────────────────────────────────── */}
+        {}
         <div className="cartpage-summary">
           <div className="cartpage-summary-row">
             <span>Ticket Amount</span>
@@ -161,7 +161,7 @@ export default function CartPage(){
           </div>
         </div>
 
-        {/* ── Footer Actions ─────────────────────────────────────────────────── */}
+        {}
         <div className="cartpage-actions">
           <button
             className="cartpage-btn back"

@@ -48,34 +48,34 @@ export default function Dashboard(){
           getTopSpender(),
         ]);
 
-        // 1. Stats ของวันนี้ (เก็บ object ไว้เหมือนเดิม ไปดึงค่าตอน Render)
+        
         setStats(todayData);
 
-        // 2. Top Artists: แปลงจาก Array of Objects ให้เหลือแค่ Array ของชื่อศิลปิน
+        
         setTopArtists(artistsData.map(a => a.artist_name));
 
-        // 3. Top Spenders (Quarter): แมป key ให้ตรงกับที่ตารางเรียกใช้
+        
         setTopSpenders(spendersData.map(s => ({
           rank: s.rank,
           name: s.name,
           tickets: s.total_tickets
         })));
 
-        // 4. Monthly Revenue: แปลง Object { jan: 100, feb: 200 } เป็น Array ให้ Recharts
+        
         const formattedMonthly = Object.entries(monthlyData.monthly_revenue || {}).map(([month, rev]) => ({
           month: month,
           revenue: Number(rev)
         }));
         setMonthlyRevenue(formattedMonthly);
 
-        // 5. Quarter Revenue: แปลง Object เป็น Array ให้ Recharts
+        
         const formattedQuarter = Object.entries(quarterData.quater_revenue || {}).map(([quarter, rev]) => ({
           quarter: quarter,
           revenue: Number(rev)
         }));
         setQuarterRevenue(formattedQuarter);
 
-        // 6. Popular Events: แปลง Object เป็น Array ให้ตาราง
+        
         const formattedPopular = Object.entries(popularData.popular_events || {}).map(([eventName, seats], index) => ({
           rank: index + 1,
           name: eventName,
@@ -83,7 +83,7 @@ export default function Dashboard(){
         }));
         setPopularEvents(formattedPopular);
 
-        // 7. All Time Spenders: แปลง Object เป็น Array ให้ตาราง
+        
         const formattedAllTime = Object.entries(allTimeData.top_spenders || {}).map(([name, spent], index) => ({
           rank: index + 1,
           name: name,
@@ -142,7 +142,7 @@ export default function Dashboard(){
           <div className="dash-card" style={{ flex: 1 }}>
             <h3 className="card-title">Today's Revenue</h3>
             <div className="stat-content">
-              {/* ดึงรายได้ */}
+              {}
               <span className="stat-number">
                 ฿{(() => {
                   const num = stats?.today?.total_revenue || 0;
@@ -151,7 +151,7 @@ export default function Dashboard(){
                   return num.toLocaleString();
                 })()}
               </span>
-              {/* ดึง % revenue_percent */}
+              {}
               <div className="stat-growth green">
                 {stats?.difference_percent?.revenue_percent > 0 ? '+' : ''}
                 {stats?.difference_percent?.revenue_percent || 0}%

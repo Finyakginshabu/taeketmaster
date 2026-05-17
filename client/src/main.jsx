@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate, useParams, NavLink
 import { CartProvider } from './pages/Cart/CartContext.jsx';
 import { AuthProvider } from './pages/Login/AuthContext.jsx';
 
-// UserPage
+
 import LoginPage from './pages/Login/LoginPage.jsx'; 
 import RegisterPage from './pages/Login/RegisterPage.jsx';
 import ForgotPasswordPage from './pages/Login/ForgotPasswordPage.jsx';
@@ -20,7 +20,7 @@ import PaymentQRPage from './pages/Payment/PaymentQRPage.jsx';
 import NavBar from './components/NavBar.jsx';
 import MyTickets from './pages/History/MyTickets.jsx';
 
-// AdminPage
+
 import DashBoardPage from './pages/DashBoard/DashBoardPage.jsx';
 import AllTablePage from './pages/Tables/AllTablesPage.jsx';
 import TablePage from './pages/Tables/AdminTablesPage.jsx';
@@ -32,7 +32,7 @@ import ReportsPage from './pages/Report/ReportsPage.jsx';
 
 import './index.css';
 
-// image URL
+
 import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison, ChevronDown, ReportGreen } from './components/Icons.jsx';
 
 function SubMenu({ icon, label, children, basePath }){

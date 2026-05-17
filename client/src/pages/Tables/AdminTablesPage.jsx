@@ -13,7 +13,7 @@ import {
   getTickets,
 } from '../../api/tables.api.js';
 
-// Map table title -> { fetch, del, idKey }
+
 const API_MAP = {
   Artists:  { fetch: getArtists,  del: deleteArtist,  idKey: 'artist_id'  },
   Genres:   { fetch: getGenres,   del: deleteGenre,   idKey: 'genre_id'   },

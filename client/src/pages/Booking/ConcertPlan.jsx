@@ -5,7 +5,7 @@ import { getEventDetailTwo, getZoneLayout, getAvailableSeat } from '../../api/ev
 import { getImageUrl } from '../../api/http.js';
 import './ConcertPlan.css';
 
-// find color bwtween 2 super green
+
 const interpolateColor = (color1, color2, factor) => {
   const c1 = parseInt(color1, 16);
   const c2 = parseInt(color2, 16);
@@ -192,7 +192,7 @@ export default function ConcertPlan(){
             Seat Available
           </button>
 
-          {/* Inline Seat Available Modal */}
+          {}
           {showSeatModal && (
             <div className="modal-overlay" onClick={() => setShowSeatModal(false)}>
               <div className="modal-box" onClick={(e) => e.stopPropagation()}>

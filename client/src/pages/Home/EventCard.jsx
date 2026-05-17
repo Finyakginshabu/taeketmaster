@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MONTHS, formatDateTime } from '../../utils.js';
 
-// รับเลข Status จาก Backend (0=Coming Soon, 1=Buy Now, 2=Sold Out)
+
 export function getStatus(statusCode){
     if(statusCode === 2) return { status: "Sold Out", label: "sold-out-btn" };
     if(statusCode === 0) return { status: "Coming Soon", label: "coming-soon-btn" };

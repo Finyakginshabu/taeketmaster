@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../Cart/CartContext.jsx'; // 💡 อย่าลืมเช็ก Path ให้ตรง
+import { useCart } from '../Cart/CartContext.jsx'; 
 import { QR } from '../../components/Icons.jsx';
 import './Payment.css';
 
 export default function PaymentQRPage(){
   const navigate = useNavigate();
-  const { totalPrice, clearCart } = useCart(); // ดึงราคาจริงมาใช้งาน
+  const { totalPrice, clearCart } = useCart(); 
 
-  // --- ลอจิกจับเวลา ซิงค์กับตะกร้า ---
+  
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
-    // 1. ดึงเวลาหมดอายุที่ถูกเซฟไว้ตอนเพิ่มของลงตะกร้าชิ้นแรก
+    
     const expireTimeStr = localStorage.getItem('cartExpireTime');
     
     if(!expireTimeStr){
@@ -22,25 +22,25 @@ export default function PaymentQRPage(){
 
     const expireTime = Number(expireTimeStr);
 
-    // ฟังก์ชันคำนวณเวลาที่เหลือ (วินาที)
+    
     const calculateTimeLeft = () => {
       const now = Date.now();
       const diff = Math.floor((expireTime - now) / 1000);
       return diff > 0 ? diff : 0;
     };
 
-    // 2. เซ็ตเวลาเริ่มต้นทันทีที่เปิดหน้า
+    
     setTimeLeft(calculateTimeLeft());
 
-    // 3. ให้นับถอยหลังทุกๆ 1 วินาที
+    
     const timerId = setInterval(() => {
       const remaining = calculateTimeLeft();
       setTimeLeft(remaining);
 
-      // ถ้าเวลาหมด ให้หยุดการทำงานของ timer
+      
       if(remaining <= 0){
         clearInterval(timerId);
-        // 💡 ออปชันเสริม: ถ้าเวลาหมดจะให้ทำอะไรต่อ เช่น clearCart() หรือเด้งกลับหน้า Home ก็ใส่ตรงนี้ได้เลยครับ
+        
       }
     }, 1000);
 
@@ -51,7 +51,7 @@ export default function PaymentQRPage(){
   const seconds = timeLeft % 60;
   const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-  // ฟังก์ชันเมื่อกดปุ่ม Done
+  
   const handleDone = () => {
     clearCart(); 
     navigate('/home'); 

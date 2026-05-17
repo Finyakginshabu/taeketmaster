@@ -10,9 +10,9 @@ export default function AllTablePage(){
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-            // fetch("/api/tables.api.js")
-            //     .then(res => res.json())
-            //     .then(data => setTables(data));
+            
+            
+            
                 setTables(mockTables);
     }, []);
 
