@@ -27,17 +27,28 @@
 (Optional) สร้าง `.env` ตาม format `.env-example` กำหนด environment ต่าง ๆ หรือเปลี่ยนชื่อ `.env-example` เป็น `.env` ก็ได้
 
 **Docker Setup (เปิด Docker ด้วย):
+
 `docker-compose up -d`
 
 Clear Docker Setup (เฉพาะถ้าจะลบ):
+
 `docker-compose down -v`
+
 clear และ setup ใหม่เมื่่ออัปเดต database/sql
 
 // ฟินใช้ **PGAdmin4** แทน Adminer ของ Invoice
 
 **Install Packages** ตาม package.json โดยใช้ npm install
+
 `cd server` -> `npm install`
+
 จะได้ `package-lock.json` และ `node_modules`
+
+รัน server
+
+`npm run dev`
+
+// ทำเหมือนกันกับ client โดยต่อไปไม่ต้อง install package ซ้ำแล้ว
 
 ## Backend API Documentation
 
