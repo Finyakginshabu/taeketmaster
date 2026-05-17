@@ -8,13 +8,6 @@ import {
 } from "../../api/reports.api.js";
 import "./Reports.css";
 
-const RefreshIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="23 4 23 10 17 10" />
-    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-  </svg>
-);
-
 const REPORT_CONFIG = {
   "tickets-sold": {
     title: "Tickets Sold Report",
@@ -136,12 +129,6 @@ export default function ReportsPage({ type = "tickets-sold" }) {
     setData([]);
     setHasApplied(false);
     setError("");
-  };
-
-  const handleRefresh = () => {
-    if (hasApplied) {
-      fetchData();
-    }
   };
 
   const formatCurrency = (value) => {
@@ -333,26 +320,7 @@ export default function ReportsPage({ type = "tickets-sold" }) {
           >
             Reset
           </button>
-          {hasApplied && (
-            <button
-              onClick={handleRefresh}
-              disabled={loading}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "transparent",
-                color: "#666",
-                border: "1px solid #ddd",
-                borderRadius: "4px",
-                cursor: loading ? "not-allowed" : "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                fontSize: "1rem",
-              }}
-            >
-              <RefreshIcon /> Refresh
-            </button>
-          )}
+
         </div>
       </div>
 

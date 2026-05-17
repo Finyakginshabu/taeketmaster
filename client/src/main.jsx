@@ -33,7 +33,7 @@ import ReportsPage from './pages/Report/ReportsPage.jsx';
 import './index.css';
 
 // image URL
-import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison, ChevronDown } from './components/Icons.jsx';
+import { GreenLogo, HomeGreen, HomeWhite, Table, TableGreen, Report, User, UserGreen, LogOut, Comparison, ChevronDown, ReportGreen } from './components/Icons.jsx';
 
 function SubMenu({ icon, label, children, basePath }){
   const location = window.location.pathname;
@@ -100,7 +100,7 @@ function Sidebar(){
         <div className="nav-group">
           <SubMenu 
             basePath="/reports"
-            icon={<Report width={24} />}
+            icon={window.location.pathname.startsWith('/reports') ? <ReportGreen width={24} /> : <Report width={24} />}
             label="Reports">
             <NavLink to="/reports/tickets-sold" className={getSubLinkClass}>
               Tickets Sold

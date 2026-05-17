@@ -278,6 +278,8 @@ export default function ReportsPage({ type = "tickets-sold" }) {
                   border: "1px solid #ddd",
                   borderRadius: "4px",
                   boxSizing: "border-box",
+                  fontFamily: "inherit",
+                  fontSize: "0.9rem",
                 }}
               >
                 <option value="this_year">This Year</option>
@@ -304,6 +306,8 @@ export default function ReportsPage({ type = "tickets-sold" }) {
                   border: "1px solid #ddd",
                   borderRadius: "4px",
                   boxSizing: "border-box",
+                  fontFamily: "inherit",
+                  fontSize: "0.9rem",
                 }}
               >
                 <option value="total_spent">Total Spent</option>

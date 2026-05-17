@@ -18,6 +18,7 @@ import ChevronsRight from '../assets/ChevronsRight.svg?react';
 import Table from '../assets/TableWhite.svg?react';
 import TableGreen from '../assets/TableGreen.svg?react';
 import Report from '../assets/Report.svg?react';
+import ReportGreen from '../assets/ReportGreen.svg?react';
 import LogOut from '../assets/LogOut.svg?react';
 import Filter from '../assets/Filter.svg?react';
 import Comparison from '../assets/Comparison.svg?react';
@@ -37,4 +38,4 @@ export { GreenLogo, WhiteLogo, HomeGreen, Cart, User, MapPin, Calendar,
         Filter, Comparison, ChevronLeft, ChevronRight, ChevronsLeft,
         ChevronsRight, HomeWhite, TableGreen, UserGreen,
         Add, Edit, Delete, Selected, Available, NotAvailable,
-        EditCart, DeleteCart, QR, History };
+        EditCart, DeleteCart, QR, History, ReportGreen };

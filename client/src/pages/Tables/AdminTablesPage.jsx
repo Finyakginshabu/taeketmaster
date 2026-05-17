@@ -54,7 +54,7 @@ function GenericTable({ title, config, onRowClick, onEditClick, onAddClick, idKe
   const paginated  = filtered.slice((page - 1) * perPage, page * perPage);
 
   const handleDelete = async (id) => {
-    if(!window.confirm('Are you sure you want to delete this record?')) return;
+    if(!window.confirm('Delete for sure, huh?')) return;
     const apiEntry = API_MAP[title];
     if(!apiEntry?.del) return;
     try {

@@ -88,7 +88,6 @@ export default function OtpPage(){
                 )
               })}
             </div>
-            <p className="error-message">{error || "OTP is 676767"}</p>
           </div>
 
           <button type="submit" className="auth-btn" style={{ width: '60%', marginTop: '1.5rem' }}>Confirm</button>
