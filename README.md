@@ -28,11 +28,15 @@
 
 **Docker Setup (เปิด Docker ด้วย):
 
-```docker-compose up -d```
+```
+docker-compose up -d
+```
 
 Clear Docker Setup (เฉพาะถ้าจะลบ):
 
-```docker-compose down -v```
+```
+docker-compose down -v
+```
 
 clear และ setup ใหม่เมื่่ออัปเดต database/sql
 
@@ -40,17 +44,23 @@ clear และ setup ใหม่เมื่่ออัปเดต database/
 
 **Install Packages** ตาม package.json โดยใช้ npm install
 
-```cd server```
+```
+cd server
+```
 
 -> 
 
-```npm install```
+```
+npm install
+```
 
 จะได้ `package-lock.json` และ `node_modules`
 
 รัน server
 
-```npm run dev```
+```
+npm run dev
+```
 
 // ทำเหมือนกันกับ client โดยต่อไปไม่ต้อง install package ซ้ำแล้ว
 
